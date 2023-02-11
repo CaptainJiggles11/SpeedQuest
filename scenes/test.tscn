@@ -1,4 +1,4 @@
-[gd_scene load_steps=10 format=2]
+[gd_scene load_steps=31 format=2]
 
 [ext_resource path="res://art/sprites/environment/background/16x16 dungeon ii wall reconfig v04 spritesheet.png" type="Texture" id=1]
 [ext_resource path="res://art/packs/0x72_DungeonTilesetII_v1.4/frames/knight_f_run_anim_f2.png" type="Texture" id=2]
@@ -6,6 +6,27 @@
 [ext_resource path="res://art/packs/0x72_DungeonTilesetII_v1.4/frames/knight_f_run_anim_f3.png" type="Texture" id=4]
 [ext_resource path="res://art/packs/0x72_DungeonTilesetII_v1.4/frames/knight_f_run_anim_f0.png" type="Texture" id=5]
 [ext_resource path="res://scenes/Player.gd" type="Script" id=6]
+[ext_resource path="res://art/packs/0x72_DungeonTilesetII_v1.4/frames/knight_f_idle_anim_f2.png" type="Texture" id=7]
+[ext_resource path="res://art/packs/0x72_DungeonTilesetII_v1.4/frames/knight_f_idle_anim_f1.png" type="Texture" id=8]
+[ext_resource path="res://art/packs/0x72_DungeonTilesetII_v1.4/frames/knight_f_idle_anim_f0.png" type="Texture" id=9]
+[ext_resource path="res://art/packs/0x72_DungeonTilesetII_v1.4/frames/knight_f_idle_anim_f3.png" type="Texture" id=10]
+[ext_resource path="res://art/packs/0x72_DungeonTilesetII_v1.4/frames/jaime_test/knight_f_roll_anim1.png" type="Texture" id=11]
+[ext_resource path="res://art/packs/0x72_DungeonTilesetII_v1.4/frames/jaime_test/knight_f_roll_anim2.png" type="Texture" id=12]
+[ext_resource path="res://art/packs/0x72_DungeonTilesetII_v1.4/frames/jaime_test/knight_f_roll_anim3.png" type="Texture" id=13]
+[ext_resource path="res://art/packs/0x72_DungeonTilesetII_v1.4/frames/jaime_test/knight_f_roll_anim4.png" type="Texture" id=14]
+[ext_resource path="res://art/packs/0x72_DungeonTilesetII_v1.4/frames/jaime_test/knight_f_roll_anim8.png" type="Texture" id=15]
+[ext_resource path="res://art/packs/0x72_DungeonTilesetII_v1.4/frames/jaime_test/knight_f_roll_anim13.png" type="Texture" id=16]
+[ext_resource path="res://art/packs/0x72_DungeonTilesetII_v1.4/frames/jaime_test/knight_f_roll_anim6.png" type="Texture" id=17]
+[ext_resource path="res://art/packs/0x72_DungeonTilesetII_v1.4/frames/jaime_test/knight_f_roll_anim7.png" type="Texture" id=18]
+[ext_resource path="res://art/packs/0x72_DungeonTilesetII_v1.4/frames/jaime_test/knight_f_roll_anim11.png" type="Texture" id=19]
+[ext_resource path="res://art/packs/0x72_DungeonTilesetII_v1.4/frames/jaime_test/knight_f_roll_anim15.png" type="Texture" id=20]
+[ext_resource path="res://art/packs/0x72_DungeonTilesetII_v1.4/frames/jaime_test/knight_f_roll_anim17.png" type="Texture" id=21]
+[ext_resource path="res://art/packs/0x72_DungeonTilesetII_v1.4/frames/jaime_test/knight_f_roll_anim9.png" type="Texture" id=22]
+[ext_resource path="res://art/packs/0x72_DungeonTilesetII_v1.4/frames/jaime_test/knight_f_roll_anim14.png" type="Texture" id=23]
+[ext_resource path="res://art/packs/0x72_DungeonTilesetII_v1.4/frames/jaime_test/knight_f_roll_anim12.png" type="Texture" id=24]
+[ext_resource path="res://art/packs/0x72_DungeonTilesetII_v1.4/frames/jaime_test/knight_f_roll_anim16.png" type="Texture" id=25]
+[ext_resource path="res://art/packs/0x72_DungeonTilesetII_v1.4/frames/jaime_test/knight_f_roll_anim5.png" type="Texture" id=26]
+[ext_resource path="res://art/packs/0x72_DungeonTilesetII_v1.4/frames/jaime_test/knight_f_roll_anim10.png" type="Texture" id=27]
 
 [sub_resource type="TileSet" id=1]
 0/name = "16x16 dungeon ii wall reconfig v04 spritesheet.png 0"
@@ -30,16 +51,26 @@
 0/shapes = [  ]
 0/z_index = 0
 
+[sub_resource type="CircleShape2D" id=3]
+radius = 5.0
+
 [sub_resource type="SpriteFrames" id=2]
 animations = [ {
 "frames": [ ExtResource( 5 ), ExtResource( 3 ), ExtResource( 2 ), ExtResource( 4 ) ],
 "loop": true,
-"name": "Melee Run",
+"name": "right",
 "speed": 12.0
+}, {
+"frames": [ ExtResource( 9 ), ExtResource( 8 ), ExtResource( 7 ), ExtResource( 10 ) ],
+"loop": true,
+"name": "idle",
+"speed": 5.0
+}, {
+"frames": [ ExtResource( 11 ), ExtResource( 12 ), ExtResource( 13 ), ExtResource( 14 ), ExtResource( 26 ), ExtResource( 17 ), ExtResource( 18 ), ExtResource( 15 ), ExtResource( 22 ), ExtResource( 27 ), ExtResource( 19 ), ExtResource( 24 ), ExtResource( 16 ), ExtResource( 23 ), ExtResource( 20 ), ExtResource( 25 ), ExtResource( 25 ), ExtResource( 21 ), ExtResource( 21 ) ],
+"loop": false,
+"name": "roll",
+"speed": 30.0
 } ]
-
-[sub_resource type="CircleShape2D" id=3]
-radius = 5.0
 
 [node name="Game" type="Node2D"]
 
@@ -51,18 +82,18 @@ tile_data = PoolIntArray( 0, 0, 524288, 1, 0, 524288, 2, 0, 524288, 3, 0, 524288
 
 [node name="Player" type="Node2D" parent="."]
 script = ExtResource( 6 )
+my_class = 1
 
-[node name="AnimatedSprite" type="AnimatedSprite" parent="Player"]
+[node name="RigidBody2D" type="RigidBody2D" parent="Player"]
 position = Vector2( 173, 110 )
-frames = SubResource( 2 )
-animation = "Melee Run"
-frame = 1
-playing = true
+gravity_scale = 0.0
 
-[node name="RigidBody2D" type="RigidBody2D" parent="Player/AnimatedSprite"]
-mode = 3
-gravity_scale = 9.8
-
-[node name="CollisionShape2D" type="CollisionShape2D" parent="Player/AnimatedSprite/RigidBody2D"]
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Player/RigidBody2D"]
 position = Vector2( 0, 8 )
 shape = SubResource( 3 )
+
+[node name="AnimatedSprite" type="AnimatedSprite" parent="Player/RigidBody2D"]
+frames = SubResource( 2 )
+animation = "roll"
+frame = 18
+playing = true
