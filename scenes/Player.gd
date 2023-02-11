@@ -25,6 +25,7 @@ export(float) var roll_cooldown = .1
 func _ready():
 	rb = get_node("RigidBody2D")
 	sprite = get_node("RigidBody2D/AnimatedSprite")
+	
 	match my_class:
 		character_class.melee:
 			print("melee")
@@ -32,20 +33,20 @@ func _ready():
 			print("ranger")
 		character_class.mage:
 			print("mage")
-			
-			
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(delta):
 	
 	movement()
-	print(input_velocity.x+1,input_velocity.y+1)
+	
+	#print(input_velocity.x+1,input_velocity.y+1)
 	print(player_facing[input_velocity.x+1][input_velocity.y+1])
 	
 func movement():
 	input_velocity = Vector2.ZERO
-	player_position = self.position
+	player_position = rb.position
 	
+	#Roll Mechanic-- gives a burst of speed and intangibility on press.
 	if can_roll == true:
 		if Input.is_action_pressed("roll"):
 			rb.linear_velocity = rb.linear_velocity*2
@@ -53,7 +54,8 @@ func movement():
 			can_roll = false
 			sprite.animation = "roll"
 			sprite.frame = 0
-
+			
+	#Get WASD inputs.
 	if rolling == false:
 		if Input.is_action_pressed("ui_right"):
 			input_velocity.x = 1
@@ -64,24 +66,29 @@ func movement():
 		if Input.is_action_pressed("ui_up"):
 			input_velocity.y = -1
 		
-		rb.linear_velocity = input_velocity.normalized() * walk_speed * 100
+		#Actually sets rigidbody velocity.
+		rb.linear_velocity = input_velocity.normalized() * walk_speed * 100 
 		
 		#If the player isn't pressing either movement keys, play idle animation.
-		if abs(input_velocity.x) <= 0 and abs(input_velocity.y) <= 0:
+		if abs(input_velocity.x) < 1 and abs(input_velocity.y) < 1:
 			sprite.animation = "idle"
-		else:
+		else: #If moving, set walking animation and flip player according to relative mouse location.
 			sprite.animation = "right"
 			if get_viewport().get_mouse_position().x < player_position.x:
 				sprite.flip_h = true
 			else:
 				sprite.flip_h = false
-	else:
+				
+	else: #If rolling
+		#Slow down after the initial burst of speed from pressing roll.
 		if sprite.frame < 8:
 			rb.linear_velocity = Vector2(rb.linear_velocity.x/1.001,rb.linear_velocity.y/1.01)
-		else:
+		else: #After the 8th frame (hitting the ground), slow down significantly faster.
 			rb.linear_velocity = Vector2(rb.linear_velocity.x/1.03,rb.linear_velocity.y/1.03)
-		yield(sprite,"animation_finished")
+			
+		yield(sprite,"animation_finished") #Wait for the last frame to end rolling state.
 		rolling = false
-		yield(get_tree().create_timer(roll_cooldown), "timeout")
+		
+		yield(get_tree().create_timer(roll_cooldown), "timeout") #Wait out the roll cooldown before you can roll again.
 		can_roll = true
 	
