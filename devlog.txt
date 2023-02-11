@@ -1,3 +1,9 @@
 2/7/2023 Project Start
 
+2/10/2023:
+
+Jaime:
+	(Melee Character)
+	+ Movement and Anims (Walk, Roll)
+	
 
