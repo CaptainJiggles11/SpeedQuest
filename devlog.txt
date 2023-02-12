@@ -5,5 +5,16 @@
 Jaime:
 	(Melee Character)
 	+ Movement and Anims (Walk, Roll)
+
+2/11/2023:
+
+Jaime:
+	+ Camera Controls
+	+ Global Singleton Script
+	(Might want to revise node hierarchy)
+
+2/12/2023:
+
+Jaime:	
 	
 

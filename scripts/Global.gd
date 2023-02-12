@@ -1,13 +1,16 @@
 extends Node
 
 var current_scene = null
+
 var player_position
+
+
 func _ready():
 	var root = get_tree().root
 	current_scene = root.get_child(root.get_child_count() - 1)
 	
 func _process(delta):
-	player_position = get_tree().get_root().get_node("Game").get_node("Player").get_node("RigidBody2D").position
+	pass
 	
 func goto_scene(path):
 	# This function will usually be called from a signal callback,

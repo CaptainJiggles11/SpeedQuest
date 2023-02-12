@@ -38,6 +38,7 @@ func _ready():
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(delta):
+	Global.player_position = rb.position
 	
 	movement()
 	
@@ -61,16 +62,17 @@ func movement():
 	#Get WASD inputs.
 	if rolling == false:
 		if Input.is_action_pressed("ui_right"):
-			input_velocity.x = 1
+			input_velocity.x += 1
 		if Input.is_action_pressed("ui_left"):
-			input_velocity.x = -1
+			input_velocity.x -= 1
 		if Input.is_action_pressed("ui_down"):
-			input_velocity.y = 1
+			input_velocity.y += 1
 		if Input.is_action_pressed("ui_up"):
-			input_velocity.y = -1
+			input_velocity.y -= 1
 		
 		#Actually sets rigidbody velocity.
 		rb.linear_velocity = input_velocity.normalized() * walk_speed * 100 
+		
 		
 		#Flips character x according to mouse position.
 		if get_viewport().get_mouse_position().x < get_viewport_rect().size.x/2:

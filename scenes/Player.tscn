@@ -1,0 +1,75 @@
+[gd_scene load_steps=30 format=2]
+
+[ext_resource path="res://art/packs/0x72_DungeonTilesetII_v1.4/frames/knight_f_idle_anim_f3.png" type="Texture" id=1]
+[ext_resource path="res://art/packs/0x72_DungeonTilesetII_v1.4/frames/knight_f_run_anim_f0.png" type="Texture" id=2]
+[ext_resource path="res://art/packs/0x72_DungeonTilesetII_v1.4/frames/jaime_test/knight_f_roll_anim1.png" type="Texture" id=3]
+[ext_resource path="res://art/packs/0x72_DungeonTilesetII_v1.4/frames/knight_f_run_anim_f3.png" type="Texture" id=4]
+[ext_resource path="res://art/packs/0x72_DungeonTilesetII_v1.4/frames/knight_f_run_anim_f2.png" type="Texture" id=5]
+[ext_resource path="res://art/packs/0x72_DungeonTilesetII_v1.4/frames/knight_f_run_anim_f1.png" type="Texture" id=6]
+[ext_resource path="res://art/packs/0x72_DungeonTilesetII_v1.4/frames/knight_f_idle_anim_f2.png" type="Texture" id=7]
+[ext_resource path="res://art/packs/0x72_DungeonTilesetII_v1.4/frames/knight_f_idle_anim_f1.png" type="Texture" id=8]
+[ext_resource path="res://art/packs/0x72_DungeonTilesetII_v1.4/frames/knight_f_idle_anim_f0.png" type="Texture" id=9]
+[ext_resource path="res://art/packs/0x72_DungeonTilesetII_v1.4/frames/jaime_test/knight_f_roll_anim16.png" type="Texture" id=10]
+[ext_resource path="res://art/packs/0x72_DungeonTilesetII_v1.4/frames/jaime_test/knight_f_roll_anim12.png" type="Texture" id=11]
+[ext_resource path="res://art/packs/0x72_DungeonTilesetII_v1.4/frames/jaime_test/knight_f_roll_anim10.png" type="Texture" id=12]
+[ext_resource path="res://art/packs/0x72_DungeonTilesetII_v1.4/frames/jaime_test/knight_f_roll_anim9.png" type="Texture" id=13]
+[ext_resource path="res://art/packs/0x72_DungeonTilesetII_v1.4/frames/jaime_test/knight_f_roll_anim4.png" type="Texture" id=14]
+[ext_resource path="res://art/packs/0x72_DungeonTilesetII_v1.4/frames/jaime_test/knight_f_roll_anim6.png" type="Texture" id=15]
+[ext_resource path="res://art/packs/0x72_DungeonTilesetII_v1.4/frames/jaime_test/knight_f_roll_anim5.png" type="Texture" id=16]
+[ext_resource path="res://art/packs/0x72_DungeonTilesetII_v1.4/frames/jaime_test/knight_f_roll_anim13.png" type="Texture" id=17]
+[ext_resource path="res://art/packs/0x72_DungeonTilesetII_v1.4/frames/jaime_test/knight_f_roll_anim15.png" type="Texture" id=18]
+[ext_resource path="res://art/packs/0x72_DungeonTilesetII_v1.4/frames/jaime_test/knight_f_roll_anim7.png" type="Texture" id=19]
+[ext_resource path="res://art/packs/0x72_DungeonTilesetII_v1.4/frames/jaime_test/knight_f_roll_anim17.png" type="Texture" id=20]
+[ext_resource path="res://art/packs/0x72_DungeonTilesetII_v1.4/frames/jaime_test/knight_f_roll_anim14.png" type="Texture" id=21]
+[ext_resource path="res://art/packs/0x72_DungeonTilesetII_v1.4/frames/jaime_test/knight_f_roll_anim11.png" type="Texture" id=22]
+[ext_resource path="res://art/packs/0x72_DungeonTilesetII_v1.4/frames/jaime_test/knight_f_roll_anim8.png" type="Texture" id=23]
+[ext_resource path="res://art/packs/0x72_DungeonTilesetII_v1.4/frames/jaime_test/knight_f_roll_anim2.png" type="Texture" id=24]
+[ext_resource path="res://art/packs/0x72_DungeonTilesetII_v1.4/frames/jaime_test/knight_f_roll_anim3.png" type="Texture" id=25]
+[ext_resource path="res://scripts/PlayerCam.gd" type="Script" id=26]
+[ext_resource path="res://scripts/Player.gd" type="Script" id=27]
+
+[sub_resource type="CircleShape2D" id=1]
+radius = 5.0
+
+[sub_resource type="SpriteFrames" id=2]
+animations = [ {
+"frames": [ ExtResource( 2 ), ExtResource( 6 ), ExtResource( 5 ), ExtResource( 4 ) ],
+"loop": true,
+"name": "right",
+"speed": 12.0
+}, {
+"frames": [ ExtResource( 9 ), ExtResource( 8 ), ExtResource( 7 ), ExtResource( 1 ) ],
+"loop": true,
+"name": "idle",
+"speed": 5.0
+}, {
+"frames": [ ExtResource( 3 ), ExtResource( 24 ), ExtResource( 25 ), ExtResource( 14 ), ExtResource( 16 ), ExtResource( 15 ), ExtResource( 19 ), ExtResource( 23 ), ExtResource( 13 ), ExtResource( 12 ), ExtResource( 22 ), ExtResource( 11 ), ExtResource( 17 ), ExtResource( 21 ), ExtResource( 18 ), ExtResource( 10 ), ExtResource( 10 ), ExtResource( 20 ), ExtResource( 20 ) ],
+"loop": false,
+"name": "roll",
+"speed": 30.0
+} ]
+
+[node name="Player" type="Node2D"]
+script = ExtResource( 27 )
+__meta__ = {
+"_edit_group_": true
+}
+
+[node name="RigidBody2D" type="RigidBody2D" parent="."]
+mode = 2
+gravity_scale = 0.0
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="RigidBody2D"]
+position = Vector2( 0, 8 )
+shape = SubResource( 1 )
+
+[node name="AnimatedSprite" type="AnimatedSprite" parent="RigidBody2D"]
+frames = SubResource( 2 )
+animation = "roll"
+frame = 18
+playing = true
+
+[node name="PlayerCam" type="Camera2D" parent="."]
+current = true
+smoothing_enabled = true
+script = ExtResource( 26 )
