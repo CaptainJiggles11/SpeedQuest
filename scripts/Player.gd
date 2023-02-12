@@ -10,6 +10,7 @@ var inventory = []
 var rb
 var sprite
 
+
 #Player States
 var player_facing = [["topleft", "left", "bottomleft"],["top","idle","bottom"],["top right","right","bottom right"]]
 var rolling = false
@@ -26,6 +27,7 @@ func _ready():
 	rb = get_node("RigidBody2D")
 	sprite = get_node("RigidBody2D/AnimatedSprite")
 	
+	
 	match my_class:
 		character_class.melee:
 			print("melee")
@@ -40,11 +42,12 @@ func _process(delta):
 	movement()
 	
 	#print(input_velocity.x+1,input_velocity.y+1)
-	print(player_facing[input_velocity.x+1][input_velocity.y+1])
+	#print(player_facing[input_velocity.x+1][input_velocity.y+1])
 	
 func movement():
 	input_velocity = Vector2.ZERO
 	player_position = rb.position
+	
 	
 	#Roll Mechanic-- gives a burst of speed and intangibility on press.
 	if can_roll == true:
@@ -69,16 +72,18 @@ func movement():
 		#Actually sets rigidbody velocity.
 		rb.linear_velocity = input_velocity.normalized() * walk_speed * 100 
 		
+		#Flips character x according to mouse position.
+		if get_viewport().get_mouse_position().x < get_viewport_rect().size.x/2:
+			sprite.flip_h = true
+		else:
+			sprite.flip_h = false
+			
 		#If the player isn't pressing either movement keys, play idle animation.
 		if abs(input_velocity.x) < 1 and abs(input_velocity.y) < 1:
 			sprite.animation = "idle"
-		else: #If moving, set walking animation and flip player according to relative mouse location.
+		else: #If moving, set walking animation.
 			sprite.animation = "right"
-			if get_viewport().get_mouse_position().x < player_position.x:
-				sprite.flip_h = true
-			else:
-				sprite.flip_h = false
-				
+
 	else: #If rolling
 		#Slow down after the initial burst of speed from pressing roll.
 		if sprite.frame < 8:
