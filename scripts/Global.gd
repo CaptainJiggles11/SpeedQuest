@@ -4,10 +4,14 @@ var current_scene = null
 
 var player_position
 
+var coin_count
+var coin0
+
 
 func _ready():
 	var root = get_tree().root
 	current_scene = root.get_child(root.get_child_count() - 1)
+	add_test_coin()
 	
 func _process(delta):
 	pass
@@ -40,3 +44,21 @@ func _deferred_goto_scene(path):
 
 	# Optionally, to make it compatible with the SceneTree.change_scene() API.
 	get_tree().current_scene = current_scene
+
+
+func add_test_coin():
+	coin_count = 0
+	coin0 = preload("res://scenes/Coin.tscn").instance()
+	coin0.position = Vector2(50,50)
+	coin0.z_index = 1
+	coin0.get_child(0).connect("body_shape_entered", self, "_on_get_coin")
+	add_child(coin0)
+
+
+func _on_get_coin(body_rid, body, body_shape_index, local_shape_index):
+	if(body.name == "PlayerBody"):
+		print("got coin")
+		remove_child(coin0)
+		coin_count += 1
+	else:
+		print("not player")
