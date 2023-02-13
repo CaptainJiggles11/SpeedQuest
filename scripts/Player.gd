@@ -24,8 +24,8 @@ export(float) var roll_cooldown = .1
 
 # Called when the node enters the scene tree for the first time.
 func _ready():
-	rb = get_node("RigidBody2D")
-	sprite = get_node("RigidBody2D/AnimatedSprite")
+	rb = get_node("PlayerBody")
+	sprite = get_node("PlayerBody/AnimatedSprite")
 	
 	
 	match my_class:
