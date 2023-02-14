@@ -1,0 +1,21 @@
+[remap]
+
+importer="wav"
+type="AudioStreamSample"
+path="res://.import/SPEEDQUEST 1.wav-002e177b91ce4411a01ab27dcad96343.sample"
+
+[deps]
+
+source_file="res://art/audio/music/SPEEDQUEST 1.wav"
+dest_files=[ "res://.import/SPEEDQUEST 1.wav-002e177b91ce4411a01ab27dcad96343.sample" ]
+
+[params]
+
+force/8_bit=false
+force/mono=false
+force/max_rate=false
+force/max_rate_hz=44100
+edit/trim=false
+edit/normalize=false
+edit/loop=true
+compress/mode=0
