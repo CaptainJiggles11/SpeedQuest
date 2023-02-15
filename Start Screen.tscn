@@ -199,7 +199,6 @@ flip_h = true
 [node name="Demon2" type="AnimatedSprite" parent="Panel"]
 position = Vector2( 229, 69.5 )
 frames = SubResource( 7 )
-frame = 3
 playing = true
 flip_h = true
 
@@ -267,7 +266,7 @@ flip_h = true
 [node name="Orc8" type="AnimatedSprite" parent="Panel"]
 position = Vector2( 197, 88.5 )
 frames = SubResource( 8 )
-frame = 1
+frame = 2
 playing = true
 flip_h = true
 
@@ -287,21 +286,19 @@ flip_h = true
 [node name="Lizard3" type="AnimatedSprite" parent="Panel"]
 position = Vector2( 152, 78.5 )
 frames = SubResource( 9 )
-frame = 3
 playing = true
 flip_h = true
 
 [node name="Lizard4" type="AnimatedSprite" parent="Panel"]
 position = Vector2( 166, 70.5 )
 frames = SubResource( 9 )
-frame = 3
 playing = true
 flip_h = true
 
 [node name="Lizard5" type="AnimatedSprite" parent="Panel"]
 position = Vector2( 166, 79.5 )
 frames = SubResource( 9 )
-frame = 2
+frame = 3
 playing = true
 flip_h = true
 
@@ -364,14 +361,14 @@ flip_h = true
 [node name="Imp2" type="AnimatedSprite" parent="Panel"]
 position = Vector2( 113, 84 )
 frames = SubResource( 11 )
-frame = 2
+frame = 3
 playing = true
 flip_h = true
 
 [node name="Imp3" type="AnimatedSprite" parent="Panel"]
 position = Vector2( 120, 86 )
 frames = SubResource( 11 )
-frame = 2
+frame = 3
 playing = true
 flip_h = true
 
