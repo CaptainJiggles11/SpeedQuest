@@ -6,10 +6,11 @@ enum character_class {none,melee,ranger,mage}
 export (character_class) var my_class = character_class.none
 var input_velocity = Vector2.ZERO
 var player_position = Vector2.ZERO
-var inventory = []
+var local_mouse_pos
+var viewport_center
 var rb
 var sprite
-
+var inventory = []
 
 #Player States
 var player_facing = [["topleft", "left", "bottomleft"],["top","idle","bottom"],["top right","right","bottom right"]]
@@ -21,12 +22,15 @@ export(float) var walk_speed = 1
 export(float) var attack_damage = 3
 export(float) var roll_cooldown = .1
 
+#Weapon Stats
+export (float) var weapon_offset = 15
+
 
 # Called when the node enters the scene tree for the first time.
 func _ready():
 	rb = get_node("PlayerBody")
 	sprite = get_node("PlayerBody/AnimatedSprite")
-	
+	viewport_center = Vector2(get_viewport_rect().size.x/2,get_viewport_rect().size.y/2) #Middle of the viewport.
 	
 	match my_class:
 		character_class.melee:
@@ -39,8 +43,10 @@ func _ready():
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(delta):
 	Global.player_position = rb.position
+	local_mouse_pos = get_viewport().get_mouse_position() #Mouse position on the viewport.
 	
-	movement()
+	movement() #Controls player movement (Walking, Rolling)
+	weapon_movement(delta) #Controls the revolving weapon.
 	
 	#print(input_velocity.x+1,input_velocity.y+1)
 	#print(player_facing[input_velocity.x+1][input_velocity.y+1])
@@ -75,7 +81,7 @@ func movement():
 		
 		
 		#Flips character x according to mouse position.
-		if get_viewport().get_mouse_position().x < get_viewport_rect().size.x/2:
+		if local_mouse_pos.x < viewport_center.x:
 			sprite.flip_h = true
 		else:
 			sprite.flip_h = false
@@ -98,4 +104,13 @@ func movement():
 		
 		yield(get_tree().create_timer(roll_cooldown), "timeout") #Wait out the roll cooldown before you can roll again.
 		can_roll = true
+
+func weapon_movement(delta):
+	#Vector of mouse to middle of screen + a really silly way to account for the screen disjoint.
+	var mouse_dir = (local_mouse_pos-Vector2(viewport_center.x+rb.linear_velocity.x/6, viewport_center.y)).normalized() 
+	var angleTo = $Weapon.transform.x.angle_to(mouse_dir) #Idk
 	
+	#Set the weapon's position to a radius around the player
+	$Weapon.position = player_position + mouse_dir * weapon_offset + Vector2(0,5) 
+	#Magic
+	$Weapon.rotate(sign(angleTo)* min(delta * 100, abs(angleTo))) 
