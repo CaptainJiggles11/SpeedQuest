@@ -89,12 +89,17 @@ func movement():
 		#If the player isn't pressing either movement keys, play idle animation.
 		print((local_mouse_pos-viewport_center).normalized())
 		if abs(input_velocity.x) < 1 and abs(input_velocity.y) < 1:
-			sprite.animation = "idle"
+			if (local_mouse_pos-viewport_center).normalized().y < -.5:
+				sprite.animation = "upidle"
+			elif (local_mouse_pos-viewport_center).normalized().y > .5:
+				sprite.animation = "downidle"
+			else:
+				sprite.animation = "idle"
 			#If moving, set walking animation.
 		elif (local_mouse_pos-viewport_center).normalized().y < -.5:
-			sprite.animation = "forward"
+			sprite.animation = "up"
 		elif (local_mouse_pos-viewport_center).normalized().y > .5:
-			sprite.animation = "backward"
+			sprite.animation = "down"
 		else:
 			sprite.animation = "right"
 
