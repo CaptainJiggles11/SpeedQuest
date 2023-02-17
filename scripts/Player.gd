@@ -87,9 +87,15 @@ func movement():
 			sprite.flip_h = false
 			
 		#If the player isn't pressing either movement keys, play idle animation.
+		print((local_mouse_pos-viewport_center).normalized())
 		if abs(input_velocity.x) < 1 and abs(input_velocity.y) < 1:
 			sprite.animation = "idle"
-		else: #If moving, set walking animation.
+			#If moving, set walking animation.
+		elif (local_mouse_pos-viewport_center).normalized().y < -.5:
+			sprite.animation = "forward"
+		elif (local_mouse_pos-viewport_center).normalized().y > .5:
+			sprite.animation = "backward"
+		else:
 			sprite.animation = "right"
 
 	else: #If rolling
