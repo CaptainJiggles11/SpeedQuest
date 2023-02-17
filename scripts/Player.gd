@@ -127,7 +127,9 @@ func weapon_movement(delta):
 	var angleTo = $Weapon.transform.x.angle_to(mouse_dir) #Idk
 	
 	#Makes Weapon render below the player sprite if they are looking upwards.
-	if $Weapon.position.y < 7:
+	
+	print((local_mouse_pos-viewport_center).normalized().y)
+	if (local_mouse_pos-viewport_center).normalized().y < .5:
 		sprite.z_index = 1
 	else:
 		sprite.z_index = 0
