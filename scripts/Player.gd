@@ -126,6 +126,12 @@ func weapon_movement(delta):
 	var mouse_dir = (local_mouse_pos-Vector2(viewport_center.x+rb.linear_velocity.x/6, viewport_center.y)).normalized() 
 	var angleTo = $Weapon.transform.x.angle_to(mouse_dir) #Idk
 	
+	#Makes Weapon render below the player sprite if they are looking upwards.
+	if $Weapon.position.y < 7:
+		sprite.z_index = 1
+	else:
+		sprite.z_index = 0
+	
 	#Set the weapon's position to a radius around the player
 	$Weapon.position = player_position + mouse_dir * weapon_offset + Vector2(0,5) 
 	#Magic
