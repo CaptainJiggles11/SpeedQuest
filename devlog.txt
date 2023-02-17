@@ -13,8 +13,28 @@ Jaime:
 	+ Global Singleton Script
 	(Might want to revise node hierarchy)
 
-2/12/2023:
+2/12-15/2023: (forgot to document)
 
-Jaime:	
+Jaime:	+Music
+		Composed an 8-bit dungeon theme in FamiTracker and added to main scene.
+	+Sfx
+		Made Slash, hit, and roll sounds with FamiTracker as well.
+
+Jason (written by Jaime): 
+	
+	+Coin Pickup
+		Added coin node and animated sprite.
+	+Hud (Score Counter)
+		Allows coin count to be tracked.
+
+2/16/2023:
+
+Jaime: 
+	+ Sword Sprite
+		Made a "Weapon" node that allows the player to swing anything around them.
+	+Knight Sprite Overhaul
+		Made an Up and Down running/idle sprite for the knight-- the player will ALWAYS face the cursor.
+
+	
 	
 

@@ -87,14 +87,19 @@ func movement():
 			sprite.flip_h = false
 			
 		#If the player isn't pressing either movement keys, play idle animation.
-		print((local_mouse_pos-viewport_center).normalized())
+		
+		var current_frame = sprite.frame 
+		
 		if abs(input_velocity.x) < 1 and abs(input_velocity.y) < 1:
 			if (local_mouse_pos-viewport_center).normalized().y < -.5:
 				sprite.animation = "upidle"
+				sprite.frame = current_frame
 			elif (local_mouse_pos-viewport_center).normalized().y > .5:
 				sprite.animation = "downidle"
+				sprite.frame = current_frame
 			else:
 				sprite.animation = "idle"
+				sprite.frame = current_frame
 			#If moving, set walking animation.
 		elif (local_mouse_pos-viewport_center).normalized().y < -.5:
 			sprite.animation = "up"
