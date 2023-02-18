@@ -35,6 +35,14 @@ Jaime:
 	+Knight Sprite Overhaul
 		Made an Up and Down running/idle sprite for the knight-- the player will ALWAYS face the cursor.
 
+2/17/2023:
+
+Jaime:
+	+ Sound Effects
+		Added a PlayerSFX Node that instantiates AudioStreamPlayers for each sound effect:
+			Roll
+			Footsteps
+
 	
 	
 
