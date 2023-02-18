@@ -1,14 +1,19 @@
 extends Node2D
 
+#Misc 
+var local_mouse_pos
+var viewport_center
+var rb
+var _timer = null
+
+#Audio Setup
+var sfx
 
 #Player Setup
 enum character_class {none,melee,ranger,mage}
 export (character_class) var my_class = character_class.none
 var input_velocity = Vector2.ZERO
 var player_position = Vector2.ZERO
-var local_mouse_pos
-var viewport_center
-var rb
 var sprite
 var inventory = []
 
@@ -16,6 +21,7 @@ var inventory = []
 var player_facing = [["topleft", "left", "bottomleft"],["top","idle","bottom"],["top right","right","bottom right"]]
 var rolling = false
 var can_roll = true
+var walking = false
 
 #Player Stats
 export(float) var walk_speed = 1
@@ -30,7 +36,15 @@ export (float) var weapon_offset = 15
 func _ready():
 	rb = get_node("PlayerBody")
 	sprite = get_node("PlayerBody/AnimatedSprite")
+	sfx = get_node("PlayerBody/PlayerSfx")
 	viewport_center = Vector2(get_viewport_rect().size.x/2,get_viewport_rect().size.y/2) #Middle of the viewport.
+	
+	_timer = Timer.new()
+	add_child(_timer)
+	_timer.connect("timeout", self, "_on_Timer_timeout")
+	_timer.set_wait_time(.2)
+	_timer.set_one_shot(false) # Make sure it loops
+	_timer.start()
 	
 	match my_class:
 		character_class.melee:
@@ -64,6 +78,7 @@ func movement():
 			can_roll = false
 			sprite.animation = "roll"
 			sprite.frame = 0
+			sfx.play_sound(sfx.roll)
 			
 	#Get WASD inputs.
 	if rolling == false:
@@ -91,6 +106,7 @@ func movement():
 		var current_frame = sprite.frame 
 		
 		if abs(input_velocity.x) < 1 and abs(input_velocity.y) < 1:
+			walking = false
 			if (local_mouse_pos-viewport_center).normalized().y < -.5:
 				sprite.animation = "upidle"
 				sprite.frame = current_frame
@@ -101,12 +117,14 @@ func movement():
 				sprite.animation = "idle"
 				sprite.frame = current_frame
 			#If moving, set walking animation.
-		elif (local_mouse_pos-viewport_center).normalized().y < -.5:
-			sprite.animation = "up"
-		elif (local_mouse_pos-viewport_center).normalized().y > .5:
-			sprite.animation = "down"
 		else:
-			sprite.animation = "right"
+			walking = true
+			if (local_mouse_pos-viewport_center).normalized().y < -.5:
+				sprite.animation = "up"
+			elif (local_mouse_pos-viewport_center).normalized().y > .5:
+				sprite.animation = "down"
+			else:
+				sprite.animation = "right"
 
 	else: #If rolling
 		#Slow down after the initial burst of speed from pressing roll.
@@ -136,3 +154,8 @@ func weapon_movement(delta):
 	$Weapon.position = player_position + mouse_dir * weapon_offset + Vector2(0,5) 
 	#Magic
 	$Weapon.rotate(sign(angleTo)* min(delta * 100, abs(angleTo))) 
+	
+func _on_Timer_timeout():
+	if walking == true and rolling == false:
+		sfx.play_sound(sfx.footsteps)
+		
