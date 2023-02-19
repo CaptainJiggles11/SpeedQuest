@@ -22,14 +22,16 @@ var player_facing = [["topleft", "left", "bottomleft"],["top","idle","bottom"],[
 var rolling = false
 var can_roll = true
 var walking = false
+var attacking = false
 
 #Player Stats
 export(float) var walk_speed = 1
 export(float) var attack_damage = 3
 export(float) var roll_cooldown = .1
+export(float) var attack_cooldown = .4
 
 #Weapon Stats
-export (float) var weapon_offset = 15
+export (float) var weapon_offset = 20
 
 
 # Called when the node enters the scene tree for the first time.
@@ -61,7 +63,8 @@ func _process(delta):
 	
 	movement() #Controls player movement (Walking, Rolling)
 	weapon_movement(delta) #Controls the revolving weapon.
-	
+	if Input.is_action_just_pressed("attack"):
+		attack()
 	#print(input_velocity.x+1,input_velocity.y+1)
 	#print(player_facing[input_velocity.x+1][input_velocity.y+1])
 	
@@ -98,8 +101,10 @@ func movement():
 		#Flips character x according to mouse position.
 		if local_mouse_pos.x < viewport_center.x:
 			sprite.flip_h = true
+		
 		else:
 			sprite.flip_h = false
+			
 			
 		#If the player isn't pressing either movement keys, play idle animation.
 		
@@ -154,7 +159,17 @@ func weapon_movement(delta):
 	$Weapon.position = player_position + mouse_dir * weapon_offset + Vector2(0,5) 
 	#Magic
 	$Weapon.rotate(sign(angleTo)* min(delta * 100, abs(angleTo))) 
-	
+
+func attack():
+	if rolling == false and attacking == false:
+		attacking = true
+		$Weapon.frame = 0
+		sfx.play_sound(sfx.sword_sfx)
+		$Weapon.play()
+		
+		yield(get_tree().create_timer(attack_cooldown), "timeout")
+		attacking = false
+		
 func _on_Timer_timeout():
 	if walking == true and rolling == false:
 		sfx.play_sound(sfx.footsteps)
