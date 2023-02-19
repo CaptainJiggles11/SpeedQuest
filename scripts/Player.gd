@@ -77,6 +77,7 @@ func movement():
 	if can_roll == true:
 		if Input.is_action_pressed("roll"):
 			rb.linear_velocity = rb.linear_velocity*2
+			$PlayerBody/CollisionShape2D.disabled = true
 			rolling = true
 			can_roll = false
 			sprite.animation = "roll"
@@ -143,6 +144,7 @@ func movement():
 		
 		yield(get_tree().create_timer(roll_cooldown), "timeout") #Wait out the roll cooldown before you can roll again.
 		can_roll = true
+		$PlayerBody/CollisionShape2D.disabled = false
 
 func weapon_movement(delta):
 	#Vector of mouse to middle of screen + a really silly way to account for the screen disjoint.
@@ -162,13 +164,14 @@ func weapon_movement(delta):
 
 func attack():
 	if rolling == false and attacking == false:
+		$Weapon/RigidBody2D/CollisionShape2D.disabled = false
 		attacking = true
 		$Weapon.frame = 0
 		sfx.play_sound(sfx.sword_sfx)
 		$Weapon.play()
-		
 		yield(get_tree().create_timer(attack_cooldown), "timeout")
 		attacking = false
+		$Weapon/RigidBody2D/CollisionShape2D.disabled = true
 		
 func _on_Timer_timeout():
 	if walking == true and rolling == false:

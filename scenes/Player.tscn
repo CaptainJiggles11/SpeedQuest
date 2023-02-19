@@ -64,7 +64,7 @@
 [ext_resource path="res://art/audio/sfx/Player/Slash/slash1.wav" type="AudioStream" id=64]
 
 [sub_resource type="CircleShape2D" id=1]
-radius = 5.0
+radius = 4.57586
 
 [sub_resource type="SpriteFrames" id=2]
 animations = [ {
@@ -113,26 +113,25 @@ animations = [ {
 } ]
 
 [sub_resource type="CapsuleShape2D" id=4]
-radius = 5.82623
+radius = 13.9274
+height = 9.31345
 
 [node name="Player" type="Node2D"]
 script = ExtResource( 27 )
-__meta__ = {
-"_edit_group_": true
-}
+my_class = 1
 
 [node name="PlayerBody" type="RigidBody2D" parent="."]
 mode = 2
 gravity_scale = 0.0
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="PlayerBody"]
-position = Vector2( 0, 8 )
+position = Vector2( 0, 10 )
 shape = SubResource( 1 )
 
 [node name="AnimatedSprite" type="AnimatedSprite" parent="PlayerBody"]
 frames = SubResource( 2 )
 animation = "up"
-frame = 3
+frame = 1
 playing = true
 
 [node name="PlayerSfx" type="Node2D" parent="PlayerBody"]
@@ -154,9 +153,13 @@ z_as_relative = false
 frames = SubResource( 3 )
 frame = 6
 
-[node name="Area2D" type="Area2D" parent="Weapon"]
+[node name="RigidBody2D" type="RigidBody2D" parent="Weapon"]
+mode = 3
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="Weapon/Area2D"]
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Weapon/RigidBody2D"]
+position = Vector2( 7, 0.15 )
 rotation = 1.5708
+scale = Vector2( 2, 0.5 )
 shape = SubResource( 4 )
+disabled = true
 [connection signal="body_entered" from="PlayerBody" to="." method="_on_RigidBody2D_body_entered"]
