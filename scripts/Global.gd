@@ -7,11 +7,27 @@ var player_position
 var coin_count
 
 var rng = RandomNumberGenerator.new()
+<<<<<<< Updated upstream
+=======
+var coin_sfx = load("res://art/audio/sfx/coin_sfx.wav")
+var time
+var timer
+>>>>>>> Stashed changes
 
 func _ready():
 	var root = get_tree().root
 	current_scene = root.get_child(root.get_child_count() - 1)
 	add_test_coin()
+<<<<<<< Updated upstream
+=======
+	add_test_enemy()
+	time = 10
+	timer = Timer.new()
+	timer.wait_time = 1.0
+	timer.connect("timeout", self, "_on_timer_timeout")
+	add_child(timer)
+	timer.start()
+>>>>>>> Stashed changes
 	
 func _process(delta):
 	pass
@@ -61,5 +77,42 @@ func _on_get_coin(body_rid, body, body_shape_index, local_shape_index):
 	if(body.name == "PlayerBody"):
 		print("got coin")
 		coin_count += 1
+<<<<<<< Updated upstream
 	else:
 		print("not player")
+=======
+		var sfx = AudioStreamPlayer.new()
+		sfx.stream = coin_sfx
+		add_child(sfx)
+		sfx.play()
+		yield(sfx, "finished")
+		sfx.queue_free()
+
+
+func _on_timer_timeout():
+	time -= 1
+
+
+# test function
+func add_test_enemy():
+	var enemy = preload("res://scenes/Enemy.tscn").instance()
+	enemy.init("bigzombie")
+	enemy.position = Vector2(-250, -150)
+	add_child(enemy)
+	enemy = preload("res://scenes/Enemy.tscn").instance()
+	enemy.init("skeleton")
+	enemy.position = Vector2(0, -150)
+	add_child(enemy)
+	enemy = preload("res://scenes/Enemy.tscn").instance()
+	enemy.init("zombie")
+	enemy.position = Vector2(250, -150)
+	add_child(enemy)
+	enemy = preload("res://scenes/Enemy.tscn").instance()
+	enemy.init("swampy")
+	enemy.position = Vector2(-250, 150)
+	add_child(enemy)
+	enemy = preload("res://scenes/Enemy.tscn").instance()
+	enemy.position = Vector2(250, 150)
+	enemy.init("chort")
+	add_child(enemy)
+>>>>>>> Stashed changes

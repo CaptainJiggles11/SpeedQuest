@@ -28,8 +28,14 @@
 [ext_resource path="res://scripts/PlayerCam.gd" type="Script" id=26]
 [ext_resource path="res://scripts/Player.gd" type="Script" id=27]
 
+<<<<<<< Updated upstream
 [sub_resource type="CircleShape2D" id=1]
 radius = 5.0
+=======
+[sub_resource type="CapsuleShape2D" id=5]
+radius = 5.0
+height = 4.0
+>>>>>>> Stashed changes
 
 [sub_resource type="SpriteFrames" id=2]
 animations = [ {
@@ -60,6 +66,7 @@ mode = 2
 gravity_scale = 0.0
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="PlayerBody"]
+<<<<<<< Updated upstream
 position = Vector2( 0, 8 )
 shape = SubResource( 1 )
 
@@ -67,6 +74,14 @@ shape = SubResource( 1 )
 frames = SubResource( 2 )
 animation = "roll"
 frame = 18
+=======
+position = Vector2( 0, 5 )
+shape = SubResource( 5 )
+
+[node name="AnimatedSprite" type="AnimatedSprite" parent="PlayerBody"]
+frames = SubResource( 2 )
+animation = "up"
+>>>>>>> Stashed changes
 playing = true
 
 [node name="PlayerCam" type="Camera2D" parent="."]
@@ -74,4 +89,23 @@ current = true
 smoothing_enabled = true
 script = ExtResource( 26 )
 
+<<<<<<< Updated upstream
 [connection signal="body_entered" from="PlayerBody" to="." method="_on_RigidBody2D_body_entered"]
+=======
+[node name="Weapon" type="AnimatedSprite" parent="."]
+z_index = 1
+z_as_relative = false
+frames = SubResource( 3 )
+frame = 6
+
+[node name="WeaponBody" type="RigidBody2D" parent="Weapon"]
+mode = 3
+script = ExtResource( 56 )
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Weapon/WeaponBody"]
+position = Vector2( 7, 0 )
+rotation = 1.5708
+scale = Vector2( 2, 0.5 )
+shape = SubResource( 4 )
+disabled = true
+>>>>>>> Stashed changes

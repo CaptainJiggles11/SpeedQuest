@@ -8,4 +8,9 @@ func _ready():
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(delta):
+<<<<<<< Updated upstream
 	$Coins.text = "COINS: " + str(Global.coin_count)
+=======
+	$Coins.text = str(Global.coin_count)
+	$Time.text = str(Global.time)
+>>>>>>> Stashed changes

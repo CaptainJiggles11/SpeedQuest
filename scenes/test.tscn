@@ -1051,4 +1051,23 @@ margin_left = 11.0
 margin_top = 11.0
 margin_right = 68.0
 margin_bottom = 25.0
+<<<<<<< Updated upstream
 text = "COINS: 0"
+=======
+text = "0"
+
+[node name="Time" type="Label" parent="UI"]
+margin_left = 187.0
+margin_top = 11.0
+margin_right = 227.0
+margin_bottom = 42.0
+text = "Time
+"
+
+[node name="BGM" type="AudioStreamPlayer" parent="."]
+stream = ExtResource( 4 )
+volume_db = -5.049
+autoplay = true
+
+[node name="Timer" type="Timer" parent="."]
+>>>>>>> Stashed changes
