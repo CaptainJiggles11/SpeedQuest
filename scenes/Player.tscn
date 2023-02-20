@@ -128,7 +128,7 @@ shape = SubResource( 1 )
 [node name="AnimatedSprite" type="AnimatedSprite" parent="PlayerBody"]
 frames = SubResource( 2 )
 animation = "up"
-frame = 2
+frame = 1
 playing = true
 
 [node name="PlayerSfx" type="Node2D" parent="PlayerBody"]

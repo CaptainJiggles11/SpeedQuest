@@ -1,12 +1,10 @@
 extends Node
 
 var current_scene = null
-
 var player_position
-
 var coin_count
-
 var rng = RandomNumberGenerator.new()
+var coin_sfx = load("res://art/audio/sfx/coin_sfx.wav")
 
 func _ready():
 	rng.randomize()
@@ -50,7 +48,6 @@ func _deferred_goto_scene(path):
 func add_test_coin():
 	coin_count = 0
 	for i in range(0, 10):
-		print(i)
 		var coin = preload("res://scenes/Coin.tscn").instance()
 		coin.position = Vector2(rng.randi_range(-250, 250), rng.randi_range(-150, 150))
 		coin.z_index = 1
@@ -60,14 +57,34 @@ func add_test_coin():
 
 func _on_get_coin(body_rid, body, body_shape_index, local_shape_index):
 	if(body.name == "PlayerBody" or body.name == "WeaponBody"):
-		print("got coin")
 		coin_count += 1
-	else:
-		print("not player")
+		var sfx = AudioStreamPlayer.new()
+		sfx.stream = coin_sfx
+		add_child(sfx)
+		sfx.play()
+		yield(sfx, "finished")
+		sfx.queue_free()
 
 
 # test function
 func add_test_enemy():
 	var enemy = preload("res://scenes/Enemy.tscn").instance()
-	enemy.position = Vector2(rng.randi_range(-250, 250), rng.randi_range(-150, 150))
+	enemy.init("bigzombie")
+	enemy.position = Vector2(-250, -150)
+	add_child(enemy)
+	enemy = preload("res://scenes/Enemy.tscn").instance()
+	enemy.init("skeleton")
+	enemy.position = Vector2(0, -150)
+	add_child(enemy)
+	enemy = preload("res://scenes/Enemy.tscn").instance()
+	enemy.init("zombie")
+	enemy.position = Vector2(250, -150)
+	add_child(enemy)
+	enemy = preload("res://scenes/Enemy.tscn").instance()
+	enemy.init("swampy")
+	enemy.position = Vector2(-250, 150)
+	add_child(enemy)
+	enemy = preload("res://scenes/Enemy.tscn").instance()
+	enemy.position = Vector2(250, 150)
+	enemy.init("chort")
 	add_child(enemy)

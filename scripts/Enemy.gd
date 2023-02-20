@@ -6,7 +6,7 @@ export (float) var speed = 50
 export (int) var damage = 1
 
 #Enemy States
-enum enemy_type {none,zombie,skeleton,swampy}
+enum enemy_type {none,bigzombie,zombie,skeleton,swampy,chort}
 export (enemy_type) var my_type = enemy_type.none
 enum attack_type {none,chase,jump,shoot}
 export (attack_type) var my_attack = attack_type.none
@@ -23,17 +23,34 @@ func _ready():
 	rb = $RigidBody2D
 	sprite = $Sprite
 	sfx = $RigidBody2D/EnemyAudio
-	
-	match my_type:
-		enemy_type.none:
-			print("non")
-		enemy_type.zombie:
-			print("zambie")
-		enemy_type.skeleton:
-			print("skelton")
-		enemy_type.swampy:
-			print("swarmp")
-	pass # Replace with function body.
+
+
+func init(type):
+	if type == "bigzombie":
+		my_type = enemy_type.bigzombie
+		$Sprite.animation = "bigzombie_run"
+		speed = 30
+		health = 8
+	elif type == "swampy":
+		my_type = enemy_type.swampy
+		$Sprite.animation = "swampy_run"
+		speed = 30
+		health = 5
+	elif type == "skeleton":
+		my_type = enemy_type.skeleton
+		$Sprite.animation = "skeleton_run"
+		speed = 50
+		health = 3
+	elif type == "chort":
+		my_type = enemy_type.chort
+		$Sprite.animation = "chort_run"
+		speed = 80
+		health = 2
+	else:
+		my_type = enemy_type.zombie
+		$Sprite.animation = "zombie_run"
+		speed = 50
+		health = 3
 
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
