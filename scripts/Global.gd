@@ -5,6 +5,8 @@ var player_position
 var coin_count
 var rng = RandomNumberGenerator.new()
 var coin_sfx = load("res://art/audio/sfx/coin_sfx.wav")
+var timer
+var time
 
 func _ready():
 	rng.randomize()
@@ -12,6 +14,11 @@ func _ready():
 	current_scene = root.get_child(root.get_child_count() - 1)
 	add_test_coin()
 	add_test_enemy()
+	time = 10
+	timer = Timer.new()
+	timer.connect("timeout", self, "_on_timer_timeout")
+	add_child(timer)
+	timer.start()
 	
 	
 func goto_scene(path):
@@ -52,6 +59,11 @@ func add_test_coin():
 		coin.position = Vector2(rng.randi_range(-250, 250), rng.randi_range(-150, 150))
 		coin.get_child(0).connect("body_shape_entered", self, "_on_get_coin")
 		add_child(coin)
+
+
+func _on_timer_timeout():
+	time -= 1
+	print(time)
 
 
 func _on_get_coin(body_rid, body, body_shape_index, local_shape_index):
