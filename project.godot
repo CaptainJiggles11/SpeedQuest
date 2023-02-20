@@ -24,11 +24,9 @@ Global="*res://scripts/Global.gd"
 
 [display]
 
-window/size/width=640
-window/size/height=360
-window/size/test_width=1280
-window/size/test_height=720
-window/stretch/mode="2d"
+window/size/width=1280
+window/size/height=720
+window/stretch/mode="viewport"
 window/stretch/aspect="keep"
 
 [input]
@@ -75,4 +73,6 @@ attack={
 
 [rendering]
 
+2d/snapping/use_gpu_pixel_snap=true
 environment/default_environment="res://default_env.tres"
+quality/2d/use_pixel_snap=true
