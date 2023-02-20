@@ -9,12 +9,12 @@ var coin_count
 var rng = RandomNumberGenerator.new()
 
 func _ready():
+	rng.randomize()
 	var root = get_tree().root
 	current_scene = root.get_child(root.get_child_count() - 1)
 	add_test_coin()
+	add_test_enemy()
 	
-func _process(delta):
-	pass
 	
 func goto_scene(path):
 	# This function will usually be called from a signal callback,
@@ -46,6 +46,7 @@ func _deferred_goto_scene(path):
 	get_tree().current_scene = current_scene
 
 
+# test function
 func add_test_coin():
 	coin_count = 0
 	for i in range(0, 10):
@@ -63,3 +64,10 @@ func _on_get_coin(body_rid, body, body_shape_index, local_shape_index):
 		coin_count += 1
 	else:
 		print("not player")
+
+
+# test function
+func add_test_enemy():
+	var enemy = preload("res://scenes/Enemy.tscn").instance()
+	enemy.position = Vector2(rng.randi_range(-250, 250), rng.randi_range(-150, 150))
+	add_child(enemy)

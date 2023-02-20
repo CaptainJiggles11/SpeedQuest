@@ -1,6 +1,6 @@
 [gd_scene load_steps=25 format=2]
 
-[ext_resource path="res://Enemy.gd" type="Script" id=1]
+[ext_resource path="res://scripts/Enemy.gd" type="Script" id=1]
 [ext_resource path="res://art/packs/0x72_DungeonTilesetII_v1.4/frames/tiny_zombie_idle_anim_f0.png" type="Texture" id=2]
 [ext_resource path="res://art/packs/0x72_DungeonTilesetII_v1.4/frames/tiny_zombie_idle_anim_f3.png" type="Texture" id=3]
 [ext_resource path="res://art/packs/0x72_DungeonTilesetII_v1.4/frames/tiny_zombie_idle_anim_f2.png" type="Texture" id=4]
@@ -72,6 +72,7 @@ z_index = 1
 z_as_relative = false
 frames = SubResource( 2 )
 animation = "swampy_idle"
-frame = 1
+frame = 3
 playing = true
+
 [connection signal="body_shape_entered" from="RigidBody2D" to="." method="_on_RigidBody2D_body_shape_entered"]
