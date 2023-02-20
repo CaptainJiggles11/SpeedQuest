@@ -118,6 +118,8 @@ script = ExtResource( 27 )
 my_class = 1
 
 [node name="PlayerBody" type="RigidBody2D" parent="."]
+collision_layer = 3
+collision_mask = 2
 mode = 2
 gravity_scale = 0.0
 
@@ -128,7 +130,7 @@ shape = SubResource( 1 )
 [node name="AnimatedSprite" type="AnimatedSprite" parent="PlayerBody"]
 frames = SubResource( 2 )
 animation = "up"
-frame = 3
+frame = 1
 playing = true
 
 [node name="PlayerSfx" type="Node2D" parent="PlayerBody"]
