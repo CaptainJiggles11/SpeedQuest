@@ -6,6 +6,7 @@ var player_position
 
 var coin_count
 
+var rng = RandomNumberGenerator.new()
 
 func _ready():
 	var root = get_tree().root
@@ -47,11 +48,13 @@ func _deferred_goto_scene(path):
 
 func add_test_coin():
 	coin_count = 0
-	var coin = preload("res://scenes/Coin.tscn").instance()
-	coin.position = Vector2(50,50)
-	coin.z_index = 1
-	coin.get_child(0).connect("body_shape_entered", self, "_on_get_coin")
-	add_child(coin)
+	for i in range(0, 10):
+		print(i)
+		var coin = preload("res://scenes/Coin.tscn").instance()
+		coin.position = Vector2(rng.randi_range(-250, 250), rng.randi_range(-150, 150))
+		coin.z_index = 1
+		coin.get_child(0).connect("body_shape_entered", self, "_on_get_coin")
+		add_child(coin)
 
 
 func _on_get_coin(body_rid, body, body_shape_index, local_shape_index):
