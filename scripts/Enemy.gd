@@ -57,7 +57,7 @@ func init(type):
 func _process(delta):
 	
 	if health <= 0:
-		queue_free()
+		death()
 	
 	var actual_speed = speed * slow
 	if slow < 1:
@@ -96,3 +96,11 @@ func take_damage(damage_dealt):
 	sfx.play_sound(sfx.hitsounds)
 	health-=damage_dealt
 	print(health)
+
+
+func death():
+	var coin = preload("res://scenes/Coin.tscn").instance()
+	coin.get_child(0).connect("body_shape_entered", get_parent(), "_on_get_coin")
+	coin.position = position
+	get_parent().add_child(coin)
+	queue_free()

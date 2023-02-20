@@ -50,13 +50,12 @@ func add_test_coin():
 	for i in range(0, 10):
 		var coin = preload("res://scenes/Coin.tscn").instance()
 		coin.position = Vector2(rng.randi_range(-250, 250), rng.randi_range(-150, 150))
-		coin.z_index = 1
 		coin.get_child(0).connect("body_shape_entered", self, "_on_get_coin")
 		add_child(coin)
 
 
 func _on_get_coin(body_rid, body, body_shape_index, local_shape_index):
-	if(body.name == "PlayerBody" or body.name == "WeaponBody"):
+	if(body.name == "PlayerBody"):
 		coin_count += 1
 		var sfx = AudioStreamPlayer.new()
 		sfx.stream = coin_sfx
