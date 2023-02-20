@@ -2,10 +2,6 @@ extends Node2D
 
 export (Array) var hitsounds
 export (Array) var footsteps
-export (Array) var sword_sfx
-export (Array) var bow_sfx
-export (Array) var staff_sfx
-export (Array) var roll
 
 # Declare member variables here. Examples:
 # var a = 2

@@ -26,9 +26,10 @@ var attacking = false
 
 #Player Stats
 export(float) var walk_speed = 1
-export(float) var attack_damage = 3
+export(float) var attack_damage = 1
 export(float) var roll_cooldown = .1
 export(float) var attack_cooldown = .4
+
 
 #Weapon Stats
 export (float) var weapon_offset = 20
@@ -40,6 +41,7 @@ func _ready():
 	sprite = get_node("PlayerBody/AnimatedSprite")
 	sfx = get_node("PlayerBody/PlayerSfx")
 	viewport_center = Vector2(get_viewport_rect().size.x/2,get_viewport_rect().size.y/2) #Middle of the viewport.
+	Global.player_position = rb.position
 	
 	_timer = Timer.new()
 	add_child(_timer)
@@ -164,14 +166,16 @@ func weapon_movement(delta):
 
 func attack():
 	if rolling == false and attacking == false:
-		$Weapon/RigidBody2D/CollisionShape2D.disabled = false
+		$Weapon/WeaponBody/CollisionShape2D.disabled = false
 		attacking = true
 		$Weapon.frame = 0
 		sfx.play_sound(sfx.sword_sfx)
 		$Weapon.play()
+		yield(get_tree().create_timer(.2), "timeout")
+		$Weapon/WeaponBody/CollisionShape2D.disabled = true
 		yield(get_tree().create_timer(attack_cooldown), "timeout")
 		attacking = false
-		$Weapon/RigidBody2D/CollisionShape2D.disabled = true
+		
 		
 func _on_Timer_timeout():
 	if walking == true and rolling == false:

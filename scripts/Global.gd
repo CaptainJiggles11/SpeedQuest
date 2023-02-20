@@ -55,7 +55,7 @@ func add_test_coin():
 
 
 func _on_get_coin(body_rid, body, body_shape_index, local_shape_index):
-	if(body.name == "PlayerBody"):
+	if(body.name == "PlayerBody" or body.name == "WeaponBody"):
 		print("got coin")
 		coin_count += 1
 	else:
