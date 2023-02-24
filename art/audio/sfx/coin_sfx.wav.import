@@ -2,12 +2,12 @@
 
 importer="wav"
 type="AudioStreamSample"
-path="res://.import/footsteps 2.wav-90104cf1315c80fbbc19b27634b9295a.sample"
+path="res://.import/coin_sfx.wav-ae256f54965e1aad7acb00d346cc5f44.sample"
 
 [deps]
 
-source_file="res://art/audio/sfx/Player/Footsteps/footsteps 2.wav"
-dest_files=[ "res://.import/footsteps 2.wav-90104cf1315c80fbbc19b27634b9295a.sample" ]
+source_file="res://art/audio/sfx/coin_sfx.wav"
+dest_files=[ "res://.import/coin_sfx.wav-ae256f54965e1aad7acb00d346cc5f44.sample" ]
 
 [params]
 
