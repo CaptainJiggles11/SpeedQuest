@@ -25,6 +25,7 @@ var can_roll = true
 var walking = false
 var attacking = false
 var reset = false
+var i_frames = 0
 
 #Player Stats
 export(float) var walk_speed = 1
@@ -75,6 +76,9 @@ func _process(delta):
 		attack()
 	#print(input_velocity.x+1,input_velocity.y+1)
 	#print(player_facing[input_velocity.x+1][input_velocity.y+1])
+	
+	if i_frames > 0:
+		i_frames -= delta
 	
 func movement():
 	input_velocity = Vector2.ZERO
@@ -195,7 +199,7 @@ func _on_Timer_timeout():
 
 
 func _on_PlayerBody_body_shape_entered(body_id, body, body_shape, local_shape):
-	print(body.name)
+	print(body)
 	if body.name == ("Hazards (Tangible)"):
 		
 		match body.get_cell(position.x,position.y):
@@ -203,9 +207,12 @@ func _on_PlayerBody_body_shape_entered(body_id, body, body_shape, local_shape):
 				#Pitfall ID
 				reset = true
 				print(reset)
-				#CANT MOVE RIGIDBODY WITH POSITION IG look into it
-				pass
-	pass # Replace with function body.
+
+	if body.name == "EnemyBody" and i_frames <= 0:
+		i_frames = 1.5
+		Global.player_health -= 1
+		sfx.play_sound(sfx.dmg)
+
 	
 
 

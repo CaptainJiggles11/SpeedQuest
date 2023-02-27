@@ -27,9 +27,9 @@ onready var line2d = $Line2D
 
 # Called when the node enters the scene tree for the first time.
 func _ready():
-	rb = $RigidBody2D
-	sprite = $Sprite
-	sfx = $RigidBody2D/EnemyAudio
+	rb = $EnemyBody
+	sprite = $EnemyBody/Sprite
+	sfx = $EnemyBody/EnemyAudio
 	yield(get_tree(), "idle_frame")
 
 	

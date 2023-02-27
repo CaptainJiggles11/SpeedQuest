@@ -8,7 +8,7 @@ var coin_sfx = load("res://art/audio/sfx/coin_sfx.wav")
 var timer
 var time
 var player_damage = 1
-
+var player_health = 3
 func _ready():
 	rng.randomize()
 	var root = get_tree().root
