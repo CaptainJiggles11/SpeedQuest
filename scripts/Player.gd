@@ -23,13 +23,13 @@ var rolling = false
 var can_roll = true
 var walking = false
 var attacking = false
+var i_frames = 0
 
 #Player Stats
 export(float) var walk_speed = 1
 export(float) var attack_damage = 1
 export(float) var roll_cooldown = .1
 export(float) var attack_cooldown = .4
-
 
 #Weapon Stats
 export (float) var weapon_offset = 20
@@ -69,6 +69,10 @@ func _process(delta):
 		attack()
 	#print(input_velocity.x+1,input_velocity.y+1)
 	#print(player_facing[input_velocity.x+1][input_velocity.y+1])
+	if i_frames > 0:
+		i_frames -= delta
+	elif i_frames < 0:
+		i_frames = 0
 	
 func movement():
 	input_velocity = Vector2.ZERO
@@ -181,3 +185,10 @@ func _on_Timer_timeout():
 	if walking == true and rolling == false:
 		sfx.play_sound(sfx.footsteps)
 		
+
+
+func _on_PlayerBody_body_shape_entered(body_rid, body, body_shape_index, local_shape_index):
+	if body.name == "EnemyBody" and i_frames == 0:
+		i_frames = 1.5
+		Global.player_health -= 1
+		sfx.play_sound(sfx.dmg)

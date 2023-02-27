@@ -9,4 +9,5 @@ func _ready():
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(delta):
 	$Coins.text = str(Global.coin_count)
-	$Time.text = str(Global.time)
+	$Time.text = str("Time: ",Global.time)
+	$Health.text = str("Health: ",Global.player_health)

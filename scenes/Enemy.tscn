@@ -64,16 +64,16 @@ script = ExtResource( 1 )
 my_type = 1
 my_attack = 1
 
-[node name="RigidBody2D" type="RigidBody2D" parent="."]
+[node name="EnemyBody" type="RigidBody2D" parent="."]
 mode = 3
 contacts_reported = 10
 contact_monitor = true
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="RigidBody2D"]
+[node name="CollisionShape2D" type="CollisionShape2D" parent="EnemyBody"]
 position = Vector2( 0, 2 )
 shape = SubResource( 3 )
 
-[node name="EnemyAudio" type="Node2D" parent="RigidBody2D"]
+[node name="EnemyAudio" type="Node2D" parent="EnemyBody"]
 script = ExtResource( 22 )
 hitsounds = [ ExtResource( 19 ), ExtResource( 18 ), ExtResource( 20 ), ExtResource( 21 ) ]
 
@@ -82,7 +82,6 @@ z_index = 1
 z_as_relative = false
 frames = SubResource( 2 )
 animation = "chort_run"
-frame = 2
 playing = true
 
-[connection signal="body_shape_entered" from="RigidBody2D" to="." method="_on_RigidBody2D_body_shape_entered"]
+[connection signal="body_shape_entered" from="EnemyBody" to="." method="_on_RigidBody2D_body_shape_entered"]
