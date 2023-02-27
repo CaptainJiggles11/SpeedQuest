@@ -23,3 +23,10 @@ margin_top = 115.0
 margin_right = 98.0
 margin_bottom = 129.0
 text = "SHIFT or RIGHT click to roll"
+
+[node name="Attack" type="Label" parent="."]
+margin_left = 65.0
+margin_top = 194.0
+margin_right = 105.0
+margin_bottom = 208.0
+text = "LEFT click to attack"
