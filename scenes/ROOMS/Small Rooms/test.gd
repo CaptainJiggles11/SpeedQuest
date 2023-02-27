@@ -1,6 +1,5 @@
-extends RigidBody2D
+extends Navigation2D
 
-var attack_damage
 
 # Declare member variables here. Examples:
 # var a = 2
@@ -14,5 +13,5 @@ func _ready():
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(delta):
-	attack_damage = Global.player_damage
+	print(get_parent().name)
 	pass
