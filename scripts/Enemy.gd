@@ -4,18 +4,26 @@ extends Node2D
 export (float) var health = 3
 export (float) var speed = 50
 export (int) var damage = 1
+var actual_speed
+var slow = 1
 
 #Enemy States
 enum enemy_type {none,bigzombie,zombie,skeleton,swampy,chort}
 export (enemy_type) var my_type = enemy_type.none
 enum attack_type {none,chase,jump,shoot}
 export (attack_type) var my_attack = attack_type.none
-var slow = 0
+export (bool) var passable = false
 
 #Enemy Setup
 var rb
 var sprite
 var sfx
+var path: Array = []
+var level_navigation: Navigation2D = null
+var player = null
+
+
+onready var line2d = $Line2D
 
 
 # Called when the node enters the scene tree for the first time.
@@ -23,56 +31,66 @@ func _ready():
 	rb = $RigidBody2D
 	sprite = $Sprite
 	sfx = $RigidBody2D/EnemyAudio
-
-
-func init(type):
-	if type == "bigzombie":
-		my_type = enemy_type.bigzombie
-		$Sprite.animation = "bigzombie_run"
-		speed = 30
-		health = 8
-	elif type == "swampy":
-		my_type = enemy_type.swampy
-		$Sprite.animation = "swampy_run"
-		speed = 30
-		health = 5
-	elif type == "skeleton":
-		my_type = enemy_type.skeleton
-		$Sprite.animation = "skeleton_run"
-		speed = 50
-		health = 3
-	elif type == "chort":
-		my_type = enemy_type.chort
-		$Sprite.animation = "chort_run"
-		speed = 80
-		health = 2
-	else:
-		my_type = enemy_type.zombie
-		$Sprite.animation = "zombie_run"
-		speed = 50
-		health = 3
-
+	yield(get_tree(), "idle_frame")
+	var tree = get_tree()
+	if tree.has_group("LevelNavigation"):
+		level_navigation = tree.get_nodes_in_group("LevelNavigation")[0]
+	
+	match my_type:
+		enemy_type.none:
+			pass
+			
+		enemy_type.bigzombie:
+			speed = 30
+			health = 8
+			sprite.animation = "bigzombie_run"
+			
+		enemy_type.chort:
+			sprite.animation = "chort_run"
+			speed = 80
+			health = 2
+		
+		enemy_type.zombie:
+			sprite.animation = "zombie_run"
+			speed = 50
+			health = 3
+			
+		enemy_type.swampy:
+			sprite.animation = "swampy_run"
+			speed = 30
+			health = 5
+			
+		enemy_type.skeleton:
+			sprite.animation = "skeleton_run"
+			speed = 50
+			health = 3
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(delta):
-	
+	line2d.global_position = Vector2.ZERO
 	if health <= 0:
 		death()
 	
-	var actual_speed = speed * slow
+	actual_speed = speed * slow
 	if slow < 1:
 		slow+= delta
 	
 	if position.x > Global.player_position.x:
 		sprite.flip_h = true
+		pass
 	else:
 		sprite.flip_h = false
-	
+		pass
+		
 	match my_attack:
 		attack_type.none:
 			pass
 		attack_type.chase:
-			position += (Global.player_position - self.position).normalized() * actual_speed * delta 
+			if passable == false:
+				generate_path()
+				navigate(delta)
+			else:
+				position += (Global.player_position - self.position).normalized() * actual_speed * delta 
 		attack_type.jump:
 			pass
 		attack_type.shoot:
@@ -82,9 +100,10 @@ func _process(delta):
 
 
 func _on_RigidBody2D_body_shape_entered(body_id, body, body_shape, local_shape):
+	#print(body.name)
 	if body.name == "WeaponBody":
 		sprite.modulate = Color(1,0,0)
-		print("hit")
+		#print("hit")
 		yield(get_tree().create_timer(.1), "timeout")
 		sprite.modulate = Color(1,1,1)
 		position -= (Global.player_position - self.position).normalized() * 3
@@ -95,8 +114,18 @@ func _on_RigidBody2D_body_shape_entered(body_id, body, body_shape, local_shape):
 func take_damage(damage_dealt):
 	sfx.play_sound(sfx.hitsounds)
 	health-=damage_dealt
-	print(health)
+	#print(health)
 
+func navigate(delta):
+	if path.size() > 0:
+		position += global_position.direction_to(path[1]).normalized() * actual_speed * delta
+		if global_position == path[0]:
+			path.pop_front()
+
+func generate_path():
+	if level_navigation != null:
+		path = level_navigation.get_simple_path(rb.global_position, Global.player_position, false)
+		#line2d.points = path
 
 func death():
 	var coin = preload("res://scenes/Coin.tscn").instance()

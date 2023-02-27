@@ -23,6 +23,7 @@ var rolling = false
 var can_roll = true
 var walking = false
 var attacking = false
+var reset = false
 
 #Player Stats
 export(float) var walk_speed = 1
@@ -58,6 +59,8 @@ func _ready():
 		character_class.mage:
 			print("mage")
 
+
+		
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(delta):
 	Global.player_position = rb.position
@@ -155,9 +158,9 @@ func weapon_movement(delta):
 	
 	#Makes Weapon render below the player sprite if they are looking upwards.
 	if (local_mouse_pos-viewport_center).normalized().y < .5:
-		sprite.z_index = 1
+		$Weapon.z_index = sprite.z_index - 1
 	else:
-		sprite.z_index = 0
+		$Weapon.z_index = sprite.z_index + 1
 	
 	#Set the weapon's position to a radius around the player
 	$Weapon.position = player_position + mouse_dir * weapon_offset + Vector2(0,5) 
@@ -181,3 +184,18 @@ func _on_Timer_timeout():
 	if walking == true and rolling == false:
 		sfx.play_sound(sfx.footsteps)
 		
+
+
+func _on_PlayerBody_body_shape_entered(body_id, body, body_shape, local_shape):
+	if body.name == ("Hazards (Tangible)"):
+		
+		match body.get_cell(position.x,position.y):
+			-1:
+				#Pitfall ID
+				reset = true
+				print(reset)
+				#CANT MOVE RIGIDBODY WITH POSITION IG look into it
+				pass
+		pass
+	pass # Replace with function body.
+	

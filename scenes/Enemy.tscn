@@ -1,4 +1,4 @@
-[gd_scene load_steps=29 format=2]
+[gd_scene load_steps=30 format=2]
 
 [ext_resource path="res://scripts/Enemy.gd" type="Script" id=1]
 [ext_resource path="res://art/packs/0x72_DungeonTilesetII_v1.4/frames/big_zombie_run_anim_f3.png" type="Texture" id=2]
@@ -26,21 +26,27 @@
 [ext_resource path="res://art/packs/0x72_DungeonTilesetII_v1.4/frames/swampy_run_anim_f0.png" type="Texture" id=24]
 [ext_resource path="res://art/packs/0x72_DungeonTilesetII_v1.4/frames/swampy_run_anim_f1.png" type="Texture" id=25]
 [ext_resource path="res://art/packs/0x72_DungeonTilesetII_v1.4/frames/swampy_run_anim_f2.png" type="Texture" id=26]
+[ext_resource path="res://scenes/PlayerRB.gd" type="Script" id=27]
 
-[sub_resource type="CapsuleShape2D" id=3]
+[sub_resource type="CapsuleShape2D" id=1]
 radius = 5.0
-height = 4.0
+height = 0.0709038
 
 [sub_resource type="SpriteFrames" id=2]
 animations = [ {
-"frames": [ ExtResource( 8 ), ExtResource( 9 ), ExtResource( 7 ), ExtResource( 2 ) ],
-"loop": true,
-"name": "bigzombie_run",
-"speed": 5.0
-}, {
 "frames": [ ExtResource( 17 ), ExtResource( 14 ), ExtResource( 15 ), ExtResource( 16 ) ],
 "loop": true,
 "name": "chort_run",
+"speed": 5.0
+}, {
+"frames": [ ExtResource( 10 ), ExtResource( 12 ), ExtResource( 13 ), ExtResource( 11 ) ],
+"loop": true,
+"name": "zombie_run",
+"speed": 5.0
+}, {
+"frames": [ ExtResource( 8 ), ExtResource( 9 ), ExtResource( 7 ), ExtResource( 2 ) ],
+"loop": true,
+"name": "bigzombie_run",
 "speed": 5.0
 }, {
 "frames": [ ExtResource( 3 ), ExtResource( 4 ), ExtResource( 5 ), ExtResource( 6 ) ],
@@ -52,14 +58,11 @@ animations = [ {
 "loop": true,
 "name": "swampy_run",
 "speed": 5.0
-}, {
-"frames": [ ExtResource( 10 ), ExtResource( 12 ), ExtResource( 13 ), ExtResource( 11 ) ],
-"loop": true,
-"name": "zombie_run",
-"speed": 5.0
 } ]
 
-[node name="Enemy" type="Node2D"]
+[node name="Enemy" type="Node2D" groups=[
+"Enemies",
+]]
 script = ExtResource( 1 )
 my_type = 1
 my_attack = 1
@@ -68,21 +71,37 @@ my_attack = 1
 mode = 3
 contacts_reported = 10
 contact_monitor = true
+script = ExtResource( 27 )
+__meta__ = {
+"_edit_lock_": true
+}
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="RigidBody2D"]
-position = Vector2( 0, 2 )
-shape = SubResource( 3 )
+position = Vector2( -0.115974, 5.71144 )
+shape = SubResource( 1 )
 
 [node name="EnemyAudio" type="Node2D" parent="RigidBody2D"]
 script = ExtResource( 22 )
+__meta__ = {
+"_edit_lock_": true
+}
 hitsounds = [ ExtResource( 19 ), ExtResource( 18 ), ExtResource( 20 ), ExtResource( 21 ) ]
 
 [node name="Sprite" type="AnimatedSprite" parent="."]
-z_index = 1
+z_index = 5
 z_as_relative = false
 frames = SubResource( 2 )
 animation = "chort_run"
-frame = 2
+frame = 1
 playing = true
+__meta__ = {
+"_edit_lock_": true
+}
 
+[node name="Line2D" type="Line2D" parent="."]
+z_index = 4096
+z_as_relative = false
+__meta__ = {
+"_edit_lock_": true
+}
 [connection signal="body_shape_entered" from="RigidBody2D" to="." method="_on_RigidBody2D_body_shape_entered"]
