@@ -7,6 +7,7 @@ var rng = RandomNumberGenerator.new()
 var coin_sfx = load("res://art/audio/sfx/coin_sfx.wav")
 var timer
 var time
+var player_damage = 1
 
 func _ready():
 	rng.randomize()

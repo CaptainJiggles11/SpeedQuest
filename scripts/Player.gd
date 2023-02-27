@@ -63,6 +63,7 @@ func _ready():
 		
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(delta):
+	Global.player_damage = attack_damage
 	Global.player_position = rb.position
 	local_mouse_pos = get_viewport().get_mouse_position() #Mouse position on the viewport.
 	
@@ -187,6 +188,7 @@ func _on_Timer_timeout():
 
 
 func _on_PlayerBody_body_shape_entered(body_id, body, body_shape, local_shape):
+	print(body.name)
 	if body.name == ("Hazards (Tangible)"):
 		
 		match body.get_cell(position.x,position.y):
@@ -196,6 +198,20 @@ func _on_PlayerBody_body_shape_entered(body_id, body, body_shape, local_shape):
 				print(reset)
 				#CANT MOVE RIGIDBODY WITH POSITION IG look into it
 				pass
-		pass
 	pass # Replace with function body.
 	
+
+
+func _on_Area2D_area_shape_entered(area_id, area, area_shape, self_shape):
+	if area.name == ("RoomCollider"):
+		area.get_parent().set_active()
+			
+	pass # Replace with function body.
+
+
+func _on_Area2D_area_shape_exited(area_id, area, area_shape, self_shape):
+	if area != null:
+		if area.name == ("RoomCollider"):
+			area.get_parent().set_inactive()
+		
+	pass # Replace with function body.

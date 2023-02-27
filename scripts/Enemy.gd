@@ -20,7 +20,6 @@ var sprite
 var sfx
 var path: Array = []
 var level_navigation: Navigation2D = null
-var player = null
 
 
 onready var line2d = $Line2D
@@ -32,9 +31,8 @@ func _ready():
 	sprite = $Sprite
 	sfx = $RigidBody2D/EnemyAudio
 	yield(get_tree(), "idle_frame")
-	var tree = get_tree()
-	if tree.has_group("LevelNavigation"):
-		level_navigation = tree.get_nodes_in_group("LevelNavigation")[0]
+
+	
 	
 	match my_type:
 		enemy_type.none:
@@ -67,6 +65,7 @@ func _ready():
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(delta):
+	level_navigation = get_parent().get_node("LevelNavigation")
 	line2d.global_position = Vector2.ZERO
 	if health <= 0:
 		death()
@@ -116,16 +115,16 @@ func take_damage(damage_dealt):
 	health-=damage_dealt
 	#print(health)
 
+func generate_path():
+	if level_navigation != null:
+		path = level_navigation.get_simple_path(rb.global_position, Global.player_position, true)
+		line2d.points = path
+		
 func navigate(delta):
 	if path.size() > 0:
 		position += global_position.direction_to(path[1]).normalized() * actual_speed * delta
 		if global_position == path[0]:
 			path.pop_front()
-
-func generate_path():
-	if level_navigation != null:
-		path = level_navigation.get_simple_path(rb.global_position, Global.player_position, false)
-		#line2d.points = path
 
 func death():
 	var coin = preload("res://scenes/Coin.tscn").instance()
