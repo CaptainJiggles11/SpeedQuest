@@ -74,7 +74,7 @@ func _process(delta):
 	if slow < 1:
 		slow+= delta
 	
-	if position.x > Global.player_position.x:
+	if global_position.x > Global.player_position.x:
 		sprite.flip_h = true
 		pass
 	else:
@@ -85,11 +85,11 @@ func _process(delta):
 		attack_type.none:
 			pass
 		attack_type.chase:
-			if passable == false:
+			if passable == true:
 				generate_path()
 				navigate(delta)
 			else:
-				position += (Global.player_position - self.position).normalized() * actual_speed * delta 
+				global_position += (Global.player_position - global_position).normalized() * actual_speed * delta 
 		attack_type.jump:
 			pass
 		attack_type.shoot:
