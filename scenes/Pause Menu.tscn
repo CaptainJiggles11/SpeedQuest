@@ -36,7 +36,7 @@ animations = [ {
 [node name="TextureRect" type="TextureRect" parent="."]
 margin_right = 40.0
 margin_bottom = 40.0
-rect_scale = Vector2( 1.21, 0.69 )
+rect_scale = Vector2( 1.22, 0.69 )
 texture = ExtResource( 6 )
 
 [node name="Label" type="Label" parent="."]
