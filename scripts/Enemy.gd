@@ -20,9 +20,9 @@ var sfx
 
 # Called when the node enters the scene tree for the first time.
 func _ready():
-	rb = $RigidBody2D
+	rb = $EnemyBody
 	sprite = $Sprite
-	sfx = $RigidBody2D/EnemyAudio
+	sfx = $EnemyBody/EnemyAudio
 
 
 func init(type):

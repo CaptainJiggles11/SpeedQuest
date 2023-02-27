@@ -1072,8 +1072,15 @@ margin_left = 25.0
 margin_top = 35.0
 margin_right = 149.0
 margin_bottom = 66.0
-text = "Time
+text = "Time: 
 "
+
+[node name="Health" type="Label" parent="UI"]
+margin_left = 27.0
+margin_top = 55.0
+margin_right = 77.0
+margin_bottom = 69.0
+text = "Health: "
 
 [node name="BGM" type="AudioStreamPlayer" parent="."]
 stream = ExtResource( 4 )

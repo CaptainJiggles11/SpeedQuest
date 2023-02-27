@@ -7,6 +7,7 @@ var rng = RandomNumberGenerator.new()
 var coin_sfx = load("res://art/audio/sfx/coin_sfx.wav")
 var timer
 var time
+var player_health = 3
 
 func _ready():
 	rng.randomize()
@@ -63,7 +64,6 @@ func add_test_coin():
 
 func _on_timer_timeout():
 	time -= 1
-	print(time)
 
 
 func _on_get_coin(body_rid, body, body_shape_index, local_shape_index):
