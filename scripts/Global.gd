@@ -2,19 +2,19 @@ extends Node
 
 var current_scene = null
 var player_position
-var coin_count
+var coin_count = 0
 var rng = RandomNumberGenerator.new()
 var coin_sfx = load("res://art/audio/sfx/coin_sfx.wav")
 var timer
 var time
+var player_damage = 1
 var player_health = 3
-
 func _ready():
 	rng.randomize()
 	var root = get_tree().root
 	current_scene = root.get_child(root.get_child_count() - 1)
-	add_test_coin()
-	add_test_enemy()
+	#add_test_coin()
+	#add_test_enemy()
 	time = 10
 	timer = Timer.new()
 	timer.connect("timeout", self, "_on_timer_timeout")
@@ -64,10 +64,11 @@ func add_test_coin():
 
 func _on_timer_timeout():
 	time -= 1
+	#print(time)
 
 
-func _on_get_coin(body_rid, body, body_shape_index, local_shape_index):
-	if(body.name == "PlayerBody"):
+func _on_get_coin(the_coin):
+		the_coin.queue_free()
 		coin_count += 1
 		var sfx = AudioStreamPlayer.new()
 		sfx.stream = coin_sfx
@@ -75,6 +76,7 @@ func _on_get_coin(body_rid, body, body_shape_index, local_shape_index):
 		sfx.play()
 		yield(sfx, "finished")
 		sfx.queue_free()
+		
 
 
 # test function
