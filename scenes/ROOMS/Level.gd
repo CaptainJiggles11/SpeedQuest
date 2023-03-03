@@ -89,7 +89,7 @@ func fix_map(matrix):
 		for y in range(size-1):
 			if matrix[x][y] == 1:
 				#If a room touches four others, delete it.
-				if get_adjacent(matrix,Vector2(x,y)).size() + get_diagonal(matrix,Vector2(x,y)).size() == 8:
+				if get_adjacent(matrix,Vector2(x,y)).size() + get_diagonal(matrix,Vector2(x,y)).size() >= 7:
 					print('pee')
 					matrix[x][y] = 0
 					
@@ -101,13 +101,21 @@ func fix_map(matrix):
 
 	
 	print("boss rooms:", potential_boss_rooms.size())
-	if potential_boss_rooms.size() == 0:
+	if potential_boss_rooms.size() <= 1:
 		print("damn")
 		return null
 	else:
 		print(potential_boss_rooms)
+		#Imma look into a pathfinding algorithm
+		#Change this to find_furthest_room
 		var pick_room = choose(potential_boss_rooms)
+		potential_boss_rooms.remove(potential_boss_rooms.find(pick_room))
 		matrix[pick_room.x][pick_room.y] = 3
+		
+		#Change this to find_closest_room 
+		pick_room = choose(potential_boss_rooms)
+		potential_boss_rooms.remove(potential_boss_rooms.find(pick_room))
+		matrix[pick_room.x][pick_room.y] = 2
 		return matrix
 
 func get_adjacent(matrix,current_room): #Slighty Evil
