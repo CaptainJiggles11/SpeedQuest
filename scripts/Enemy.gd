@@ -128,7 +128,6 @@ func navigate(delta):
 
 func death():
 	var coin = preload("res://scenes/Coin.tscn").instance()
-	coin.get_child(0).connect("body_shape_entered", get_parent(), "_on_get_coin")
 	coin.position = position
 	get_parent().add_child(coin)
 	queue_free()
