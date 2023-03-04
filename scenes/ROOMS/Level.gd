@@ -4,7 +4,7 @@ extends Node2D
 # Declare member variables here. Examples:
 # var a = 2
 # var b = "text"
-var size = 7
+var size = 50
 var room_offset = 510
 var generate_room_amount = 7
 
@@ -16,15 +16,16 @@ export(PackedScene) var treasure_room
 # Called when the node enters the scene tree for the first time.
 func _ready():
 	var map = null
-	
+
 	while map == null:
 		map = generate_map(generate_room_amount)
-	
-	generate_floor(map)
-	
-	pass # Replace with function body.
 
-func generate_floor(map):
+	generate_floor(map)
+
+func generate_floor(map): #Actually fills the world with level nodes.
+	
+	
+	
 	for x in range(size):
 		for y in range(size):
 			match map[x][y]:
@@ -48,8 +49,7 @@ func generate_floor(map):
 					new_room.position = Vector2(room_offset*(x-size/2),room_offset*(y-size/2))
 					self.add_child(new_room)
 
-
-func generate_map(room_number):
+func generate_map(room_number): #Roughly fills matrix with normal rooms that originate from the start room.
 	var rng = RandomNumberGenerator.new()
 	var matrix = []
 	for x in range(size):
@@ -82,7 +82,7 @@ func generate_map(room_number):
 					break
 	return fix_map(matrix)
 
-func fix_map(matrix):
+func fix_map(matrix): #Irons out map irregularities and places special rooms.
 	var potential_boss_rooms = []
 	
 	for x in range(size-1):
@@ -90,7 +90,6 @@ func fix_map(matrix):
 			if matrix[x][y] == 1:
 				#If a room touches four others, delete it.
 				if get_adjacent(matrix,Vector2(x,y)).size() + get_diagonal(matrix,Vector2(x,y)).size() >= 7:
-					print('pee')
 					matrix[x][y] = 0
 					
 				#If a room only has one neighbor, it's a potential boss room.
@@ -99,14 +98,12 @@ func fix_map(matrix):
 					if matrix[x+potential_room[0].x][y+potential_room[0].y] == 1:
 						potential_boss_rooms.append(Vector2(x,y))
 
+	#print("boss rooms:", potential_boss_rooms.size())
 	
-	print("boss rooms:", potential_boss_rooms.size())
 	if potential_boss_rooms.size() <= 1:
-		print("damn")
 		return null
 	else:
-		print(potential_boss_rooms)
-		#Imma look into a pathfinding algorithm
+		#Imma look into a pathfinding algorithm, currently picks a random isolated room to be boss/treasure room.
 		#Change this to find_furthest_room
 		var pick_room = choose(potential_boss_rooms)
 		potential_boss_rooms.remove(potential_boss_rooms.find(pick_room))
@@ -139,7 +136,7 @@ func get_adjacent(matrix,current_room): #Slighty Evil
 			
 
 	return adjacent_rooms
-	
+
 func get_diagonal(matrix,current_room): #Extremely Evil.
 	var diagonal_rooms = []
 	
@@ -162,10 +159,7 @@ func get_diagonal(matrix,current_room): #Extremely Evil.
 					diagonal_rooms.append(Vector2(0,-1))
 			
 	return diagonal_rooms
-	
-	
+
 func choose(array):
 	return array[randi() % array.size()]
-# Called every frame. 'delta' is the elapsed time since the previous frame.
-#func _process(delta):
-#	pass
+
