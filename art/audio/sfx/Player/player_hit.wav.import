@@ -1,0 +1,23 @@
+[remap]
+
+importer="wav"
+type="AudioStreamSample"
+path="res://.import/player_hit.wav-927d6c3f9b65f1ec50c2dbe1c0e69f76.sample"
+
+[deps]
+
+source_file="res://art/audio/sfx/Player/player_hit.wav"
+dest_files=[ "res://.import/player_hit.wav-927d6c3f9b65f1ec50c2dbe1c0e69f76.sample" ]
+
+[params]
+
+force/8_bit=false
+force/mono=false
+force/max_rate=false
+force/max_rate_hz=44100
+edit/trim=false
+edit/normalize=false
+edit/loop_mode=0
+edit/loop_begin=0
+edit/loop_end=-1
+compress/mode=0

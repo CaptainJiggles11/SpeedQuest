@@ -7,7 +7,13 @@ func _ready():
 
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
-func _process(delta):
-	$Coins.text = str(Global.coin_count)
-	$Time.text = str("Time: ",Global.time)
-	$Health.text = str("Health: ",Global.player_health)
+#func _process(delta):
+#	pass
+
+
+func _on_Exit_pressed():
+	get_tree().quit()
+
+
+func _on_Start_pressed():
+	get_tree().change_scene("res://scenes/ROOMS/Level.tscn")
