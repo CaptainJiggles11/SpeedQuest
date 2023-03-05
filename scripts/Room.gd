@@ -3,6 +3,7 @@ extends Node2D
 var loaded = false
 var cleared = false
 var obscure 
+var adjacent_rooms
 
 # Declare member variables here. Examples:
 # var a = 2
@@ -18,7 +19,8 @@ func _ready():
 	for i in self.get_children():
 		i.set_process(false)
 	
-	
+	if $Doors != null:
+		$Doors.configure(adjacent_rooms)
 
 	pass # Replace with function body.
 
