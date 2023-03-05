@@ -7,6 +7,8 @@ var rb
 var _timer = null
 var player_cam = null
 var devmode = true
+var rb_script = load("res://scenes/PlayerRB.gd").new()
+var move_player = null
 
 #Audio Setup
 var sfx
@@ -19,6 +21,7 @@ var player_position = Vector2.ZERO
 var sprite
 var inventory = []
 
+
 #Player States
 var player_facing = [["topleft", "left", "bottomleft"],["top","idle","bottom"],["top right","right","bottom right"]]
 var rolling = false
@@ -27,6 +30,7 @@ var walking = false
 var attacking = false
 var reset = false
 var i_frames = 0
+var door_timer = 0
 
 #Player Stats
 export(float) var walk_speed = 1
@@ -47,6 +51,7 @@ func _ready():
 	viewport_center = Vector2(get_viewport_rect().size.x/2,get_viewport_rect().size.y/2) #Middle of the viewport.
 	Global.player_position = rb.global_position
 	player_cam = $PlayerCam
+	
 	
 	_timer = Timer.new()
 	add_child(_timer)
@@ -71,6 +76,7 @@ func _process(delta):
 	Global.player_position = rb.global_position
 	local_mouse_pos = get_viewport().get_mouse_position() #Mouse position on the viewport.
 	
+	
 	movement() #Controls player movement (Walking, Rolling)
 	weapon_movement(delta) #Controls the revolving weapon.
 	if Input.is_action_just_pressed("attack"):
@@ -78,7 +84,10 @@ func _process(delta):
 	#print(input_velocity.x+1,input_velocity.y+1)
 	#print(player_facing[input_velocity.x+1][input_velocity.y+1])
 	
-	if i_frames > 0:
+	if door_timer >= 0:
+		door_timer -= delta
+		
+	if i_frames >= 0:
 		i_frames -= delta
 	
 func movement():
@@ -200,21 +209,34 @@ func _on_Timer_timeout():
 
 
 func _on_PlayerBody_body_shape_entered(body_id, body, body_shape, local_shape):
-	print(body)
+	print(body.name)
 	if body.name == ("Hazards (Tangible)"):
 		
 		match body.get_cell(position.x,position.y):
 			-1:
 				#Pitfall ID
 				reset = true
-				print(reset)
+				#print(reset)
 
 	if body.name == "EnemyBody" and i_frames <= 0:
 		i_frames = 1.5
 		Global.player_health -= 1
 		sfx.play_sound(sfx.dmg)
-
 	
+	if door_timer <= 0:
+		match body.name:
+			"North Door":
+				move_player = Vector2(0,-60)
+				door_timer = .5
+			"South Door":
+				move_player = Vector2(0,60)
+				door_timer = .5
+			"West Door":
+				move_player = Vector2(-50,0)
+				door_timer = .5
+			"East Door":
+				move_player = Vector2(50,0)
+				door_timer = .5
 
 
 func _on_Area2D_area_shape_entered(area_id, area, area_shape, self_shape):
