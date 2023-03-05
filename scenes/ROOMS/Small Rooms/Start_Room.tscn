@@ -1421,3 +1421,4 @@ position = Vector2( 0, -3.778 )
 scale = Vector2( 0.5, 0.498 )
 z_index = 100
 texture = ExtResource( 7 )
+[connection signal="cleared" from="." to="." method="_on_Room_cleared"]

@@ -1,9 +1,10 @@
 extends Node2D
 
 var loaded = false
-var cleared = false
+signal cleared
 var obscure 
 var adjacent_rooms
+var enemies = []
 
 # Declare member variables here. Examples:
 # var a = 2
@@ -22,19 +23,32 @@ func _ready():
 	
 	if $Doors != null:
 		$Doors.configure(adjacent_rooms)
-
-	pass # Replace with function body.
+		
+		for node in get_children():
+			if node.is_in_group("Enemies"):
+				enemies.append(node)
+		
+		if enemies.size() <= 0:
+			$Doors.open_room()
+		else:
+			$Doors.close_room()
 
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(delta):
 	if loaded == true:
+		if enemies != null and $Doors != null:
+			if enemies.size() <= 0:
+				$Doors.open_room()
+				enemies = null
+				
 		if obscure.modulate.a > 0:
 			obscure.modulate.a -= 5 * delta
+	
 	else:
 		if obscure.modulate.a < 1:
 			obscure.modulate.a += 3 * delta
-
+			
 
 func set_active(): 
 	loaded = true
@@ -53,4 +67,3 @@ func reparent(node):
 	get_tree().get_nodes_in_group("LevelNavigation")[0].add_child(node)
 	node.position = $"Decor (Intangible)".global_position
 
-	

@@ -131,4 +131,5 @@ func death():
 	var coin = preload("res://scenes/Coin.tscn").instance()
 	coin.position = position
 	get_parent().add_child(coin)
+	get_parent().get("enemies").erase(self)
 	queue_free()
