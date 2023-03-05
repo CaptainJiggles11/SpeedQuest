@@ -119,7 +119,7 @@ func take_damage(damage_dealt):
 func generate_path():
 	if level_navigation != null:
 		path = level_navigation.get_simple_path(rb.global_position, Global.player_position, true)
-		line2d.points = path
+		#line2d.points = path
 		
 func navigate(delta):
 	if path.size() > 0:

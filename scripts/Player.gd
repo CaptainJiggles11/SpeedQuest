@@ -6,6 +6,7 @@ var viewport_center
 var rb
 var _timer = null
 var player_cam = null
+var devmode = true
 
 #Audio Setup
 var sfx
@@ -106,11 +107,11 @@ func movement():
 			input_velocity.y += 1
 		if Input.is_action_pressed("ui_up"):
 			input_velocity.y -= 1
-		if Input.is_action_just_released("scroll_up"):
-			player_cam.zoom = Vector2(player_cam.zoom.x - .1, player_cam.zoom.y - .1 )
-			print("su")
-		if Input.is_action_just_released("scroll_down"):
-			player_cam.zoom = Vector2(player_cam.zoom.x + .1, player_cam.zoom.y + .1 )
+		if devmode == true:
+			if Input.is_action_just_released("scroll_up"):
+				player_cam.zoom = Vector2(player_cam.zoom.x - .1, player_cam.zoom.y - .1 )
+			if Input.is_action_just_released("scroll_down"):
+				player_cam.zoom = Vector2(player_cam.zoom.x + .1, player_cam.zoom.y + .1 )
 		
 		#Actually sets rigidbody velocity.
 		rb.linear_velocity = input_velocity.normalized() * walk_speed * 100 

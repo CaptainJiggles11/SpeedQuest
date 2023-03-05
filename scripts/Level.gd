@@ -164,7 +164,4 @@ func get_diagonal(matrix,current_room): #Extremely Evil.
 
 func choose(array):
 	return array[randi() % array.size()]
-	
-func _process(delta):
-	print(find_node("Navigation2D").get_child_count())
 
