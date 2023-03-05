@@ -1184,6 +1184,7 @@ shape = SubResource( 116 )
 one_way_collision_margin = 0.0
 
 [node name="Sprite" type="Sprite" parent="RoomCollider"]
+self_modulate = Color( 0.109804, 0.0666667, 0.0901961, 1 )
 scale = Vector2( 0.5, 0.5 )
 z_index = 100
 texture = ExtResource( 2 )
