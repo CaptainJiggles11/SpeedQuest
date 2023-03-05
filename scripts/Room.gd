@@ -13,6 +13,7 @@ var adjacent_rooms
 func _ready():
 	
 	obscure = $RoomCollider/Sprite
+	obscure.show()
 	
 	call_deferred("reparent",$"Walls (Tangible)")
 	
