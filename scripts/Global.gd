@@ -68,14 +68,14 @@ func _on_timer_timeout():
 
 
 func _on_get_coin(the_coin):
-		the_coin.queue_free()
-		coin_count += 1
-		var sfx = AudioStreamPlayer.new()
-		sfx.stream = coin_sfx
-		add_child(sfx)
-		sfx.play()
-		yield(sfx, "finished")
-		sfx.queue_free()
+	the_coin.queue_free()
+	coin_count += 1
+	var sfx = AudioStreamPlayer.new()
+	sfx.stream = coin_sfx
+	add_child(sfx)
+	sfx.play()
+	yield(sfx, "finished")
+	sfx.queue_free()
 		
 
 

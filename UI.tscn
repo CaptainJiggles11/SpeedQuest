@@ -37,4 +37,3 @@ text = "Health: "
 [node name="BGM" type="AudioStreamPlayer" parent="."]
 stream = ExtResource( 2 )
 volume_db = -5.049
-autoplay = true

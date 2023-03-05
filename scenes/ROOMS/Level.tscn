@@ -1,13 +1,19 @@
-[gd_scene load_steps=5 format=2]
+[gd_scene load_steps=8 format=2]
 
 [ext_resource path="res://scenes/ROOMS/Small Rooms/SmallRoom_1.tscn" type="PackedScene" id=1]
 [ext_resource path="res://scenes/ROOMS/Level.gd" type="Script" id=2]
 [ext_resource path="res://scenes/Player.tscn" type="PackedScene" id=3]
 [ext_resource path="res://UI.tscn" type="PackedScene" id=4]
+[ext_resource path="res://scenes/ROOMS/Small Rooms/SmallRoom_2.tscn" type="PackedScene" id=5]
+[ext_resource path="res://scenes/ROOMS/Small Rooms/Start_Room.tscn" type="PackedScene" id=6]
+[ext_resource path="res://scenes/ROOMS/Small Rooms/Treasure_Room.tscn" type="PackedScene" id=7]
 
 [node name="Level" type="Node2D"]
 script = ExtResource( 2 )
 rooms = [ ExtResource( 1 ) ]
+boss_room = ExtResource( 5 )
+start_room = ExtResource( 6 )
+treasure_room = ExtResource( 7 )
 
 [node name="Player" parent="." instance=ExtResource( 3 )]
 attack_damage = 3.0
