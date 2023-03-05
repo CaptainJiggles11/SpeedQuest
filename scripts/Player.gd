@@ -44,7 +44,7 @@ func _ready():
 	sprite = get_node("PlayerBody/AnimatedSprite")
 	sfx = get_node("PlayerBody/PlayerSfx")
 	viewport_center = Vector2(get_viewport_rect().size.x/2,get_viewport_rect().size.y/2) #Middle of the viewport.
-	Global.player_position = rb.position
+	Global.player_position = rb.global_position
 	player_cam = $PlayerCam
 	
 	_timer = Timer.new()
@@ -67,7 +67,7 @@ func _ready():
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(delta):
 	Global.player_damage = attack_damage
-	Global.player_position = rb.position
+	Global.player_position = rb.global_position
 	local_mouse_pos = get_viewport().get_mouse_position() #Mouse position on the viewport.
 	
 	movement() #Controls player movement (Walking, Rolling)
@@ -82,7 +82,7 @@ func _process(delta):
 	
 func movement():
 	input_velocity = Vector2.ZERO
-	player_position = rb.position
+	player_position = rb.global_position
 	
 	
 	#Roll Mechanic-- gives a burst of speed and intangibility on press.

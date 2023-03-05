@@ -1,0 +1,105 @@
+[gd_scene load_steps=19 format=2]
+
+[ext_resource path="res://scenes/Slime_Boss.gd" type="Script" id=1]
+[ext_resource path="res://art/sprites/characters/enemies/monstro.png" type="Texture" id=2]
+[ext_resource path="res://art/audio/sfx/Hit (Taking Damage)/hit2.wav" type="AudioStream" id=18]
+[ext_resource path="res://art/audio/sfx/Hit (Taking Damage)/hit1.wav" type="AudioStream" id=19]
+[ext_resource path="res://art/audio/sfx/Hit (Taking Damage)/hit3.wav" type="AudioStream" id=20]
+[ext_resource path="res://art/audio/sfx/Hit (Taking Damage)/hit4.wav" type="AudioStream" id=21]
+[ext_resource path="res://EnemyAudio.gd" type="Script" id=22]
+[ext_resource path="res://scenes/PlayerRB.gd" type="Script" id=27]
+
+[sub_resource type="CapsuleShape2D" id=1]
+radius = 5.0
+height = 0.0709038
+
+[sub_resource type="AtlasTexture" id=2]
+atlas = ExtResource( 2 )
+region = Rect2( 160, 93, 80, 93 )
+
+[sub_resource type="AtlasTexture" id=3]
+atlas = ExtResource( 2 )
+region = Rect2( 320, 0, 80, 93 )
+
+[sub_resource type="AtlasTexture" id=4]
+atlas = ExtResource( 2 )
+region = Rect2( 0, 93, 80, 93 )
+
+[sub_resource type="AtlasTexture" id=5]
+atlas = ExtResource( 2 )
+region = Rect2( 240, 93, 80, 93 )
+
+[sub_resource type="AtlasTexture" id=6]
+atlas = ExtResource( 2 )
+region = Rect2( 160, 93, 80, 93 )
+
+[sub_resource type="AtlasTexture" id=7]
+atlas = ExtResource( 2 )
+region = Rect2( 0, 93, 80, 93 )
+
+[sub_resource type="AtlasTexture" id=8]
+atlas = ExtResource( 2 )
+region = Rect2( 80, 93, 80, 93 )
+
+[sub_resource type="AtlasTexture" id=9]
+atlas = ExtResource( 2 )
+region = Rect2( 160, 93, 80, 93 )
+
+[sub_resource type="SpriteFrames" id=10]
+animations = [ {
+"frames": [ SubResource( 2 ), SubResource( 3 ), SubResource( 4 ), SubResource( 5 ) ],
+"loop": false,
+"name": "slime_fall",
+"speed": 10.0
+}, {
+"frames": [  ],
+"loop": true,
+"name": "slime_shoot",
+"speed": 5.0
+}, {
+"frames": [ SubResource( 6 ), SubResource( 7 ), SubResource( 8 ), SubResource( 9 ) ],
+"loop": false,
+"name": "slime_jump",
+"speed": 10.0
+} ]
+
+[node name="Boss" type="Node2D" groups=[
+"Enemies",
+]]
+script = ExtResource( 1 )
+
+[node name="BossBody" type="RigidBody2D" parent="."]
+mode = 3
+contacts_reported = 10
+contact_monitor = true
+script = ExtResource( 27 )
+__meta__ = {
+"_edit_lock_": true
+}
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="BossBody"]
+position = Vector2( -0.115974, 5.71144 )
+shape = SubResource( 1 )
+
+[node name="BossAudio" type="Node2D" parent="BossBody"]
+script = ExtResource( 22 )
+__meta__ = {
+"_edit_lock_": true
+}
+hitsounds = [ ExtResource( 19 ), ExtResource( 18 ), ExtResource( 20 ), ExtResource( 21 ) ]
+
+[node name="Sprite" type="AnimatedSprite" parent="BossBody"]
+z_index = 5
+z_as_relative = false
+frames = SubResource( 10 )
+animation = "slime_fall"
+frame = 3
+playing = true
+
+[node name="Line2D" type="Line2D" parent="."]
+z_index = 4096
+z_as_relative = false
+__meta__ = {
+"_edit_lock_": true
+}
+[connection signal="body_shape_entered" from="BossBody" to="." method="_on_RigidBody2D_body_shape_entered"]

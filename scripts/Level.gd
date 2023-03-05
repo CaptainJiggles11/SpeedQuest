@@ -21,6 +21,8 @@ func _ready():
 		map = generate_map(generate_room_amount)
 
 	generate_floor(map)
+	
+	
 
 func generate_floor(map): #Actually fills the world with level nodes.
 	
@@ -162,4 +164,7 @@ func get_diagonal(matrix,current_room): #Extremely Evil.
 
 func choose(array):
 	return array[randi() % array.size()]
+	
+func _process(delta):
+	print(find_node("Navigation2D").get_child_count())
 

@@ -92,15 +92,15 @@ animations = [ {
 "name": "upidle",
 "speed": 5.0
 }, {
-"frames": [ ExtResource( 29 ), ExtResource( 30 ), ExtResource( 31 ), ExtResource( 32 ) ],
-"loop": true,
-"name": "down",
-"speed": 12.0
-}, {
 "frames": [ ExtResource( 43 ), ExtResource( 44 ), ExtResource( 38 ), ExtResource( 39 ) ],
 "loop": true,
 "name": "downidle",
 "speed": 5.0
+}, {
+"frames": [ ExtResource( 29 ), ExtResource( 30 ), ExtResource( 31 ), ExtResource( 32 ) ],
+"loop": true,
+"name": "down",
+"speed": 12.0
 } ]
 
 [sub_resource type="RectangleShape2D" id=3]
@@ -145,7 +145,6 @@ z_index = 10
 z_as_relative = false
 frames = SubResource( 2 )
 animation = "up"
-frame = 3
 playing = true
 
 [node name="PlayerSfx" type="Node2D" parent="PlayerBody"]
@@ -165,7 +164,7 @@ shape = SubResource( 3 )
 
 [node name="PlayerCam" type="Camera2D" parent="."]
 current = true
-zoom = Vector2( 0.5, 0.5 )
+zoom = Vector2( 0.4, 0.4 )
 smoothing_enabled = true
 script = ExtResource( 26 )
 
