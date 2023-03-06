@@ -1,0 +1,129 @@
+[gd_scene load_steps=17 format=2]
+
+[ext_resource path="res://art/fonts/yoster.ttf" type="DynamicFontData" id=1]
+[ext_resource path="res://art/Miscellaneous/Frame_charcoalBG.png" type="Texture" id=2]
+[ext_resource path="res://art/packs/0x72_DungeonTilesetII_v1.4/frames/knight_f_hit_anim_f0.png" type="Texture" id=3]
+[ext_resource path="res://art/packs/0x72_DungeonTilesetII_v1.4/frames/weapon_knight_sword.png" type="Texture" id=4]
+[ext_resource path="res://art/packs/0x72_DungeonTilesetII_v1.4/frames/goblin_idle_anim_f3.png" type="Texture" id=5]
+[ext_resource path="res://art/packs/0x72_DungeonTilesetII_v1.4/frames/goblin_idle_anim_f2.png" type="Texture" id=6]
+[ext_resource path="res://art/packs/0x72_DungeonTilesetII_v1.4/frames/goblin_idle_anim_f0.png" type="Texture" id=7]
+[ext_resource path="res://art/packs/0x72_DungeonTilesetII_v1.4/frames/goblin_idle_anim_f1.png" type="Texture" id=8]
+
+[sub_resource type="DynamicFont" id=1]
+size = 100
+font_data = ExtResource( 1 )
+
+[sub_resource type="DynamicFont" id=2]
+font_data = ExtResource( 1 )
+
+[sub_resource type="DynamicFont" id=7]
+font_data = ExtResource( 1 )
+
+[sub_resource type="DynamicFont" id=3]
+font_data = ExtResource( 1 )
+
+[sub_resource type="StyleBoxFlat" id=4]
+bg_color = Color( 0.6, 0.6, 0.6, 0 )
+
+[sub_resource type="SpriteFrames" id=5]
+animations = [ {
+"frames": [ ExtResource( 3 ) ],
+"loop": true,
+"name": "default",
+"speed": 5.0
+} ]
+
+[sub_resource type="SpriteFrames" id=6]
+animations = [ {
+"frames": [ ExtResource( 4 ) ],
+"loop": true,
+"name": "default",
+"speed": 5.0
+} ]
+
+[sub_resource type="SpriteFrames" id=8]
+animations = [ {
+"frames": [ ExtResource( 7 ), ExtResource( 8 ), ExtResource( 5 ), ExtResource( 6 ) ],
+"loop": true,
+"name": "default",
+"speed": 5.0
+} ]
+
+[node name="Game Over" type="CanvasLayer"]
+
+[node name="TextureRect" type="TextureRect" parent="."]
+margin_right = 40.0
+margin_bottom = 40.0
+rect_scale = Vector2( 1.22, 0.69 )
+texture = ExtResource( 2 )
+
+[node name="Label" type="Label" parent="."]
+anchor_left = 0.5
+anchor_right = 0.5
+margin_left = -273.0
+margin_top = 45.0
+margin_right = 271.0
+margin_bottom = 146.0
+custom_fonts/font = SubResource( 1 )
+text = "Game Over"
+
+[node name="VBoxContainer" type="VBoxContainer" parent="."]
+anchor_left = 0.5
+anchor_top = 1.0
+anchor_right = 0.5
+anchor_bottom = 1.0
+margin_left = -142.0
+margin_top = -266.0
+margin_right = -46.0
+margin_bottom = -192.0
+rect_scale = Vector2( 3, 3 )
+
+[node name="Restart" type="Button" parent="VBoxContainer"]
+margin_right = 96.0
+margin_bottom = 23.0
+custom_fonts/font = SubResource( 2 )
+text = "Restart"
+
+[node name="Upgrade" type="Button" parent="VBoxContainer"]
+margin_top = 27.0
+margin_right = 96.0
+margin_bottom = 50.0
+custom_fonts/font = SubResource( 7 )
+text = "Upgrade"
+
+[node name="Main Menu" type="Button" parent="VBoxContainer"]
+margin_top = 54.0
+margin_right = 96.0
+margin_bottom = 77.0
+custom_fonts/font = SubResource( 3 )
+text = "Main Menu"
+
+[node name="Panel" type="Panel" parent="."]
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+margin_left = -171.0
+margin_top = -96.5
+margin_right = 171.0
+margin_bottom = 96.5
+custom_styles/panel = SubResource( 4 )
+
+[node name="knight" type="AnimatedSprite" parent="Panel"]
+position = Vector2( 156, 96.5 )
+rotation = 4.71239
+scale = Vector2( 3, 3 )
+frames = SubResource( 5 )
+
+[node name="sword" type="AnimatedSprite" parent="Panel"]
+position = Vector2( 228, 52.5 )
+rotation = -1.61443
+scale = Vector2( 3, 3 )
+frames = SubResource( 6 )
+
+[node name="goblin" type="AnimatedSprite" parent="Panel/sword"]
+position = Vector2( -14.2629, 5.71663 )
+rotation = 1.61443
+scale = Vector2( 1, 1 )
+frames = SubResource( 8 )
+flip_h = true
