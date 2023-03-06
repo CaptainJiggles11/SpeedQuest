@@ -17,5 +17,7 @@ func _ready():
 
 
 func _on_Resume_pressed():
-	get_tree().paused = false
-	pass # Replace with function body.
+	var root = get_tree().root
+	root.remove_child(self)
+	root.add_child(Global.level)
+	Global.alive = true
