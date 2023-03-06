@@ -2306,31 +2306,39 @@ tile_data = PoolIntArray( -983056, 0, 131078, -983055, 0, 393222, -983054, 0, 39
 
 [node name="Enemy" parent="." instance=ExtResource( 2 )]
 position = Vector2( -193.391, -149.025 )
+my_attack = 0
 
 [node name="Enemy2" parent="." instance=ExtResource( 2 )]
 position = Vector2( 208.64, -147.404 )
+my_attack = 0
 
 [node name="Enemy3" parent="." instance=ExtResource( 2 )]
 position = Vector2( 209.72, 143.852 )
+my_attack = 0
 
 [node name="Enemy4" parent="." instance=ExtResource( 2 )]
 position = Vector2( -199.335, 148.175 )
+my_attack = 0
 
 [node name="Enemy5" parent="." instance=ExtResource( 2 )]
 position = Vector2( -48.7644, -34.2525 )
 my_type = 4
+my_attack = 0
 
 [node name="Enemy6" parent="." instance=ExtResource( 2 )]
 position = Vector2( 47.4322, -34.9159 )
 my_type = 4
+my_attack = 0
 
 [node name="Enemy7" parent="." instance=ExtResource( 2 )]
 position = Vector2( 47.4322, 30.7631 )
 my_type = 4
+my_attack = 0
 
 [node name="Enemy8" parent="." instance=ExtResource( 2 )]
 position = Vector2( -50.0912, 30.7631 )
 my_type = 4
+my_attack = 0
 
 [node name="RoomCollider" type="Area2D" parent="."]
 pause_mode = 2

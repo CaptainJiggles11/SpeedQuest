@@ -10,9 +10,13 @@ var slow = 1
 #Enemy States
 enum enemy_type {none,bigzombie,zombie,skeleton,swampy,chort}
 export (enemy_type) var my_type = enemy_type.none
-enum attack_type {none,chase,jump,shoot}
+enum attack_type {none,jump,shoot}
 export (attack_type) var my_attack = attack_type.none
+var aggro = false
 export (bool) var passable = false
+export (bool) var chase = true
+export (float) var aggro_range = 150
+export (float) var stopping_distance = 0
 
 #Enemy Setup
 var rb
@@ -20,6 +24,8 @@ var sprite
 var sfx
 var path: Array = []
 var level_navigation: Navigation2D = null
+var timer = 0
+var cooldown = false
 
 
 onready var line2d = $Line2D
@@ -82,17 +88,28 @@ func _process(delta):
 		sprite.flip_h = false
 		pass
 		
-	match my_attack:
-		attack_type.none:
-			pass
-		attack_type.chase:
+	if chase == true:
+		if Vector2(Global.player_position.x,Global.player_position.y).distance_to(Vector2(global_position.x,global_position.y)) < aggro_range or aggro == true:
+			aggro = true
 			if passable == false:
 				generate_path()
 				navigate(delta)
 			else:
 				global_position += (Global.player_position - global_position).normalized() * actual_speed * delta 
-		attack_type.jump:
+		
+	match my_attack: 
+		attack_type.none:
 			pass
+		attack_type.jump: #Mentally insane sleep deprived machination 
+			if timer > 0:
+				global_position += (Global.player_position - global_position).normalized() * actual_speed*timer/.05 * delta 
+				timer -= delta
+			elif timer >= -2:
+				timer -= delta
+			else:
+				timer = .5
+				
+			
 		attack_type.shoot:
 			pass
 		
