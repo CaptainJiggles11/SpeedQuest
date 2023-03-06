@@ -9,7 +9,10 @@ var timer
 var time
 var player_damage = 1
 var player_health = 3
+var pause_screen = false
+
 func _ready():
+	
 	rng.randomize()
 	var root = get_tree().root
 	current_scene = root.get_child(root.get_child_count() - 1)

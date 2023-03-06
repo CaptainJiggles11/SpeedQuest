@@ -2331,18 +2331,22 @@ chase = false
 [node name="Enemy5" parent="." instance=ExtResource( 2 )]
 position = Vector2( -156, -36 )
 my_type = 4
+my_attack = 2
 
 [node name="Enemy6" parent="." instance=ExtResource( 2 )]
 position = Vector2( 156, -38 )
 my_type = 4
+my_attack = 2
 
 [node name="Enemy7" parent="." instance=ExtResource( 2 )]
 position = Vector2( 156, 26 )
 my_type = 4
+my_attack = 2
 
 [node name="Enemy8" parent="." instance=ExtResource( 2 )]
 position = Vector2( -155, 32 )
 my_type = 4
+my_attack = 2
 
 [node name="RoomCollider" type="Area2D" parent="."]
 pause_mode = 2

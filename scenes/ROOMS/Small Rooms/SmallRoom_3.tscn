@@ -2319,18 +2319,22 @@ position = Vector2( -96, -4 )
 [node name="Enemy5" parent="." instance=ExtResource( 2 )]
 position = Vector2( -48.7644, -34.2525 )
 my_type = 4
+my_attack = 2
 
 [node name="Enemy6" parent="." instance=ExtResource( 2 )]
 position = Vector2( 47.4322, -34.9159 )
 my_type = 4
+my_attack = 2
 
 [node name="Enemy7" parent="." instance=ExtResource( 2 )]
 position = Vector2( 47.4322, 30.7631 )
 my_type = 4
+my_attack = 2
 
 [node name="Enemy8" parent="." instance=ExtResource( 2 )]
 position = Vector2( -50.0912, 30.7631 )
 my_type = 4
+my_attack = 2
 
 [node name="RoomCollider" type="Area2D" parent="."]
 pause_mode = 2

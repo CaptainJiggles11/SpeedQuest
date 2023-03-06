@@ -4,6 +4,7 @@ extends Node2D
 export (float) var health = 3
 export (float) var speed = 50
 export (int) var damage = 1
+export (int) var projectile_damage = 1
 var actual_speed
 var slow = 1
 
@@ -17,6 +18,7 @@ export (bool) var passable = false
 export (bool) var chase = true
 export (float) var aggro_range = 150
 export (float) var stopping_distance = 0
+var jump_direction = Vector2(0,0)
 
 #Enemy Setup
 var rb
@@ -24,8 +26,9 @@ var sprite
 var sfx
 var path: Array = []
 var level_navigation: Navigation2D = null
-var timer = 0
+var timer = 2
 var cooldown = false
+export(PackedScene) var projectile
 
 
 onready var line2d = $Line2D
@@ -101,18 +104,30 @@ func _process(delta):
 		attack_type.none:
 			pass
 		attack_type.jump: #Mentally insane sleep deprived machination 
-			if timer > 0:
-				global_position += (Global.player_position - global_position).normalized() * actual_speed*timer/.05 * delta 
-				timer -= delta
-			elif timer >= -2:
-				timer -= delta
-			else:
-				timer = .5
+			if Vector2(Global.player_position.x,Global.player_position.y).distance_to(Vector2(global_position.x,global_position.y)) < aggro_range or aggro == true:
+				aggro == true
+				if timer > 0:
+					global_position += jump_direction * actual_speed*timer/.05 * delta 
+					timer -= delta
+				elif timer >= -2:
+					timer -= delta
+				else:
+					timer = .5
+					jump_direction = (Global.player_position - global_position).normalized()
+					#jump_direction = Vector2(rand_range(250, -250),rand_range(250, -250)).normalized()
 	
 		attack_type.shoot:
-			pass
-		
-	pass
+			if Vector2(Global.player_position.x,Global.player_position.y).distance_to(Vector2(global_position.x,global_position.y)) < aggro_range or aggro == true:	
+				if timer <= 0:
+					var new_projectile = projectile.instance()
+					new_projectile.set("attack_damage", projectile_damage)
+					new_projectile.set("provided_velocity", (Global.player_position - global_position).normalized() )
+					new_projectile.global_position = position + (Global.player_position - global_position).normalized() * 10
+					get_parent().add_child(new_projectile)
+					randomize()
+					timer = rand_range(.75,3)
+				else:
+					timer -= delta
 
 
 func _on_RigidBody2D_body_shape_entered(body_id, body, body_shape, local_shape):
