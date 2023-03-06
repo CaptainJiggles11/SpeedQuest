@@ -211,12 +211,14 @@ func _on_Timer_timeout():
 func _on_PlayerBody_body_shape_entered(body_id, body, body_shape, local_shape):
 	print(body.name)
 	if body.name == ("Hazards (Tangible)"):
-		
+		print(body.get_cell(position.x,position.y))
 		match body.get_cell(position.x,position.y):
 			-1:
 				#Pitfall ID
 				reset = true
 				#print(reset)
+			3:
+				reset = true
 
 	if body.name == "EnemyBody" and i_frames <= 0:
 		i_frames = 1.5

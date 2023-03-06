@@ -2306,15 +2306,27 @@ tile_data = PoolIntArray( -983056, 0, 131078, -983055, 0, 393222, -983054, 0, 39
 
 [node name="Enemy" parent="." instance=ExtResource( 2 )]
 position = Vector2( -159, -153 )
+my_type = 3
+my_attack = 1
+chase = false
 
 [node name="Enemy2" parent="." instance=ExtResource( 2 )]
 position = Vector2( 157, -150 )
+my_type = 3
+my_attack = 1
+chase = false
 
 [node name="Enemy3" parent="." instance=ExtResource( 2 )]
 position = Vector2( 157, 138 )
+my_type = 3
+my_attack = 1
+chase = false
 
 [node name="Enemy4" parent="." instance=ExtResource( 2 )]
 position = Vector2( -163, 142 )
+my_type = 3
+my_attack = 1
+chase = false
 
 [node name="Enemy5" parent="." instance=ExtResource( 2 )]
 position = Vector2( -156, -36 )
