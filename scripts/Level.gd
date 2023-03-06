@@ -37,7 +37,7 @@ func generate_floor(map): #Actually fills the world with level nodes.
 					self.add_child(new_room)
 					
 				1: #Normal Room
-					var new_room = choose(rooms).instance()
+					var new_room = rooms[0].instance()
 					new_room.position = Vector2(room_offset*(x-size/2),room_offset*(y-size/2))
 					new_room.set("adjacent_rooms", get_adjacent(map,Vector2(x,y)))
 					self.add_child(new_room)

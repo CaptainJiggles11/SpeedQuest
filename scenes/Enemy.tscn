@@ -39,24 +39,24 @@ animations = [ {
 "name": "chort_run",
 "speed": 5.0
 }, {
-"frames": [ ExtResource( 24 ), ExtResource( 25 ), ExtResource( 26 ), ExtResource( 23 ) ],
-"loop": true,
-"name": "swampy_run",
-"speed": 5.0
-}, {
-"frames": [ ExtResource( 3 ), ExtResource( 4 ), ExtResource( 5 ), ExtResource( 6 ) ],
-"loop": true,
-"name": "skeleton_run",
-"speed": 5.0
-}, {
 "frames": [ ExtResource( 10 ), ExtResource( 12 ), ExtResource( 13 ), ExtResource( 11 ) ],
 "loop": true,
 "name": "zombie_run",
 "speed": 5.0
 }, {
+"frames": [ ExtResource( 24 ), ExtResource( 25 ), ExtResource( 26 ), ExtResource( 23 ) ],
+"loop": true,
+"name": "swampy_run",
+"speed": 5.0
+}, {
 "frames": [ ExtResource( 8 ), ExtResource( 9 ), ExtResource( 7 ), ExtResource( 2 ) ],
 "loop": true,
 "name": "bigzombie_run",
+"speed": 5.0
+}, {
+"frames": [ ExtResource( 3 ), ExtResource( 4 ), ExtResource( 5 ), ExtResource( 6 ) ],
+"loop": true,
+"name": "skeleton_run",
 "speed": 5.0
 } ]
 
@@ -92,7 +92,7 @@ z_index = 5
 z_as_relative = false
 frames = SubResource( 2 )
 animation = "chort_run"
-frame = 1
+frame = 2
 playing = true
 __meta__ = {
 "_edit_lock_": true
