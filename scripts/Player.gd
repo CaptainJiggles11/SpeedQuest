@@ -84,6 +84,12 @@ func _process(delta):
 	#print(input_velocity.x+1,input_velocity.y+1)
 	#print(player_facing[input_velocity.x+1][input_velocity.y+1])
 	
+	if Input.is_action_just_pressed("pause"):
+		Global.level = self
+		Global.alive = false
+		get_tree().root.remove_child(self)
+		get_tree().root.add_child(load("res://scenes/Pause Menu.tscn").instance())
+	
 	if door_timer >= 0:
 		door_timer -= delta
 		
@@ -93,7 +99,6 @@ func _process(delta):
 func movement():
 	input_velocity = Vector2.ZERO
 	player_position = rb.global_position
-	
 	
 	#Roll Mechanic-- gives a burst of speed and intangibility on press.
 	if can_roll == true:
@@ -223,6 +228,8 @@ func _on_PlayerBody_body_shape_entered(body_id, body, body_shape, local_shape):
 	if body.name == "EnemyBody" and i_frames <= 0:
 		i_frames = 1.5
 		Global.player_health -= 1
+		if Global.player_health == 0:
+			Global.open_shop()
 		sfx.play_sound(sfx.dmg)
 	
 	if door_timer <= 0:

@@ -15,6 +15,8 @@ export(PackedScene) var treasure_room
 
 # Called when the node enters the scene tree for the first time.
 func _ready():
+	Global.level = self
+	get_tree().root.add_child(self)
 	var map = null
 
 	while map == null:
