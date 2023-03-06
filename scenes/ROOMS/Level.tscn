@@ -1,4 +1,4 @@
-[gd_scene load_steps=9 format=2]
+[gd_scene load_steps=12 format=2]
 
 [ext_resource path="res://scenes/ROOMS/Small Rooms/SmallRoom_1.tscn" type="PackedScene" id=1]
 [ext_resource path="res://scripts/Level.gd" type="Script" id=2]
@@ -8,15 +8,20 @@
 [ext_resource path="res://scenes/ROOMS/Small Rooms/Start_Room.tscn" type="PackedScene" id=6]
 [ext_resource path="res://scenes/ROOMS/Small Rooms/SmallRoom_0.tscn" type="PackedScene" id=7]
 [ext_resource path="res://art/Miscellaneous/0x0.jpg" type="Texture" id=8]
+[ext_resource path="res://scenes/ROOMS/Small Rooms/SmallRoom_2.tscn" type="PackedScene" id=9]
+[ext_resource path="res://scenes/ROOMS/Small Rooms/SmallRoom_3.tscn" type="PackedScene" id=10]
+[ext_resource path="res://scenes/ROOMS/Small Rooms/SmallRoom_4.tscn" type="PackedScene" id=11]
 
 [node name="Level" type="Node2D"]
 script = ExtResource( 2 )
-rooms = [ ExtResource( 1 ) ]
+rooms = [ ExtResource( 1 ), ExtResource( 9 ), ExtResource( 10 ), ExtResource( 11 ) ]
 boss_room = ExtResource( 5 )
 start_room = ExtResource( 6 )
 treasure_room = ExtResource( 7 )
 
-[node name="Navigation2D" type="Navigation2D" parent="." groups=["LevelNavigation"]]
+[node name="Navigation2D" type="Navigation2D" parent="." groups=[
+"LevelNavigation",
+]]
 pause_mode = 2
 
 [node name="UI" parent="." instance=ExtResource( 4 )]
@@ -26,6 +31,7 @@ attack_damage = 3.0
 
 [node name="0x0" type="Sprite" parent="."]
 modulate = Color( 0.109804, 0.0666667, 0.0901961, 1 )
+position = Vector2( -13.5376, 5.41499 )
 scale = Vector2( 100, 100 )
 z_index = -100
 z_as_relative = false
