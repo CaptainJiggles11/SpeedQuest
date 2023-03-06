@@ -1,20 +1,18 @@
 extends Node2D
 
-#Enemy Stats
+#Boss Stats
 export (float) var health = 3
 export (float) var speed = 50
 export (int) var damage = 1
 var actual_speed
 var slow = 1
 
-#Enemy States
-enum enemy_type {none,bigzombie,zombie,skeleton,swampy,chort}
-export (enemy_type) var my_type = enemy_type.none
+#Boss States
 enum attack_type {none,chase,jump,shoot}
 export (attack_type) var my_attack = attack_type.none
 export (bool) var passable = false
 
-#Enemy Setup
+#Boss Setup
 var rb
 var sprite
 var sfx
@@ -27,46 +25,19 @@ onready var line2d = $Line2D
 
 # Called when the node enters the scene tree for the first time.
 func _ready():
-	rb = $EnemyBody
-	sprite = $EnemyBody/Sprite
-	sfx = $EnemyBody/EnemyAudio
+	rb = $BossBody
+	sprite = $BossBody/Sprite
+	sfx = $BossBody/BossAudio
 	yield(get_tree(), "idle_frame")
+	
+	speed = 30
+	health = 8
+	sprite.animation = "slime_idle"
 
-	
-	
-	match my_type:
-		enemy_type.none:
-			pass
-			
-		enemy_type.bigzombie:
-			speed = 30
-			health = 8
-			sprite.animation = "bigzombie_run"
-			
-		enemy_type.chort:
-			sprite.animation = "chort_run"
-			speed = 80
-			health = 2
-		
-		enemy_type.zombie:
-			sprite.animation = "zombie_run"
-			speed = 50
-			health = 3
-			
-		enemy_type.swampy:
-			sprite.animation = "swampy_run"
-			speed = 30
-			health = 5
-			
-		enemy_type.skeleton:
-			sprite.animation = "skeleton_run"
-			speed = 50
-			health = 3
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(delta):
-	level_navigation = get_tree().get_nodes_in_group("LevelNavigation")[0]
-	
+	level_navigation = get_parent().get_node("LevelNavigation")
 	line2d.global_position = Vector2.ZERO
 	if health <= 0:
 		death()
@@ -76,17 +47,17 @@ func _process(delta):
 		slow+= delta
 	
 	if global_position.x > Global.player_position.x:
-		sprite.flip_h = true
+		sprite.flip_h = false
 		pass
 	else:
-		sprite.flip_h = false
+		sprite.flip_h = true
 		pass
 		
 	match my_attack:
 		attack_type.none:
 			pass
 		attack_type.chase:
-			if passable == false:
+			if passable == true:
 				generate_path()
 				navigate(delta)
 			else:
@@ -118,8 +89,8 @@ func take_damage(damage_dealt):
 
 func generate_path():
 	if level_navigation != null:
-		path = level_navigation.get_simple_path(rb.global_position, Global.player_position, false)
-		#line2d.points = path
+		path = level_navigation.get_simple_path(rb.global_position, Global.player_position, true)
+		line2d.points = path
 		
 func navigate(delta):
 	if path.size() > 0:
@@ -131,5 +102,4 @@ func death():
 	var coin = preload("res://scenes/Coin.tscn").instance()
 	coin.position = position
 	get_parent().add_child(coin)
-	get_parent().get("enemies").erase(self)
 	queue_free()

@@ -21,10 +21,10 @@ func _ready():
 		map = generate_map(generate_room_amount)
 
 	generate_floor(map)
+	
+	
 
 func generate_floor(map): #Actually fills the world with level nodes.
-	
-	
 	
 	for x in range(size):
 		for y in range(size):
@@ -33,20 +33,24 @@ func generate_floor(map): #Actually fills the world with level nodes.
 				99: #Replace with Start Room
 					var new_room = start_room.instance()
 					new_room.position = Vector2(room_offset*(x-size/2),room_offset*(y-size/2))
+					new_room.set("adjacent_rooms", get_adjacent(map,Vector2(x,y)))
 					self.add_child(new_room)
 					
 				1: #Normal Room
 					var new_room = rooms[0].instance()
 					new_room.position = Vector2(room_offset*(x-size/2),room_offset*(y-size/2))
+					new_room.set("adjacent_rooms", get_adjacent(map,Vector2(x,y)))
 					self.add_child(new_room)
 					
 				2: #Treasure Room
 					var new_room = treasure_room.instance()
 					new_room.position = Vector2(room_offset*(x-size/2),room_offset*(y-size/2))
+					new_room.set("adjacent_rooms", get_adjacent(map,Vector2(x,y)))
 					self.add_child(new_room)
 				3: #Boss Room
 					var new_room = boss_room.instance()
 					new_room.position = Vector2(room_offset*(x-size/2),room_offset*(y-size/2))
+					new_room.set("adjacent_rooms", get_adjacent(map,Vector2(x,y)))
 					self.add_child(new_room)
 
 func generate_map(room_number): #Roughly fills matrix with normal rooms that originate from the start room.
