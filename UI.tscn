@@ -18,6 +18,9 @@ margin_top = 11.0
 margin_right = 81.0
 margin_bottom = 25.0
 text = "0"
+__meta__ = {
+"_edit_use_anchors_": false
+}
 
 [node name="Time" type="Label" parent="."]
 margin_left = 25.0
@@ -33,7 +36,11 @@ margin_top = 55.0
 margin_right = 77.0
 margin_bottom = 69.0
 text = "Health: "
+__meta__ = {
+"_edit_use_anchors_": false
+}
 
 [node name="BGM" type="AudioStreamPlayer" parent="."]
 stream = ExtResource( 2 )
 volume_db = -5.049
+autoplay = true

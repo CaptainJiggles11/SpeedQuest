@@ -128,8 +128,8 @@ my_class = 1
 [node name="PlayerBody" type="RigidBody2D" parent="."]
 z_index = 10
 z_as_relative = false
-collision_layer = 3
-collision_mask = 2
+collision_layer = 19
+collision_mask = 16
 mode = 2
 contacts_reported = 10
 contact_monitor = true
@@ -145,6 +145,7 @@ z_index = 10
 z_as_relative = false
 frames = SubResource( 2 )
 animation = "up"
+frame = 3
 playing = true
 
 [node name="PlayerSfx" type="Node2D" parent="PlayerBody"]

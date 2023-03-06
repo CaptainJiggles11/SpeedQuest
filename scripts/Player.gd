@@ -6,7 +6,7 @@ var viewport_center
 var rb
 var _timer = null
 var player_cam = null
-var devmode = true
+var devmode = false
 var rb_script = load("res://scenes/PlayerRB.gd").new()
 var move_player = null
 
@@ -52,7 +52,6 @@ func _ready():
 	Global.player_position = rb.global_position
 	player_cam = $PlayerCam
 	
-	
 	_timer = Timer.new()
 	add_child(_timer)
 	_timer.connect("timeout", self, "_on_Timer_timeout")
@@ -84,12 +83,6 @@ func _process(delta):
 	#print(input_velocity.x+1,input_velocity.y+1)
 	#print(player_facing[input_velocity.x+1][input_velocity.y+1])
 	
-	if Input.is_action_just_pressed("pause"):
-		Global.level = self
-		Global.alive = false
-		get_tree().root.remove_child(self)
-		get_tree().root.add_child(load("res://scenes/Pause Menu.tscn").instance())
-	
 	if door_timer >= 0:
 		door_timer -= delta
 		
@@ -100,11 +93,18 @@ func movement():
 	input_velocity = Vector2.ZERO
 	player_position = rb.global_position
 	
+	if Input.is_action_pressed("pause"):
+		#get_tree().paused = true
+		#Global.pause_screen = true
+		pass
+	
 	#Roll Mechanic-- gives a burst of speed and intangibility on press.
 	if can_roll == true:
 		if Input.is_action_pressed("roll"):
 			rb.linear_velocity = rb.linear_velocity*2
 			rb.set_collision_layer_bit(0, false)
+			rb.set_collision_layer_bit(1, false)
+			rb.set_collision_layer_bit(2, false)
 			rolling = true
 			can_roll = false
 			sprite.animation = "roll"
@@ -177,6 +177,8 @@ func movement():
 		yield(get_tree().create_timer(roll_cooldown), "timeout") #Wait out the roll cooldown before you can roll again.
 		can_roll = true
 		rb.set_collision_layer_bit(0, true)
+		rb.set_collision_layer_bit(1, true)
+		rb.set_collision_layer_bit(2, true)
 
 func weapon_movement(delta):
 	#Vector of mouse to middle of screen + a really silly way to account for the screen disjoint.
@@ -196,6 +198,7 @@ func weapon_movement(delta):
 
 func attack():
 	if rolling == false and attacking == false:
+		$Weapon/WeaponBody.set("friendly", true)
 		$Weapon/WeaponBody/CollisionShape2D.disabled = false
 		attacking = true
 		$Weapon.frame = 0
@@ -205,7 +208,11 @@ func attack():
 		$Weapon/WeaponBody/CollisionShape2D.disabled = true
 		yield(get_tree().create_timer(attack_cooldown), "timeout")
 		attacking = false
-		
+
+func take_damage(amount):
+	i_frames = 1.5
+	Global.player_health -= amount
+	sfx.play_sound(sfx.dmg)
 		
 func _on_Timer_timeout():
 	if walking == true and rolling == false:
@@ -226,11 +233,7 @@ func _on_PlayerBody_body_shape_entered(body_id, body, body_shape, local_shape):
 				reset = true
 
 	if body.name == "EnemyBody" and i_frames <= 0:
-		i_frames = 1.5
-		Global.player_health -= 1
-		if Global.player_health == 0:
-			Global.open_shop()
-		sfx.play_sound(sfx.dmg)
+		take_damage(1)
 	
 	if door_timer <= 0:
 		match body.name:

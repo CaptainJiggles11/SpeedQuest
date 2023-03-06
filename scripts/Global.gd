@@ -9,14 +9,15 @@ var timer
 var time
 var player_damage = 1
 var player_health = 3
-var alive = false
-var level = null
+var pause_screen = false
 
 func _ready():
+	
 	rng.randomize()
 	var root = get_tree().root
 	current_scene = root.get_child(root.get_child_count() - 1)
-	
+	#add_test_coin()
+	#add_test_enemy()
 	time = 10
 	timer = Timer.new()
 	timer.connect("timeout", self, "_on_timer_timeout")
@@ -65,10 +66,8 @@ func add_test_coin():
 
 
 func _on_timer_timeout():
-	if alive:
-		time -= 1
-		if time == -1:
-			open_shop()
+	time -= 1
+	#print(time)
 
 
 func _on_get_coin(the_coin):
@@ -81,11 +80,27 @@ func _on_get_coin(the_coin):
 	yield(sfx, "finished")
 	sfx.queue_free()
 		
-		
-func open_shop():
-	alive = false
-	goto_scene("res://scenes/Shop.tscn")
-	
-func pause():
-	alive = false
-	goto_scene("res://scenes/Pause Menu.tscn")
+
+
+# test function
+func add_test_enemy():
+	var enemy = preload("res://scenes/Enemy.tscn").instance()
+	enemy.init("bigzombie")
+	enemy.position = Vector2(-250, -150)
+	add_child(enemy)
+	enemy = preload("res://scenes/Enemy.tscn").instance()
+	enemy.init("skeleton")
+	enemy.position = Vector2(0, -150)
+	add_child(enemy)
+	enemy = preload("res://scenes/Enemy.tscn").instance()
+	enemy.init("zombie")
+	enemy.position = Vector2(250, -150)
+	add_child(enemy)
+	enemy = preload("res://scenes/Enemy.tscn").instance()
+	enemy.init("swampy")
+	enemy.position = Vector2(-250, 150)
+	add_child(enemy)
+	enemy = preload("res://scenes/Enemy.tscn").instance()
+	enemy.position = Vector2(250, 150)
+	enemy.init("chort")
+	add_child(enemy)
