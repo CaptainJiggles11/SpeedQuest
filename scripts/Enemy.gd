@@ -108,8 +108,7 @@ func _process(delta):
 				timer -= delta
 			else:
 				timer = .5
-				
-			
+	
 		attack_type.shoot:
 			pass
 		
@@ -135,7 +134,7 @@ func take_damage(damage_dealt):
 
 func generate_path():
 	if level_navigation != null:
-		path = level_navigation.get_simple_path(rb.global_position, Global.player_position, false)
+		path = level_navigation.get_simple_path(rb.global_position, Global.player_position, true)
 		#line2d.points = path
 		
 func navigate(delta):
