@@ -111,6 +111,7 @@ func movement():
 			rb.set_collision_layer_bit(0, false)
 			rb.set_collision_layer_bit(1, false)
 			rb.set_collision_layer_bit(2, false)
+			rb.set_collision_layer_bit(3, false)
 			rolling = true
 			can_roll = false
 			sprite.animation = "roll"
@@ -141,7 +142,7 @@ func movement():
 		
 		var current_frame = sprite.frame 
 		
-		if abs(input_velocity.x) < 1 and abs(input_velocity.y) < 1:
+		if abs(input_velocity.x) < .01 and abs(input_velocity.y) < .01:
 			walking = false
 			if look_direction.y < -.5:
 				sprite.animation = "upidle"
@@ -174,9 +175,10 @@ func movement():
 		
 		yield(get_tree().create_timer(roll_cooldown), "timeout") #Wait out the roll cooldown before you can roll again.
 		can_roll = true
-		rb.set_collision_layer_bit(0, true)
-		rb.set_collision_layer_bit(1, true)
-		rb.set_collision_layer_bit(2, true)
+		rb.set_collision_layer_bit(0, true) #Player
+		rb.set_collision_layer_bit(1, true) #Enemy
+		rb.set_collision_layer_bit(2, true) #Enemy Projectiles
+		rb.set_collision_layer_bit(3, true) #Hazards
 
 func weapon_movement(delta):
 	#Vector of mouse to middle of screen + a really silly way to account for the screen disjoint.
@@ -208,18 +210,18 @@ func attack():
 		attacking = false
 
 func take_damage(amount):
-	i_frames = 1.5
-	Global.player_health -= amount
-	sfx.play_sound(sfx.dmg)
+	if i_frames <= 0:
+		i_frames = 1.5
+		Global.player_health -= amount
+		sfx.play_sound(sfx.dmg)
 
 func _on_Timer_timeout():
 	if walking == true and rolling == false:
 		sfx.play_sound(sfx.footsteps)
 
 func _on_PlayerBody_body_shape_entered(body_id, body, body_shape, local_shape):
-	print(body.name)
 	if body.name == ("Hazards (Tangible)"):
-		print(body.get_cell(position.x,position.y))
+		#print(body.get_cell(position.x,position.y))
 		match body.get_cell(position.x,position.y):
 			-1:
 				#Pitfall ID
@@ -236,10 +238,10 @@ func _on_PlayerBody_body_shape_entered(body_id, body, body_shape, local_shape):
 	if door_timer <= 0:
 		match body.name:
 			"North Door":
-				move_player = Vector2(0,-60)
+				move_player = Vector2(0,-50)
 				door_timer = .5
 			"South Door":
-				move_player = Vector2(0,60)
+				move_player = Vector2(0,50)
 				door_timer = .5
 			"West Door":
 				move_player = Vector2(-50,0)

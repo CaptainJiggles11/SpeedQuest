@@ -19,8 +19,10 @@ func _ready():
 func _process(delta):
 	if friendly == true:
 		attack_damage = Global.player_damage
+		set_collision_layer_bit(1, true)
 	else:
 		linear_velocity = provided_velocity * 200
+		set_collision_layer_bit(0, true)
 
 
 func _on_Projectile_body_shape_entered(body_id, body, body_shape, local_shape):

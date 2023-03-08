@@ -1159,6 +1159,8 @@ format = 1
 z_index = 1
 tile_set = SubResource( 115 )
 cell_size = Vector2( 16, 16 )
+collision_layer = 8
+collision_mask = 8
 format = 1
 
 [node name="Walls (Tangible)" type="TileMap" parent="."]

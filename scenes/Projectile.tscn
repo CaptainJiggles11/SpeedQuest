@@ -9,8 +9,8 @@ radius = 2.56099
 [node name="Projectile" type="RigidBody2D"]
 z_index = 5
 z_as_relative = false
-collision_layer = 2
-collision_mask = 2
+collision_layer = 16
+collision_mask = 16
 mode = 2
 contacts_reported = 5
 contact_monitor = true

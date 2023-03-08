@@ -9,7 +9,5 @@ func _ready():
 func _process(delta):
 	var player_pos = Global.player_position
 	
-	print(look_direction)
-#	position = Vector2(player_pos.x,player_pos.y) + Vector2( mouse_pos.x - get_viewport_rect().size.x/2 , mouse_pos.y - get_viewport_rect().size.y/2)/camera_range
 	position = Vector2(player_pos.x,player_pos.y) + Vector2( look_direction.x - get_viewport_rect().size.x/2 , look_direction.y - get_viewport_rect().size.y/2)/camera_range
 	
