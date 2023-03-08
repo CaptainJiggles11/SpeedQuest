@@ -13,7 +13,7 @@ var look_direction = Vector2(1,1)
 
 
 #Controller
-var deadzone = 0.25
+var deadzone = 0.5
 
 
 
@@ -293,7 +293,7 @@ func joypad_controls():
 	if abs(right_stick_rl) > deadzone || abs(right_stick_ud) > deadzone:
 
 		look_direction = Vector2(right_stick_rl, right_stick_ud)
-		$PlayerCam.set("look_direction", look_direction*200)
+		$PlayerCam.set("look_direction", get_viewport_rect().size/2 + look_direction*200)
 
 	
 	if abs(left_stick_rl) > deadzone || abs(left_stick_ud) > deadzone:
