@@ -9,6 +9,14 @@ var player_cam = null
 var devmode = false
 var rb_script = load("res://scenes/PlayerRB.gd").new()
 var move_player = null
+var look_direction = Vector2(1,1)
+
+
+#Controller
+var deadzone = 0.25
+
+
+
 
 #Audio Setup
 var sfx
@@ -43,7 +51,6 @@ export(float) var attack_cooldown = .4
 export (float) var weapon_offset = 20
 
 
-# Called when the node enters the scene tree for the first time.
 func _ready():
 	rb = get_node("PlayerBody")
 	sprite = get_node("PlayerBody/AnimatedSprite")
@@ -67,9 +74,6 @@ func _ready():
 		character_class.mage:
 			print("mage")
 
-
-		
-# Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(delta):
 	Global.player_damage = attack_damage
 	Global.player_position = rb.global_position
@@ -88,7 +92,7 @@ func _process(delta):
 		
 	if i_frames >= 0:
 		i_frames -= delta
-	
+
 func movement():
 	input_velocity = Vector2.ZERO
 	player_position = rb.global_position
@@ -98,6 +102,7 @@ func movement():
 		Global.alive = false
 		get_tree().root.remove_child(self)
 		get_tree().root.add_child(load("res://scenes/Pause Menu.tscn").instance())
+
 	
 	#Roll Mechanic-- gives a burst of speed and intangibility on press.
 	if can_roll == true:
@@ -111,29 +116,21 @@ func movement():
 			sprite.animation = "roll"
 			sprite.frame = 0
 			sfx.play_sound(sfx.roll)
-			
+
+
 	#Get WASD inputs.
 	if rolling == false:
-		if Input.is_action_pressed("ui_right"):
-			input_velocity.x += 1
-		if Input.is_action_pressed("ui_left"):
-			input_velocity.x -= 1
-		if Input.is_action_pressed("ui_down"):
-			input_velocity.y += 1
-		if Input.is_action_pressed("ui_up"):
-			input_velocity.y -= 1
-		if devmode == true:
-			if Input.is_action_just_released("scroll_up"):
-				player_cam.zoom = Vector2(player_cam.zoom.x - .1, player_cam.zoom.y - .1 )
-			if Input.is_action_just_released("scroll_down"):
-				player_cam.zoom = Vector2(player_cam.zoom.x + .1, player_cam.zoom.y + .1 )
+		if Input.get_connected_joypads().size() >= 1:
+			joypad_controls()
+		else:
+			keyboard_controls()
 		
 		#Actually sets rigidbody velocity.
 		rb.linear_velocity = input_velocity.normalized() * walk_speed * 100 
 		
 		
 		#Flips character x according to mouse position.
-		if local_mouse_pos.x < viewport_center.x:
+		if look_direction.x < 0:
 			sprite.flip_h = true
 		
 		else:
@@ -146,10 +143,10 @@ func movement():
 		
 		if abs(input_velocity.x) < 1 and abs(input_velocity.y) < 1:
 			walking = false
-			if (local_mouse_pos-viewport_center).normalized().y < -.5:
+			if look_direction.y < -.5:
 				sprite.animation = "upidle"
 				sprite.frame = current_frame
-			elif (local_mouse_pos-viewport_center).normalized().y > .5:
+			elif look_direction.y > .5:
 				sprite.animation = "downidle"
 				sprite.frame = current_frame
 			else:
@@ -158,9 +155,9 @@ func movement():
 			#If moving, set walking animation.
 		else:
 			walking = true
-			if (local_mouse_pos-viewport_center).normalized().y < -.5:
+			if look_direction.y < -.5:
 				sprite.animation = "up"
-			elif (local_mouse_pos-viewport_center).normalized().y > .5:
+			elif look_direction.y > .5:
 				sprite.animation = "down"
 			else:
 				sprite.animation = "right"
@@ -183,17 +180,17 @@ func movement():
 
 func weapon_movement(delta):
 	#Vector of mouse to middle of screen + a really silly way to account for the screen disjoint.
-	var mouse_dir = (local_mouse_pos-Vector2(viewport_center.x+rb.linear_velocity.x/6, viewport_center.y)).normalized() 
-	var angleTo = $Weapon.transform.x.angle_to(mouse_dir) #Idk
+	
+	var angleTo = $Weapon.transform.x.angle_to(look_direction)
 	
 	#Makes Weapon render below the player sprite if they are looking upwards.
-	if (local_mouse_pos-viewport_center).normalized().y < .5:
+	if look_direction.y < .5:
 		$Weapon.z_index = sprite.z_index - 1
 	else:
 		$Weapon.z_index = sprite.z_index + 1
 	
 	#Set the weapon's position to a radius around the player
-	$Weapon.position = player_position + mouse_dir * weapon_offset + Vector2(0,5) 
+	$Weapon.position = player_position + look_direction.normalized() * weapon_offset + Vector2(0,5) 
 	#Magic
 	$Weapon.rotate(sign(angleTo)* min(delta * 100, abs(angleTo))) 
 
@@ -214,12 +211,10 @@ func take_damage(amount):
 	i_frames = 1.5
 	Global.player_health -= amount
 	sfx.play_sound(sfx.dmg)
-		
+
 func _on_Timer_timeout():
 	if walking == true and rolling == false:
 		sfx.play_sound(sfx.footsteps)
-		
-
 
 func _on_PlayerBody_body_shape_entered(body_id, body, body_shape, local_shape):
 	print(body.name)
@@ -253,13 +248,11 @@ func _on_PlayerBody_body_shape_entered(body_id, body, body_shape, local_shape):
 				move_player = Vector2(50,0)
 				door_timer = .5
 
-
 func _on_Area2D_area_shape_entered(area_id, area, area_shape, self_shape):
 	if area.name == ("RoomCollider"):
 		area.get_parent().set_active()
 			
 	pass # Replace with function body.
-
 
 func _on_Area2D_area_shape_exited(area_id, area, area_shape, self_shape):
 	if area != null:
@@ -267,3 +260,43 @@ func _on_Area2D_area_shape_exited(area_id, area, area_shape, self_shape):
 			area.get_parent().set_inactive()
 		
 	pass # Replace with function body.
+
+func keyboard_controls():
+	
+	look_direction = (local_mouse_pos-viewport_center).normalized()
+	
+	if Input.is_action_pressed("ui_right"):
+		input_velocity.x += 1
+	if Input.is_action_pressed("ui_left"):
+		input_velocity.x -= 1
+	if Input.is_action_pressed("ui_down"):
+		input_velocity.y += 1
+	if Input.is_action_pressed("ui_up"):
+		input_velocity.y -= 1
+	
+	look_direction = (local_mouse_pos-Vector2(viewport_center.x+rb.linear_velocity.x/6, viewport_center.y)).normalized() 
+	$PlayerCam.set("look_direction", get_viewport().get_mouse_position())
+	
+	if devmode == true:
+		if Input.is_action_just_released("scroll_up"):
+			player_cam.zoom = Vector2(player_cam.zoom.x - .1, player_cam.zoom.y - .1 )
+		if Input.is_action_just_released("scroll_down"):
+			player_cam.zoom = Vector2(player_cam.zoom.x + .1, player_cam.zoom.y + .1 )
+
+func joypad_controls():
+	#Gets joystick axes and sets the movement variables for movement()
+	var left_stick_rl = Input.get_joy_axis(0, JOY_AXIS_0)
+	var left_stick_ud = Input.get_joy_axis(0, JOY_AXIS_1)
+	var right_stick_rl = Input.get_joy_axis(0, JOY_AXIS_2)
+	var right_stick_ud = Input.get_joy_axis(0 ,JOY_AXIS_3)
+	
+	if abs(right_stick_rl) > deadzone || abs(right_stick_ud) > deadzone:
+
+		look_direction = Vector2(right_stick_rl, right_stick_ud)
+		$PlayerCam.set("look_direction", look_direction*200)
+
+	
+	if abs(left_stick_rl) > deadzone || abs(left_stick_ud) > deadzone:
+		input_velocity.x += left_stick_rl
+		input_velocity.y += left_stick_ud
+
