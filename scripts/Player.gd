@@ -213,9 +213,12 @@ func attack():
 
 func take_damage(amount):
 	if i_frames <= 0:
-		i_frames = 1.5
+		i_frames = 1.0
+		$PlayerCam.add_trauma(.2)
 		Global.player_health -= amount
 		sfx.play_sound(sfx.dmg)
+		if Global.player_health <= 0:
+			Global.open_shop()
 
 func _on_Timer_timeout():
 	if walking == true and rolling == false:
@@ -232,10 +235,8 @@ func _on_PlayerBody_body_shape_entered(body_id, body, body_shape, local_shape):
 			3:
 				reset = true
 
-	if body.name == "EnemyBody" and i_frames <= 0:
+	if body.name == "EnemyBody":
 		take_damage(1)
-		if Global.player_health == 0:
-			Global.open_shop()
 	
 	if door_timer <= 0:
 		match body.name:
