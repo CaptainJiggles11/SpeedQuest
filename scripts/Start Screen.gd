@@ -3,7 +3,7 @@ extends CanvasLayer
 
 # Called when the node enters the scene tree for the first time.
 func _ready():
-	pass # Replace with function body.
+	print("start")
 
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
@@ -16,4 +16,5 @@ func _on_Exit_pressed():
 
 
 func _on_Start_pressed():
-	get_tree().change_scene("res://scenes/ROOMS/Level.tscn")
+	Global.alive = true
+	Global.goto_scene("res://scenes/ROOMS/Level.tscn")

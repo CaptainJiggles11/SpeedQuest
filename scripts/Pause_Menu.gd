@@ -1,6 +1,5 @@
-extends RigidBody2D
+extends CanvasLayer
 
-var attack_damage
 
 # Declare member variables here. Examples:
 # var a = 2
@@ -13,6 +12,12 @@ func _ready():
 
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
-func _process(delta):
-	attack_damage = Global.player_damage
-	pass
+#func _process(delta):
+#	pass
+
+
+func _on_Resume_pressed():
+	var root = get_tree().root
+	root.remove_child(self)
+	root.add_child(Global.level)
+	Global.alive = true

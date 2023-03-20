@@ -1,0 +1,8 @@
+collision:
+
+Player - 0 - 4 (Disable 0-3 on roll)
+Enemy - 1
+Projectiles - 2
+Hazards - 3
+Walls - 1-4
+Friendly Projectiles = 5
