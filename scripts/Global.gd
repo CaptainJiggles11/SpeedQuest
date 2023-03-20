@@ -2,7 +2,7 @@ extends Node
 
 var current_scene = null
 var player_position
-var coin_count = 100
+var coin_count = 0
 var rng = RandomNumberGenerator.new()
 var coin_sfx = load("res://art/audio/sfx/coin_sfx.wav")
 var timer
