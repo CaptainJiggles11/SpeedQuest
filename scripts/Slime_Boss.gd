@@ -61,9 +61,9 @@ func _process(delta):
 		attack_type.radial:
 			if timer <= 0:
 				var shoot_angle = Vector2.UP
-				for x in range(51):
+				for x in range(128):
 					shoot(shoot_angle.normalized(),global_position + shoot_angle)
-					shoot_angle = shoot_angle.rotated(deg2rad(15/2))
+					shoot_angle = shoot_angle.rotated(deg2rad(15/4))
 				randomize()
 				timer = rand_range(.75,3)
 			else:
