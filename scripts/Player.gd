@@ -168,18 +168,21 @@ func movement():
 		#Slow down after the initial burst of speed from pressing roll.
 		if sprite.frame < 8:
 			rb.linear_velocity = Vector2(rb.linear_velocity.x/1.001,rb.linear_velocity.y/1.01)
-		else: #After the 8th frame (hitting the ground), slow down significantly faster.
-			rb.linear_velocity = Vector2(rb.linear_velocity.x/1.03,rb.linear_velocity.y/1.03)
-			
+		elif sprite.frame >= 8 : #After the 8th frame (hitting the ground), slow down significantly faster.
+
+			rb.linear_velocity = Vector2(rb.linear_velocity.x/1.05,rb.linear_velocity.y/1.05)
+		
+		if sprite.frame > 12:
+			rb.set_collision_layer_bit(0, true) #Player
+			rb.set_collision_layer_bit(1, true) #Enemy
+			rb.set_collision_layer_bit(2, true) #Enemy Projectiles
+			rb.set_collision_layer_bit(3, true) #Hazards
 		yield(sprite,"animation_finished") #Wait for the last frame to end rolling state.
 		rolling = false
 		
 		yield(get_tree().create_timer(roll_cooldown), "timeout") #Wait out the roll cooldown before you can roll again.
 		can_roll = true
-		rb.set_collision_layer_bit(0, true) #Player
-		rb.set_collision_layer_bit(1, true) #Enemy
-		rb.set_collision_layer_bit(2, true) #Enemy Projectiles
-		rb.set_collision_layer_bit(3, true) #Hazards
+
 
 func weapon_movement(delta):
 	#Vector of mouse to middle of screen + a really silly way to account for the screen disjoint.

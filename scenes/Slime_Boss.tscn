@@ -53,20 +53,18 @@ animations = [ {
 "name": "slime_fall",
 "speed": 10.0
 }, {
-"frames": [  ],
-"loop": true,
-"name": "slime_shoot",
-"speed": 5.0
-}, {
 "frames": [ SubResource( 6 ), SubResource( 7 ), SubResource( 8 ), SubResource( 9 ) ],
 "loop": false,
 "name": "slime_jump",
 "speed": 10.0
+}, {
+"frames": [  ],
+"loop": true,
+"name": "slime_shoot",
+"speed": 5.0
 } ]
 
-[node name="Boss" type="Node2D" groups=[
-"Enemies",
-]]
+[node name="Boss" type="Node2D" groups=["Enemies"]]
 script = ExtResource( 1 )
 projectile = ExtResource( 3 )
 
@@ -106,4 +104,5 @@ z_as_relative = false
 __meta__ = {
 "_edit_lock_": true
 }
+
 [connection signal="body_shape_entered" from="BossBody" to="." method="_on_RigidBody2D_body_shape_entered"]
