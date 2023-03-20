@@ -431,6 +431,5 @@ frames = SubResource( 14 )
 frame = 1
 playing = true
 flip_h = true
-
 [connection signal="pressed" from="VBoxContainer/Start" to="." method="_on_Start_pressed"]
 [connection signal="pressed" from="VBoxContainer/Exit" to="." method="_on_Exit_pressed"]

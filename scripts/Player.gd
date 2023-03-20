@@ -169,7 +169,7 @@ func movement():
 		if sprite.frame < 8:
 			rb.linear_velocity = Vector2(rb.linear_velocity.x/1.001,rb.linear_velocity.y/1.01)
 		else: #After the 8th frame (hitting the ground), slow down significantly faster.
-			rb.linear_velocity = Vector2(rb.linear_velocity.x/1.1,rb.linear_velocity.y/1.1)
+			rb.linear_velocity = Vector2(rb.linear_velocity.x/1.03,rb.linear_velocity.y/1.03)
 			
 		yield(sprite,"animation_finished") #Wait for the last frame to end rolling state.
 		rolling = false
@@ -199,7 +199,7 @@ func weapon_movement(delta):
 
 func attack():
 	if rolling == false and attacking == false:
-		$PlayerCam.add_trauma(.2)
+		$PlayerCam.add_trauma(.15)
 		$Weapon/WeaponBody.set("friendly", true)
 		$Weapon/WeaponBody/CollisionShape2D.disabled = false
 		attacking = true

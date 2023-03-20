@@ -16,6 +16,7 @@ func _ready():
 	obscure = $RoomCollider/Sprite
 	obscure.show()
 	
+	
 	call_deferred("reparent",$"Walls (Tangible)")
 	
 	for i in self.get_children():
@@ -63,7 +64,7 @@ func set_inactive():
 	pass
 	
 func reparent(node):
-	node.get_parent().remove_child(node) # error here  
+	node.get_parent().remove_child(node)
 	get_tree().get_nodes_in_group("LevelNavigation")[0].add_child(node)
 	node.position = $"Decor (Intangible)".global_position
 

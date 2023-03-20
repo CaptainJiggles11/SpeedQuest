@@ -1,7 +1,8 @@
-[gd_scene load_steps=19 format=2]
+[gd_scene load_steps=20 format=2]
 
 [ext_resource path="res://scenes/Slime_Boss.gd" type="Script" id=1]
 [ext_resource path="res://art/sprites/characters/enemies/monstro.png" type="Texture" id=2]
+[ext_resource path="res://scenes/Projectile.tscn" type="PackedScene" id=3]
 [ext_resource path="res://art/audio/sfx/Hit (Taking Damage)/hit2.wav" type="AudioStream" id=18]
 [ext_resource path="res://art/audio/sfx/Hit (Taking Damage)/hit1.wav" type="AudioStream" id=19]
 [ext_resource path="res://art/audio/sfx/Hit (Taking Damage)/hit3.wav" type="AudioStream" id=20]
@@ -67,6 +68,7 @@ animations = [ {
 "Enemies",
 ]]
 script = ExtResource( 1 )
+projectile = ExtResource( 3 )
 
 [node name="BossBody" type="RigidBody2D" parent="."]
 collision_layer = 34

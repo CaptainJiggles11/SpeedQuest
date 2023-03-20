@@ -13,17 +13,18 @@ func _ready():
 	pass
 
 func configure(adjacent):
-	if !adjacent.has(Vector2(0,-1)):
-		$"North Door".queue_free()
-	if !adjacent.has(Vector2(0,1)):
-		$"South Door".queue_free()
-	if !adjacent.has(Vector2(1,0)):
-		$"East Door".queue_free()
-	if !adjacent.has(Vector2(-1,0)):
-		$"West Door".queue_free()
-		
-	for door in get_children():
-			adjacent_rooms.append(door)
+	if adjacent != null:
+		if !adjacent.has(Vector2(0,-1)):
+			$"North Door".queue_free()
+		if !adjacent.has(Vector2(0,1)):
+			$"South Door".queue_free()
+		if !adjacent.has(Vector2(1,0)):
+			$"East Door".queue_free()
+		if !adjacent.has(Vector2(-1,0)):
+			$"West Door".queue_free()
+			
+		for door in get_children():
+				adjacent_rooms.append(door)
 	
 func close_room():
 	for door in adjacent_rooms:

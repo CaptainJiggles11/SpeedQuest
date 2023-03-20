@@ -4,11 +4,12 @@ extends Node2D
 export (float) var health = 3
 export (float) var speed = 50
 export (int) var damage = 1
+export (int) var projectile_damage = 1
 var actual_speed
 var slow = 1
 
 #Boss States
-enum attack_type {none,chase,jump,shoot}
+enum attack_type {none,radial,chase,jump}
 export (attack_type) var my_attack = attack_type.none
 export (bool) var passable = false
 
@@ -18,6 +19,8 @@ var sprite
 var sfx
 var path: Array = []
 var level_navigation: Navigation2D = null
+export (PackedScene) var projectile
+var timer = 1
 
 
 onready var line2d = $Line2D
@@ -39,6 +42,7 @@ func _ready():
 func _process(delta):
 	level_navigation = get_parent().get_node("LevelNavigation")
 	line2d.global_position = Vector2.ZERO
+	
 	if health <= 0:
 		death()
 	
@@ -48,26 +52,22 @@ func _process(delta):
 	
 	if global_position.x > Global.player_position.x:
 		sprite.flip_h = false
-		pass
 	else:
 		sprite.flip_h = true
-		pass
 		
 	match my_attack:
 		attack_type.none:
 			pass
-		attack_type.chase:
-			if passable == true:
-				generate_path()
-				navigate(delta)
+		attack_type.radial:
+			if timer <= 0:
+				var shoot_angle = Vector2.UP
+				for x in range(51):
+					shoot(shoot_angle.normalized(),global_position + shoot_angle)
+					shoot_angle = shoot_angle.rotated(deg2rad(15/2))
+				randomize()
+				timer = rand_range(.75,3)
 			else:
-				global_position += (Global.player_position - global_position).normalized() * actual_speed * delta 
-		attack_type.jump:
-			pass
-		attack_type.shoot:
-			pass
-		
-	pass
+				timer -= delta
 
 
 func _on_RigidBody2D_body_shape_entered(body_id, body, body_shape, local_shape):
@@ -103,3 +103,12 @@ func death():
 	coin.position = position
 	get_parent().add_child(coin)
 	queue_free()
+	
+func shoot(direction = (Global.player_position - global_position).normalized(), shootPos = position + (Global.player_position - global_position).normalized() * 10):
+	var new_projectile = projectile.instance()
+	new_projectile.set("attack_damage", projectile_damage)
+	new_projectile.set("provided_velocity", direction)
+	new_projectile.set("start_pos", shootPos)
+	get_parent().add_child(new_projectile)
+
+	

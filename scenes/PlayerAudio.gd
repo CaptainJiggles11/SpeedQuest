@@ -22,10 +22,11 @@ func _ready():
 func _process(delta):
 	pass
 	
-func play_sound(sound_name):
+func play_sound(sound_name, volume = 1):
 	var sfx = AudioStreamPlayer.new()
 	add_child(sfx)
 	var rand_value = randi() % sound_name.size()
+	sfx.volume_db = 1
 	sfx.stream = sound_name[rand_value]
 	sfx.play()
 	yield(sfx, "finished")
