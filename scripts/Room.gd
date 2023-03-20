@@ -17,7 +17,7 @@ func _ready():
 	obscure.show()
 	
 	
-	#call_deferred("reparent",$"Walls (Tangible)")
+	call_deferred("reparent",$"Walls (Tangible)")
 	
 	for i in self.get_children():
 		i.set_process(false)
