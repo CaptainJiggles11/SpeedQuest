@@ -26,7 +26,7 @@
 [ext_resource path="res://art/packs/0x72_DungeonTilesetII_v1.4/frames/swampy_run_anim_f0.png" type="Texture" id=24]
 [ext_resource path="res://art/packs/0x72_DungeonTilesetII_v1.4/frames/swampy_run_anim_f1.png" type="Texture" id=25]
 [ext_resource path="res://art/packs/0x72_DungeonTilesetII_v1.4/frames/swampy_run_anim_f2.png" type="Texture" id=26]
-[ext_resource path="res://scenes/PlayerRB.gd" type="Script" id=27]
+[ext_resource path="res://scripts/PlayerRB.gd" type="Script" id=27]
 [ext_resource path="res://scenes/Projectile.tscn" type="PackedScene" id=28]
 
 [sub_resource type="CapsuleShape2D" id=1]
@@ -35,19 +35,14 @@ height = 0.0709038
 
 [sub_resource type="SpriteFrames" id=2]
 animations = [ {
-"frames": [ ExtResource( 10 ), ExtResource( 12 ), ExtResource( 13 ), ExtResource( 11 ) ],
-"loop": true,
-"name": "zombie_run",
-"speed": 5.0
-}, {
-"frames": [ ExtResource( 24 ), ExtResource( 25 ), ExtResource( 26 ), ExtResource( 23 ) ],
-"loop": true,
-"name": "swampy_run",
-"speed": 5.0
-}, {
 "frames": [ ExtResource( 8 ), ExtResource( 9 ), ExtResource( 7 ), ExtResource( 2 ) ],
 "loop": true,
 "name": "bigzombie_run",
+"speed": 5.0
+}, {
+"frames": [ ExtResource( 17 ), ExtResource( 14 ), ExtResource( 15 ), ExtResource( 16 ) ],
+"loop": true,
+"name": "chort_run",
 "speed": 5.0
 }, {
 "frames": [ ExtResource( 3 ), ExtResource( 4 ), ExtResource( 5 ), ExtResource( 6 ) ],
@@ -55,15 +50,18 @@ animations = [ {
 "name": "skeleton_run",
 "speed": 5.0
 }, {
-"frames": [ ExtResource( 17 ), ExtResource( 14 ), ExtResource( 15 ), ExtResource( 16 ) ],
+"frames": [ ExtResource( 24 ), ExtResource( 25 ), ExtResource( 26 ), ExtResource( 23 ) ],
 "loop": true,
-"name": "chort_run",
+"name": "swampy_run",
+"speed": 5.0
+}, {
+"frames": [ ExtResource( 10 ), ExtResource( 12 ), ExtResource( 13 ), ExtResource( 11 ) ],
+"loop": true,
+"name": "zombie_run",
 "speed": 5.0
 } ]
 
-[node name="Enemy" type="Node2D" groups=[
-"Enemies",
-]]
+[node name="Enemy" type="Node2D" groups=["Enemies"]]
 script = ExtResource( 1 )
 my_type = 1
 projectile = ExtResource( 28 )
@@ -95,7 +93,6 @@ z_index = 5
 z_as_relative = false
 frames = SubResource( 2 )
 animation = "chort_run"
-frame = 3
 playing = true
 __meta__ = {
 "_edit_lock_": true
@@ -107,5 +104,6 @@ z_as_relative = false
 __meta__ = {
 "_edit_lock_": true
 }
+
 [connection signal="body_shape_entered" from="EnemyBody" to="." method="_on_RigidBody2D_body_shape_entered"]
 [connection signal="body_shape_exited" from="EnemyBody" to="." method="_on_EnemyBody_body_shape_exited"]

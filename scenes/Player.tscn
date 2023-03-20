@@ -1,4 +1,4 @@
-[gd_scene load_steps=68 format=2]
+[gd_scene load_steps=67 format=2]
 
 [ext_resource path="res://art/packs/0x72_DungeonTilesetII_v1.4/frames/knight_f_idle_anim_f3.png" type="Texture" id=1]
 [ext_resource path="res://art/packs/0x72_DungeonTilesetII_v1.4/frames/knight_f_run_anim_f0.png" type="Texture" id=2]
@@ -45,15 +45,15 @@
 [ext_resource path="res://art/packs/0x72_DungeonTilesetII_v1.4/frames/jaime_test/f_knight_down_idle1.png" type="Texture" id=43]
 [ext_resource path="res://art/packs/0x72_DungeonTilesetII_v1.4/frames/jaime_test/f_knight_down_idle2.png" type="Texture" id=44]
 [ext_resource path="res://art/audio/sfx/Player/roll.wav" type="AudioStream" id=45]
-[ext_resource path="res://scenes/PlayerAudio.gd" type="Script" id=46]
-[ext_resource path="res://scenes/PlayerRB.gd" type="Script" id=47]
+[ext_resource path="res://scripts/PlayerAudio.gd" type="Script" id=46]
+[ext_resource path="res://scripts/PlayerRB.gd" type="Script" id=47]
 [ext_resource path="res://art/audio/sfx/Hit (Taking Damage)/hit1.wav" type="AudioStream" id=48]
 [ext_resource path="res://art/audio/sfx/Player/Footsteps/footsteps 3.wav" type="AudioStream" id=51]
 [ext_resource path="res://art/audio/sfx/Player/Footsteps/footsteps 1.wav" type="AudioStream" id=52]
 [ext_resource path="res://art/audio/sfx/Player/Footsteps/footsteps 2.wav" type="AudioStream" id=53]
 [ext_resource path="res://art/packs/0x72_DungeonTilesetII_v1.4/frames/jaime_test/sword/sword_slash2.png" type="Texture" id=54]
 [ext_resource path="res://art/packs/0x72_DungeonTilesetII_v1.4/frames/jaime_test/sword/sword_slash4.png" type="Texture" id=55]
-[ext_resource path="res://scenes/Projectile.gd" type="Script" id=56]
+[ext_resource path="res://scripts/Projectile.gd" type="Script" id=56]
 [ext_resource path="res://art/packs/0x72_DungeonTilesetII_v1.4/frames/jaime_test/sword/sword_slash5.png" type="Texture" id=57]
 [ext_resource path="res://art/packs/0x72_DungeonTilesetII_v1.4/frames/jaime_test/sword/sword_slash7.png" type="Texture" id=59]
 [ext_resource path="res://art/packs/0x72_DungeonTilesetII_v1.4/frames/jaime_test/sword/sword_slash8.png" type="Texture" id=60]
@@ -61,9 +61,6 @@
 [ext_resource path="res://art/audio/sfx/Player/Slash/slash2.wav" type="AudioStream" id=62]
 [ext_resource path="res://art/audio/sfx/Player/Slash/slash3.wav" type="AudioStream" id=63]
 [ext_resource path="res://art/audio/sfx/Player/Slash/slash1.wav" type="AudioStream" id=64]
-
-[sub_resource type="PhysicsMaterial" id=6]
-friction = 0.0
 
 [sub_resource type="CircleShape2D" id=1]
 radius = 4.57586
@@ -132,7 +129,6 @@ z_as_relative = false
 collision_layer = 31
 collision_mask = 16
 mode = 2
-physics_material_override = SubResource( 6 )
 contacts_reported = 10
 contact_monitor = true
 can_sleep = false
@@ -147,6 +143,7 @@ z_index = 10
 z_as_relative = false
 frames = SubResource( 2 )
 animation = "up"
+frame = 2
 playing = true
 
 [node name="PlayerSfx" type="Node2D" parent="PlayerBody"]

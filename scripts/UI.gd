@@ -10,5 +10,5 @@ func _ready():
 func _process(delta):
 	$Coins.text = str(Global.coin_count)
 	$Time.text = str("Time: ",Global.time)
-	$Health.text = str("Health: ",Global.player_health)\
+	$Health.text = str("Health: ",Global.player_health)
 	

@@ -1,7 +1,28 @@
-[gd_scene load_steps=5 format=2]
+[gd_scene load_steps=14 format=2]
 
 [ext_resource path="res://art/fonts/yoster.ttf" type="DynamicFontData" id=1]
-[ext_resource path="res://scenes/Shop.gd" type="Script" id=2]
+[ext_resource path="res://scripts/Shop.gd" type="Script" id=2]
+[ext_resource path="res://art/Miscellaneous/Frame_charcoalBG.png" type="Texture" id=3]
+[ext_resource path="res://art/packs/0x72_DungeonTilesetII_v1.4/frames/coin_anim_f0.png" type="Texture" id=4]
+[ext_resource path="res://art/Miscellaneous/clock_icon.png" type="Texture" id=5]
+[ext_resource path="res://art/Miscellaneous/health_icon.png" type="Texture" id=6]
+[ext_resource path="res://art/Miscellaneous/sword_icon.png" type="Texture" id=7]
+
+[sub_resource type="DynamicFont" id=3]
+size = 48
+font_data = ExtResource( 1 )
+
+[sub_resource type="DynamicFont" id=4]
+size = 20
+font_data = ExtResource( 1 )
+
+[sub_resource type="DynamicFont" id=5]
+size = 32
+font_data = ExtResource( 1 )
+
+[sub_resource type="DynamicFont" id=6]
+size = 20
+font_data = ExtResource( 1 )
 
 [sub_resource type="DynamicFont" id=1]
 font_data = ExtResource( 1 )
@@ -12,13 +33,171 @@ default_font = SubResource( 1 )
 [node name="Shop" type="CanvasLayer"]
 script = ExtResource( 2 )
 
+[node name="TextureRect" type="TextureRect" parent="."]
+margin_right = 1050.0
+margin_bottom = 1050.0
+rect_scale = Vector2( 1.22, 0.69 )
+texture = ExtResource( 3 )
+
+[node name="ShopTitle" type="Label" parent="."]
+margin_top = 50.0
+margin_right = 1280.0
+margin_bottom = 149.0
+custom_fonts/font = SubResource( 3 )
+text = "SHOP
+"
+align = 1
+
+[node name="Sprite" type="Sprite" parent="."]
+position = Vector2( 70, 50 )
+scale = Vector2( 3, 3 )
+texture = ExtResource( 4 )
+
+[node name="Coins" type="Label" parent="."]
+margin_left = 87.0
+margin_top = 42.0
+margin_right = 185.0
+margin_bottom = 87.0
+custom_fonts/font = SubResource( 4 )
+text = "Coins
+"
+
+[node name="TimeUpgrade" type="Button" parent="."]
+margin_left = 70.0
+margin_top = 140.0
+margin_right = 1210.0
+margin_bottom = 220.0
+
+[node name="Icon" type="Sprite" parent="TimeUpgrade"]
+position = Vector2( 41, 39 )
+scale = Vector2( 0.373777, 0.365871 )
+texture = ExtResource( 5 )
+
+[node name="Title" type="Label" parent="TimeUpgrade"]
+margin_left = 90.0
+margin_top = 25.0
+margin_right = 338.0
+margin_bottom = 58.0
+custom_fonts/font = SubResource( 5 )
+text = "Time Limit"
+
+[node name="Level" type="Label" parent="TimeUpgrade"]
+margin_left = 950.0
+margin_top = 15.0
+margin_right = 1100.0
+margin_bottom = 36.0
+custom_fonts/font = SubResource( 6 )
+text = "Level 1"
+align = 2
+
+[node name="Coin" type="Sprite" parent="TimeUpgrade"]
+position = Vector2( 1050, 52 )
+scale = Vector2( 3, 3 )
+texture = ExtResource( 4 )
+
+[node name="Cost" type="Label" parent="TimeUpgrade"]
+margin_left = 950.0
+margin_top = 45.0
+margin_right = 1100.0
+margin_bottom = 66.0
+custom_fonts/font = SubResource( 6 )
+text = "10"
+align = 2
+
+[node name="HealthUpgrade" type="Button" parent="."]
+margin_left = 70.0
+margin_top = 240.0
+margin_right = 1210.0
+margin_bottom = 320.0
+
+[node name="Icon" type="Sprite" parent="HealthUpgrade"]
+position = Vector2( 41, 39 )
+scale = Vector2( 0.28, 0.28 )
+texture = ExtResource( 6 )
+
+[node name="Title" type="Label" parent="HealthUpgrade"]
+margin_left = 90.0
+margin_top = 25.0
+margin_right = 338.0
+margin_bottom = 58.0
+custom_fonts/font = SubResource( 5 )
+text = "Max Health"
+
+[node name="Level" type="Label" parent="HealthUpgrade"]
+margin_left = 950.0
+margin_top = 15.0
+margin_right = 1100.0
+margin_bottom = 36.0
+custom_fonts/font = SubResource( 6 )
+text = "Level 1"
+align = 2
+
+[node name="Coin" type="Sprite" parent="HealthUpgrade"]
+position = Vector2( 1050, 52 )
+scale = Vector2( 3, 3 )
+texture = ExtResource( 4 )
+
+[node name="Cost" type="Label" parent="HealthUpgrade"]
+margin_left = 950.0
+margin_top = 45.0
+margin_right = 1100.0
+margin_bottom = 66.0
+custom_fonts/font = SubResource( 6 )
+text = "20"
+align = 2
+
+[node name="DmgUpgrade" type="Button" parent="."]
+margin_left = 70.0
+margin_top = 340.0
+margin_right = 1210.0
+margin_bottom = 420.0
+
+[node name="Icon" type="Sprite" parent="DmgUpgrade"]
+position = Vector2( 41, 39 )
+scale = Vector2( 0.09, 0.09 )
+texture = ExtResource( 7 )
+
+[node name="Title" type="Label" parent="DmgUpgrade"]
+margin_left = 90.0
+margin_top = 25.0
+margin_right = 338.0
+margin_bottom = 58.0
+custom_fonts/font = SubResource( 5 )
+text = "Attack Damage"
+
+[node name="Level" type="Label" parent="DmgUpgrade"]
+margin_left = 950.0
+margin_top = 15.0
+margin_right = 1100.0
+margin_bottom = 36.0
+custom_fonts/font = SubResource( 6 )
+text = "Level 1"
+align = 2
+
+[node name="Coin" type="Sprite" parent="DmgUpgrade"]
+position = Vector2( 1050, 52 )
+scale = Vector2( 3, 3 )
+texture = ExtResource( 4 )
+
+[node name="Cost" type="Label" parent="DmgUpgrade"]
+margin_left = 950.0
+margin_top = 45.0
+margin_right = 1100.0
+margin_bottom = 66.0
+custom_fonts/font = SubResource( 6 )
+text = "50"
+align = 2
+
 [node name="Start" type="Button" parent="."]
 margin_left = 540.0
-margin_top = 600.0
+margin_top = 629.0
 margin_right = 740.0
-margin_bottom = 630.0
+margin_bottom = 659.0
 theme = SubResource( 2 )
 text = "Start Run"
 
+[connection signal="pressed" from="TimeUpgrade" to="." method="_on_TimeUpgrade_pressed"]
+[connection signal="pressed" from="HealthUpgrade" to="." method="_on_HealthUpgrade_pressed"]
+[connection signal="pressed" from="DmgUpgrade" to="." method="_on_DmgUpgrade_pressed"]
 [connection signal="pressed" from="Start" to="." method="_on_Start_pressed"]
 [connection signal="pressed" from="Start" to="." method="_on_Button_pressed"]
