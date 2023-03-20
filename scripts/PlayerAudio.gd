@@ -30,5 +30,4 @@ func play_sound(sound_name):
 	sfx.play()
 	yield(sfx, "finished")
 	sfx.queue_free()
-
 	

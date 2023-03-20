@@ -62,7 +62,6 @@
 [ext_resource path="res://art/audio/sfx/Player/Slash/slash3.wav" type="AudioStream" id=63]
 [ext_resource path="res://art/audio/sfx/Player/Slash/slash1.wav" type="AudioStream" id=64]
 
-
 [sub_resource type="CircleShape2D" id=1]
 radius = 4.57586
 
@@ -144,7 +143,7 @@ z_index = 10
 z_as_relative = false
 frames = SubResource( 2 )
 animation = "up"
-frame = 3
+frame = 2
 playing = true
 
 [node name="PlayerSfx" type="Node2D" parent="PlayerBody"]

@@ -218,6 +218,7 @@ func take_damage(amount):
 		Global.player_health -= amount
 		sfx.play_sound(sfx.dmg)
 		if Global.player_health <= 0:
+			yield(get_tree().create_timer(.2), "timeout")
 			Global.open_shop()
 
 func _on_Timer_timeout():

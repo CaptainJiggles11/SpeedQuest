@@ -2,22 +2,27 @@ extends Node
 
 var current_scene = null
 var player_position
-var coin_count = 0
+var coin_count = 100
 var rng = RandomNumberGenerator.new()
 var coin_sfx = load("res://art/audio/sfx/coin_sfx.wav")
 var timer
 var time
-var player_damage = 1
-var player_health = 3
+var player_health
 var level = null
 var alive = false
+
+# Upgrades
+var max_time = 15
+var max_hp = 1
+var player_damage = 1
 
 func _ready():
 	
 	rng.randomize()
 	var root = get_tree().root
 	current_scene = root.get_child(root.get_child_count() - 1)
-	time = 10
+	time = max_time
+	player_health = max_hp
 	timer = Timer.new()
 	timer.connect("timeout", self, "_on_timer_timeout")
 	add_child(timer)

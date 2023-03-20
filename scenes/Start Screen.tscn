@@ -201,241 +201,233 @@ __meta__ = {
 [node name="Knight" type="AnimatedSprite" parent="Panel"]
 position = Vector2( 47, 82.5 )
 frames = SubResource( 6 )
-frame = 2
+frame = 1
 playing = true
 
 [node name="Demon" type="AnimatedSprite" parent="Panel"]
 position = Vector2( 210, 62.5 )
 frames = SubResource( 7 )
-frame = 3
+frame = 2
 playing = true
 flip_h = true
 
 [node name="Demon2" type="AnimatedSprite" parent="Panel"]
 position = Vector2( 229, 69.5 )
 frames = SubResource( 7 )
-frame = 3
+frame = 2
 playing = true
 flip_h = true
 
 [node name="Demon3" type="AnimatedSprite" parent="Panel"]
 position = Vector2( 215, 79.5 )
 frames = SubResource( 7 )
-frame = 2
+frame = 1
 playing = true
 flip_h = true
 
 [node name="Demon4" type="AnimatedSprite" parent="Panel"]
 position = Vector2( 230, 82.5 )
 frames = SubResource( 7 )
-frame = 2
+frame = 1
 playing = true
 flip_h = true
 
 [node name="Orc" type="AnimatedSprite" parent="Panel"]
 position = Vector2( 188, 69.5 )
 frames = SubResource( 8 )
+frame = 3
 playing = true
 flip_h = true
 
 [node name="Orc2" type="AnimatedSprite" parent="Panel"]
 position = Vector2( 179, 72.5 )
 frames = SubResource( 8 )
-frame = 3
+frame = 2
 playing = true
 flip_h = true
 
 [node name="Orc3" type="AnimatedSprite" parent="Panel"]
 position = Vector2( 200, 69.5 )
 frames = SubResource( 8 )
-frame = 3
+frame = 2
 playing = true
 flip_h = true
 
 [node name="Orc4" type="AnimatedSprite" parent="Panel"]
 position = Vector2( 193, 76.5 )
 frames = SubResource( 8 )
-frame = 2
+frame = 1
 playing = true
 flip_h = true
 
 [node name="Orc5" type="AnimatedSprite" parent="Panel"]
 position = Vector2( 181, 82.5 )
 frames = SubResource( 8 )
-frame = 2
+frame = 1
 playing = true
 flip_h = true
 
 [node name="Orc6" type="AnimatedSprite" parent="Panel"]
 position = Vector2( 186, 88.5 )
 frames = SubResource( 8 )
-frame = 2
+frame = 1
 playing = true
 flip_h = true
 
 [node name="Orc7" type="AnimatedSprite" parent="Panel"]
 position = Vector2( 201, 82.5 )
 frames = SubResource( 8 )
-frame = 1
 playing = true
 flip_h = true
 
 [node name="Orc8" type="AnimatedSprite" parent="Panel"]
 position = Vector2( 197, 88.5 )
 frames = SubResource( 8 )
-frame = 1
 playing = true
 flip_h = true
 
 [node name="Lizard" type="AnimatedSprite" parent="Panel"]
 position = Vector2( 154, 69.5 )
 frames = SubResource( 9 )
+frame = 3
 playing = true
 flip_h = true
 
 [node name="Lizard2" type="AnimatedSprite" parent="Panel"]
 position = Vector2( 142, 70.5 )
 frames = SubResource( 9 )
-frame = 3
+frame = 2
 playing = true
 flip_h = true
 
 [node name="Lizard3" type="AnimatedSprite" parent="Panel"]
 position = Vector2( 152, 78.5 )
 frames = SubResource( 9 )
-frame = 3
+frame = 2
 playing = true
 flip_h = true
 
 [node name="Lizard4" type="AnimatedSprite" parent="Panel"]
 position = Vector2( 166, 70.5 )
 frames = SubResource( 9 )
-frame = 3
+frame = 2
 playing = true
 flip_h = true
 
 [node name="Lizard5" type="AnimatedSprite" parent="Panel"]
 position = Vector2( 166, 79.5 )
 frames = SubResource( 9 )
-frame = 2
+frame = 1
 playing = true
 flip_h = true
 
 [node name="lizard6" type="AnimatedSprite" parent="Panel"]
 position = Vector2( 157, 84.5 )
 frames = SubResource( 9 )
-frame = 1
 playing = true
 flip_h = true
 
 [node name="lizard7" type="AnimatedSprite" parent="Panel"]
 position = Vector2( 169, 80.5 )
 frames = SubResource( 9 )
-frame = 1
 playing = true
 flip_h = true
 
 [node name="Zombie" type="AnimatedSprite" parent="Panel"]
 position = Vector2( 124, 83 )
 frames = SubResource( 10 )
-frame = 1
 playing = true
 flip_h = true
 
 [node name="Zombie2" type="AnimatedSprite" parent="Panel"]
 position = Vector2( 130, 78 )
 frames = SubResource( 10 )
-frame = 1
 playing = true
 flip_h = true
 
 [node name="Zombie3" type="AnimatedSprite" parent="Panel"]
 position = Vector2( 128, 87 )
 frames = SubResource( 10 )
-frame = 1
 playing = true
 flip_h = true
 
 [node name="Zombie4" type="AnimatedSprite" parent="Panel"]
 position = Vector2( 135, 83.5 )
 frames = SubResource( 10 )
-frame = 1
 playing = true
 flip_h = true
 
 [node name="Zombie5" type="AnimatedSprite" parent="Panel"]
 position = Vector2( 142, 90 )
 frames = SubResource( 10 )
-frame = 1
 playing = true
 flip_h = true
 
 [node name="Imp" type="AnimatedSprite" parent="Panel"]
 position = Vector2( 108, 85 )
 frames = SubResource( 11 )
-frame = 2
+frame = 1
 playing = true
 flip_h = true
 
 [node name="Imp2" type="AnimatedSprite" parent="Panel"]
 position = Vector2( 113, 84 )
 frames = SubResource( 11 )
-frame = 2
+frame = 1
 playing = true
 flip_h = true
 
 [node name="Imp3" type="AnimatedSprite" parent="Panel"]
 position = Vector2( 120, 86 )
 frames = SubResource( 11 )
-frame = 2
+frame = 1
 playing = true
 flip_h = true
 
 [node name="Imp4" type="AnimatedSprite" parent="Panel"]
 position = Vector2( 114, 90 )
 frames = SubResource( 11 )
-frame = 1
 playing = true
 flip_h = true
 
 [node name="Goblin" type="AnimatedSprite" parent="Panel"]
 position = Vector2( 100, 84 )
 frames = SubResource( 12 )
+frame = 3
 playing = true
 flip_h = true
 
 [node name="Goblin2" type="AnimatedSprite" parent="Panel"]
 position = Vector2( 103, 89 )
 frames = SubResource( 12 )
-frame = 3
+frame = 2
 playing = true
 flip_h = true
 
 [node name="Goblin3" type="AnimatedSprite" parent="Panel"]
 position = Vector2( 97, 91 )
 frames = SubResource( 12 )
-frame = 3
+frame = 2
 playing = true
 flip_h = true
 
 [node name="Skeleton" type="AnimatedSprite" parent="Panel"]
 position = Vector2( 91, 90.5 )
 frames = SubResource( 13 )
-frame = 1
 playing = true
 flip_h = true
 
 [node name="Skeleton2" type="AnimatedSprite" parent="Panel"]
 position = Vector2( 84, 90.5 )
 frames = SubResource( 13 )
-frame = 3
+frame = 2
 playing = true
 flip_h = true
 
 [node name="Tzombie" type="AnimatedSprite" parent="Panel"]
 position = Vector2( 72, 89.5 )
 frames = SubResource( 14 )
-frame = 3
+frame = 2
 playing = true
 flip_h = true
 
