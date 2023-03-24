@@ -83,6 +83,7 @@ func _on_get_coin(the_coin):
 	var sfx = AudioStreamPlayer.new()
 	sfx.stream = coin_sfx
 	add_child(sfx)
+	sfx.volume_db = -5
 	sfx.play()
 	yield(sfx, "finished")
 	sfx.queue_free()

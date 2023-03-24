@@ -123,6 +123,7 @@ func _process(delta):
 					new_projectile.set("attack_damage", projectile_damage)
 					new_projectile.set("provided_velocity", (Global.player_position - global_position).normalized() )
 					new_projectile.global_position = position + (Global.player_position - global_position).normalized() * 10
+					new_projectile.set("start_pos", global_position + (Global.player_position - global_position).normalized() * 10)
 					get_parent().add_child(new_projectile)
 					randomize()
 					timer = rand_range(.75,3)
