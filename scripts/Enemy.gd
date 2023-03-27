@@ -28,7 +28,7 @@ var sprite
 var sfx
 var path: Array = []
 var level_navigation: Navigation2D = null
-var timer = 2
+var timer = rand_range(.5,2)
 var charge_timer = 0
 var cooldown = false
 export(PackedScene) var projectile
@@ -71,14 +71,14 @@ func _ready():
 			health = 5
 			
 		enemy_type.skeleton:
-			sprite.animation = "skeleton_run"
+			sprite.animation = "skeleton_idle"
 			speed = 50
 			health = 3
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(delta):
 	level_navigation = get_tree().get_nodes_in_group("LevelNavigation")[0]
-	
+	print(timer)
 	line2d.global_position = Vector2.ZERO
 	if health <= 0:
 		death()
@@ -109,15 +109,23 @@ func _process(delta):
 			pass
 		attack_type.jump: #Mentally insane sleep deprived machination 
 			if Vector2(Global.player_position.x,Global.player_position.y).distance_to(Vector2(global_position.x,global_position.y)) < aggro_range or aggro == true:
-				aggro == true
-				if timer > 0:
-					global_position += jump_direction * actual_speed*timer/.05 * delta 
+				aggro = true
+				if timer >= 0:
+					print('cum')
+					rb.linear_velocity = jump_direction * actual_speed * 5 * timer
 					timer -= delta
-				elif timer >= -2:
-					timer -= delta
-				else:
-					timer = .5
-					jump_direction = (Global.player_position - global_position).normalized()
+				elif attacking == false:
+					attacking = true
+					sprite.animation = "skeleton_idle"
+					rb.linear_velocity = Vector2.ZERO
+					randomize()
+					yield(get_tree().create_timer(rand_range(.5,1)), "timeout")
+					sprite.animation = "skeleton_crouch"
+					yield(sprite,"animation_finished")
+					jump_direction = (Global.player_position - rb.global_position).normalized()
+					timer = 1
+					sprite.animation = "skeleton_jump"
+					attacking = false
 					#jump_direction = Vector2(rand_range(250, -250),rand_range(250, -250)).normalized()
 	
 		attack_type.shoot:
