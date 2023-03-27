@@ -2,15 +2,15 @@
 
 importer="texture"
 type="StreamTexture"
-path="res://.import/swampy_idle_anim_f0.png-9e8f5fda787b2cd68fd0b7f3b1f288cc.stex"
+path="res://.import/swampy_attack_anim_f3.png-787c1f5223b64d58d2f3f0be1ad2cb5e.stex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://art/packs/0x72_DungeonTilesetII_v1.4/frames/swampy_idle_anim_f0.png"
-dest_files=[ "res://.import/swampy_idle_anim_f0.png-9e8f5fda787b2cd68fd0b7f3b1f288cc.stex" ]
+source_file="res://art/packs/0x72_DungeonTilesetII_v1.4/frames/custom_enemy_anims/swampy_attack/swampy_attack_anim_f3.png"
+dest_files=[ "res://.import/swampy_attack_anim_f3.png-787c1f5223b64d58d2f3f0be1ad2cb5e.stex" ]
 
 [params]
 

@@ -12,7 +12,7 @@ var level = null
 var alive = false
 
 # Upgrades
-var max_time = 15
+var max_time = 120
 var max_hp = 1
 var player_damage = 1
 

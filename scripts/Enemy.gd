@@ -19,6 +19,8 @@ export (bool) var chase = true
 export (float) var aggro_range = 150
 export (float) var stopping_distance = 0
 var jump_direction = Vector2(0,0)
+var moving = false
+var attacking = false
 
 #Enemy Setup
 var rb
@@ -27,6 +29,7 @@ var sfx
 var path: Array = []
 var level_navigation: Navigation2D = null
 var timer = 2
+var charge_timer = 0
 var cooldown = false
 export(PackedScene) var projectile
 
@@ -94,11 +97,12 @@ func _process(delta):
 	if chase == true:
 		if Vector2(Global.player_position.x,Global.player_position.y).distance_to(Vector2(global_position.x,global_position.y)) < aggro_range or aggro == true:
 			aggro = true
-			if passable == false:
-				generate_path()
-				navigate(delta)
-			else:
-				global_position += (Global.player_position - global_position).normalized() * actual_speed * delta 
+			if attacking == false:
+				if passable == false:
+					generate_path()
+					navigate(delta)
+				else:
+					global_position += (Global.player_position - global_position).normalized() * actual_speed * delta 
 		
 	match my_attack: 
 		attack_type.none:
@@ -118,7 +122,11 @@ func _process(delta):
 	
 		attack_type.shoot:
 			if Vector2(Global.player_position.x,Global.player_position.y).distance_to(Vector2(global_position.x,global_position.y)) < aggro_range or aggro == true:	
-				if timer <= 0:
+				if timer <= 0 and attacking == false:
+					sprite.animation = "swampy_attack"
+					attacking = true
+					yield(sprite,"animation_finished")
+					sprite.animation = "swampy_finish"
 					var new_projectile = projectile.instance()
 					new_projectile.set("attack_damage", projectile_damage)
 					new_projectile.set("provided_velocity", (Global.player_position - global_position).normalized() )
@@ -126,8 +134,10 @@ func _process(delta):
 					new_projectile.set("start_pos", global_position + (Global.player_position - global_position).normalized() * 10)
 					get_parent().add_child(new_projectile)
 					randomize()
-					timer = rand_range(.75,3)
-				else:
+					timer = rand_range(1,2)
+					attacking = false
+					"swampy_run"
+				elif timer > 0:
 					timer -= delta
 
 
