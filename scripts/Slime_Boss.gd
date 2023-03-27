@@ -9,7 +9,7 @@ var actual_speed
 var slow = 1
 
 #Boss States
-enum attack_type {none,radial,chase,jump}
+enum attack_type {none,radial,burst}
 export (attack_type) var my_attack = attack_type.none
 export (bool) var passable = false
 
@@ -42,7 +42,6 @@ func _ready():
 func _process(delta):
 	level_navigation = get_parent().get_node("LevelNavigation")
 	line2d.global_position = Vector2.ZERO
-	
 	if health <= 0:
 		death()
 	
@@ -56,18 +55,38 @@ func _process(delta):
 		sprite.flip_h = true
 		
 	match my_attack:
-		attack_type.none:
-			pass
-		attack_type.radial:
+		0: #Idle
+			if timer >= 0:
+				timer-=delta
+			else:
+				randomize()
+				choose_attack()
+				
+		1: #Radial
 			if timer <= 0:
 				var shoot_angle = Vector2.UP
 				for x in range(128):
 					shoot(shoot_angle.normalized(),global_position + shoot_angle)
 					shoot_angle = shoot_angle.rotated(deg2rad(15/4))
 				randomize()
-				timer = rand_range(.75,3)
+				choose_attack()
+				timer = rand_range(2,5)
 			else:
 				timer -= delta
+		2: #Burst
+			if timer <= 0:
+				var shoot_angle = Vector2.UP
+				for x in range(64):
+					var ran = rand_range(.75,1.5)
+					randomize()
+					var new_projectile = shoot((Global.player_position - global_position).normalized()*rand_range(0,1) + Vector2(rand_range(-.4,.4),rand_range(-.4,.4)) )
+					new_projectile.get_child(0).scale = Vector2(ran,ran)
+				randomize()
+				choose_attack()
+				timer = rand_range(3,6)
+			else:
+				timer -= delta
+			
 
 
 func _on_RigidBody2D_body_shape_entered(body_id, body, body_shape, local_shape):
@@ -110,5 +129,10 @@ func shoot(direction = (Global.player_position - global_position).normalized(), 
 	new_projectile.set("provided_velocity", direction)
 	new_projectile.set("start_pos", shootPos)
 	get_parent().add_child(new_projectile)
+	return new_projectile
+	
+func choose_attack():
+	my_attack = attack_type.values()[ randi()%attack_type.size() ]
+	
 
 	

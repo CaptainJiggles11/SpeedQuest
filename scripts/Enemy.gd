@@ -28,7 +28,7 @@ var sprite
 var sfx
 var path: Array = []
 var level_navigation: Navigation2D = null
-var timer = rand_range(.5,2)
+var timer = 0
 var charge_timer = 0
 var cooldown = false
 export(PackedScene) var projectile
@@ -53,6 +53,8 @@ func _ready():
 		enemy_type.bigzombie:
 			speed = 30
 			health = 8
+			aggro_range = 200
+			timer = rand_range(2,5)
 			sprite.animation = "bigzombie_run"
 			
 		enemy_type.chort:
@@ -69,16 +71,17 @@ func _ready():
 			sprite.animation = "swampy_run"
 			speed = 30
 			health = 5
+			timer = rand_range(1,2)
 			
 		enemy_type.skeleton:
 			sprite.animation = "skeleton_idle"
 			speed = 50
 			health = 3
+			timer = 1
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(delta):
 	level_navigation = get_tree().get_nodes_in_group("LevelNavigation")[0]
-	print(timer)
 	line2d.global_position = Vector2.ZERO
 	if health <= 0:
 		death()
@@ -104,14 +107,13 @@ func _process(delta):
 				else:
 					global_position += (Global.player_position - global_position).normalized() * actual_speed * delta 
 		
-	match my_attack: 
-		attack_type.none:
+	match my_type: 
+		enemy_type.none:
 			pass
-		attack_type.jump: #Mentally insane sleep deprived machination 
+		enemy_type.skeleton: #Mentally insane sleep deprived machination 
 			if Vector2(Global.player_position.x,Global.player_position.y).distance_to(Vector2(global_position.x,global_position.y)) < aggro_range or aggro == true:
 				aggro = true
 				if timer >= 0:
-					print('cum')
 					rb.linear_velocity = jump_direction * actual_speed * 5 * timer
 					timer -= delta
 				elif attacking == false:
@@ -126,9 +128,9 @@ func _process(delta):
 					timer = 1
 					sprite.animation = "skeleton_jump"
 					attacking = false
-					#jump_direction = Vector2(rand_range(250, -250),rand_range(250, -250)).normalized()
+
 	
-		attack_type.shoot:
+		enemy_type.swampy:
 			if Vector2(Global.player_position.x,Global.player_position.y).distance_to(Vector2(global_position.x,global_position.y)) < aggro_range or aggro == true:	
 				if timer <= 0 and attacking == false:
 					sprite.animation = "swampy_attack"
@@ -144,16 +146,27 @@ func _process(delta):
 					randomize()
 					timer = rand_range(1,2)
 					attacking = false
-					"swampy_run"
+					sprite.animation = "swampy_run"
 				elif timer > 0:
 					timer -= delta
+					
+		enemy_type.bigzombie:
+			if Vector2(Global.player_position.x,Global.player_position.y).distance_to(Vector2(global_position.x,global_position.y)) < aggro_range or aggro == true:	
+				aggro = true
+				if timer >= 0:
+					speed = 60
+					timer -= delta
+				elif attacking == false:
+					attacking = true
+					yield(get_tree().create_timer(rand_range(1,2)), "timeout")
+					timer = rand_range(3,4)
+					attacking = false
+				
 
 
 func _on_RigidBody2D_body_shape_entered(body_id, body, body_shape, local_shape):
-	#print(body.name)
 	if body.name == "WeaponBody":
 		sprite.modulate = Color(1,0,0)
-		#print("hit")
 		yield(get_tree().create_timer(.1), "timeout")
 		sprite.modulate = Color(1,1,1)
 		position -= (Global.player_position - self.position).normalized() * 3
@@ -162,9 +175,9 @@ func _on_RigidBody2D_body_shape_entered(body_id, body, body_shape, local_shape):
 	pass # Replace with function body.
 	
 func take_damage(damage_dealt):
+	print(damage_dealt)
 	sfx.play_sound(sfx.hitsounds)
 	health-=damage_dealt
-	#print(health)
 
 func generate_path():
 	if level_navigation != null:
@@ -179,7 +192,7 @@ func navigate(delta):
 
 func death():
 	var coin = preload("res://scenes/Coin.tscn").instance()
-	coin.position = position
-	get_parent().add_child(coin)
+	get_parent().get_parent().add_child(coin)
+	coin.global_position = rb.global_position
 	get_parent().get("enemies").erase(self)
 	queue_free()

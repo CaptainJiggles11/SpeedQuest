@@ -80,7 +80,6 @@ func _process(delta):
 	Global.player_position = rb.global_position
 	local_mouse_pos = get_viewport().get_mouse_position() #Mouse position on the viewport.
 	
-	
 	movement() #Controls player movement (Walking, Rolling)
 	weapon_movement(delta) #Controls the revolving weapon.
 	if Input.is_action_just_pressed("attack"):
@@ -204,6 +203,7 @@ func attack():
 	if rolling == false and attacking == false:
 		$PlayerCam.add_trauma(.15)
 		$Weapon/WeaponBody.set("friendly", true)
+		$Weapon/WeaponBody.set("attack_damage", Global.player_damage)
 		$Weapon/WeaponBody/CollisionShape2D.disabled = false
 		attacking = true
 		$Weapon.frame = 0

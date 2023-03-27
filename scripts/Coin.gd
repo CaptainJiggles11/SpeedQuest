@@ -1,7 +1,7 @@
 extends Node2D
 
 var sprite
-
+var chase_player = false
 # Called when the node enters the scene tree for the first time.
 func _ready():
 	sprite = get_node("Area2D/AnimatedSprite")
@@ -11,7 +11,12 @@ func _ready():
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(delta):
-	pass
+	if chase_player == false:
+		if Vector2(global_position).distance_to(Global.player_position) > 200:
+			chase_player = true
+	else:
+		global_position += (Global.player_position - global_position).normalized() * 2
+
 
 
 
