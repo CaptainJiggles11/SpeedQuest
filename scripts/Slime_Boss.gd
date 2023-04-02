@@ -9,10 +9,10 @@ var actual_speed
 var slow = 1
 
 #Boss States
-enum attack_type {none,radial,burst}
-export (attack_type) var my_attack = attack_type.none
+enum attack_type {idle,radial,burst,follow}
+export (attack_type) var my_attack = attack_type.idle
 export (bool) var passable = false
-
+var jumping = false
 #Boss Setup
 var rb
 var sprite
@@ -21,6 +21,7 @@ var path: Array = []
 var level_navigation: Navigation2D = null
 export (PackedScene) var projectile
 var timer = 1
+var jump_dir = Vector2.ZERO
 
 
 onready var line2d = $Line2D
@@ -86,6 +87,36 @@ func _process(delta):
 				timer = rand_range(3,6)
 			else:
 				timer -= delta
+		3: #Follow:
+			var rand = rand_range(.5,1)
+			if jumping == false:
+				var jump_start = global_position
+				var og_scale = sprite.scale
+				jump_dir = (Global.player_position - global_position).normalized()
+				sprite.power = rand
+				var jump_end = jump_dir * 100 * rand
+				sprite.jump_end = jump_end
+				sprite.animation = "slime_jump"
+				jumping = true
+				yield(sprite,"animation_finished")
+				sprite.scale = og_scale
+				sprite.animation = "slime_airborne"
+				sprite.up()
+				yield(get_tree().create_timer(rand), "timeout")
+				sprite.down()
+				yield(sprite,"animation_finished")
+				sprite.animation = "slime_stunned"
+				sprite.squash(Vector2(1.2,.8), .5)
+				yield(get_tree().create_timer(rand/1.5), "timeout")
+				jumping = false
+	
+			else:
+				if sprite.frame == 2 and sprite.animation == "slime_jump":
+					sprite.scale = Vector2(.8,1.2)
+				if sprite.frame == 0 and sprite.animation == "slime_fall":
+					sprite.scale = Vector2(.8,1.2)
+				global_position.linear_interpolate(sprite.jump_end,delta)
+				
 			
 
 

@@ -1,8 +1,10 @@
-[gd_scene load_steps=20 format=2]
+[gd_scene load_steps=24 format=2]
 
 [ext_resource path="res://scripts/Slime_Boss.gd" type="Script" id=1]
 [ext_resource path="res://art/sprites/characters/enemies/monstro.png" type="Texture" id=2]
 [ext_resource path="res://scenes/Projectile.tscn" type="PackedScene" id=3]
+[ext_resource path="res://scenes/Slime_Sprite.gd" type="Script" id=4]
+[ext_resource path="res://art/Miscellaneous/shadow.png" type="Texture" id=5]
 [ext_resource path="res://art/audio/sfx/Hit (Taking Damage)/hit2.wav" type="AudioStream" id=18]
 [ext_resource path="res://art/audio/sfx/Hit (Taking Damage)/hit1.wav" type="AudioStream" id=19]
 [ext_resource path="res://art/audio/sfx/Hit (Taking Damage)/hit3.wav" type="AudioStream" id=20]
@@ -10,12 +12,11 @@
 [ext_resource path="res://EnemyAudio.gd" type="Script" id=22]
 [ext_resource path="res://scripts/PlayerRB.gd" type="Script" id=27]
 
-
 [sub_resource type="CapsuleShape2D" id=1]
 radius = 5.0
 height = 0.0709038
 
-[sub_resource type="AtlasTexture" id=2]
+[sub_resource type="AtlasTexture" id=14]
 atlas = ExtResource( 2 )
 region = Rect2( 160, 93, 80, 93 )
 
@@ -23,13 +24,13 @@ region = Rect2( 160, 93, 80, 93 )
 atlas = ExtResource( 2 )
 region = Rect2( 320, 0, 80, 93 )
 
-[sub_resource type="AtlasTexture" id=4]
+[sub_resource type="AtlasTexture" id=15]
 atlas = ExtResource( 2 )
 region = Rect2( 0, 93, 80, 93 )
 
-[sub_resource type="AtlasTexture" id=5]
+[sub_resource type="AtlasTexture" id=12]
 atlas = ExtResource( 2 )
-region = Rect2( 240, 93, 80, 93 )
+region = Rect2( 160, 0, 80, 93 )
 
 [sub_resource type="AtlasTexture" id=6]
 atlas = ExtResource( 2 )
@@ -43,30 +44,54 @@ region = Rect2( 0, 93, 80, 93 )
 atlas = ExtResource( 2 )
 region = Rect2( 80, 93, 80, 93 )
 
-[sub_resource type="AtlasTexture" id=9]
+[sub_resource type="AtlasTexture" id=10]
 atlas = ExtResource( 2 )
-region = Rect2( 160, 93, 80, 93 )
+region = Rect2( 80, 0, 80, 93 )
 
-[sub_resource type="SpriteFrames" id=10]
+[sub_resource type="AtlasTexture" id=11]
+atlas = ExtResource( 2 )
+region = Rect2( 240, 0, 80, 93 )
+
+[sub_resource type="AtlasTexture" id=5]
+atlas = ExtResource( 2 )
+region = Rect2( 240, 93, 80, 93 )
+
+[sub_resource type="SpriteFrames" id=13]
 animations = [ {
-"frames": [ SubResource( 2 ), SubResource( 3 ), SubResource( 4 ), SubResource( 5 ) ],
+"frames": [ SubResource( 14 ) ],
+"loop": true,
+"name": "slime_airborne",
+"speed": 10.0
+}, {
+"frames": [ SubResource( 3 ), SubResource( 15 ) ],
 "loop": false,
 "name": "slime_fall",
-"speed": 10.0
+"speed": 7.0
 }, {
-"frames": [ SubResource( 6 ), SubResource( 7 ), SubResource( 8 ), SubResource( 9 ) ],
+"frames": [ SubResource( 12 ) ],
+"loop": true,
+"name": "slime_idle",
+"speed": 5.0
+}, {
+"frames": [ SubResource( 6 ), SubResource( 7 ), SubResource( 7 ), SubResource( 8 ) ],
 "loop": false,
 "name": "slime_jump",
+"speed": 15.0
+}, {
+"frames": [ SubResource( 10 ), SubResource( 11 ) ],
+"loop": false,
+"name": "slime_shoot",
 "speed": 10.0
 }, {
-"frames": [  ],
+"frames": [ SubResource( 5 ) ],
 "loop": true,
-"name": "slime_shoot",
+"name": "slime_stunned",
 "speed": 5.0
 } ]
 
 [node name="Boss" type="Node2D" groups=["Enemies"]]
 script = ExtResource( 1 )
+speed = 200.0
 projectile = ExtResource( 3 )
 
 [node name="BossBody" type="RigidBody2D" parent="."]
@@ -94,10 +119,16 @@ hitsounds = [ ExtResource( 19 ), ExtResource( 18 ), ExtResource( 20 ), ExtResour
 [node name="Sprite" type="AnimatedSprite" parent="BossBody"]
 z_index = 5
 z_as_relative = false
-frames = SubResource( 10 )
-animation = "slime_fall"
-frame = 3
+frames = SubResource( 13 )
+animation = "slime_stunned"
 playing = true
+script = ExtResource( 4 )
+
+[node name="Shadow" type="Sprite" parent="BossBody"]
+modulate = Color( 0, 0, 0, 0.627451 )
+position = Vector2( 0.491097, 26.3436 )
+scale = Vector2( 0.331138, 0.17132 )
+texture = ExtResource( 5 )
 
 [node name="Line2D" type="Line2D" parent="."]
 z_index = 4096
