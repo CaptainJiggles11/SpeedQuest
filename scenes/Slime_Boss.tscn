@@ -1,8 +1,11 @@
-[gd_scene load_steps=20 format=2]
+[gd_scene load_steps=25 format=2]
 
 [ext_resource path="res://scripts/Slime_Boss.gd" type="Script" id=1]
 [ext_resource path="res://art/sprites/characters/enemies/monstro.png" type="Texture" id=2]
 [ext_resource path="res://scenes/Projectile.tscn" type="PackedScene" id=3]
+[ext_resource path="res://scenes/Slime_Sprite.gd" type="Script" id=4]
+[ext_resource path="res://art/Miscellaneous/shadow.png" type="Texture" id=5]
+[ext_resource path="res://art/audio/music/SpeedQuest - (BOSS 1).wav" type="AudioStream" id=6]
 [ext_resource path="res://art/audio/sfx/Hit (Taking Damage)/hit2.wav" type="AudioStream" id=18]
 [ext_resource path="res://art/audio/sfx/Hit (Taking Damage)/hit1.wav" type="AudioStream" id=19]
 [ext_resource path="res://art/audio/sfx/Hit (Taking Damage)/hit3.wav" type="AudioStream" id=20]
@@ -11,24 +14,28 @@
 [ext_resource path="res://scripts/PlayerRB.gd" type="Script" id=27]
 
 [sub_resource type="CapsuleShape2D" id=1]
-radius = 5.0
-height = 0.0709038
+radius = 14.7306
+height = 35.7345
 
-[sub_resource type="AtlasTexture" id=2]
+[sub_resource type="AtlasTexture" id=14]
 atlas = ExtResource( 2 )
 region = Rect2( 160, 93, 80, 93 )
+
+[sub_resource type="AtlasTexture" id=16]
+atlas = ExtResource( 2 )
+region = Rect2( 80, 0, 80, 93 )
 
 [sub_resource type="AtlasTexture" id=3]
 atlas = ExtResource( 2 )
 region = Rect2( 320, 0, 80, 93 )
 
-[sub_resource type="AtlasTexture" id=4]
+[sub_resource type="AtlasTexture" id=15]
 atlas = ExtResource( 2 )
 region = Rect2( 0, 93, 80, 93 )
 
-[sub_resource type="AtlasTexture" id=5]
+[sub_resource type="AtlasTexture" id=12]
 atlas = ExtResource( 2 )
-region = Rect2( 240, 93, 80, 93 )
+region = Rect2( 160, 0, 80, 93 )
 
 [sub_resource type="AtlasTexture" id=6]
 atlas = ExtResource( 2 )
@@ -42,30 +49,55 @@ region = Rect2( 0, 93, 80, 93 )
 atlas = ExtResource( 2 )
 region = Rect2( 80, 93, 80, 93 )
 
-[sub_resource type="AtlasTexture" id=9]
+[sub_resource type="AtlasTexture" id=11]
 atlas = ExtResource( 2 )
-region = Rect2( 160, 93, 80, 93 )
+region = Rect2( 240, 0, 80, 93 )
 
-[sub_resource type="SpriteFrames" id=10]
+[sub_resource type="AtlasTexture" id=5]
+atlas = ExtResource( 2 )
+region = Rect2( 240, 93, 80, 93 )
+
+[sub_resource type="SpriteFrames" id=13]
 animations = [ {
-"frames": [ SubResource( 2 ), SubResource( 3 ), SubResource( 4 ), SubResource( 5 ) ],
+"frames": [ SubResource( 14 ) ],
+"loop": true,
+"name": "slime_airborne",
+"speed": 10.0
+}, {
+"frames": [ SubResource( 16 ), SubResource( 16 ), SubResource( 16 ) ],
+"loop": true,
+"name": "slime_charge",
+"speed": 5.0
+}, {
+"frames": [ SubResource( 3 ), SubResource( 15 ) ],
 "loop": false,
 "name": "slime_fall",
-"speed": 10.0
+"speed": 7.0
 }, {
-"frames": [ SubResource( 6 ), SubResource( 7 ), SubResource( 8 ), SubResource( 9 ) ],
+"frames": [ SubResource( 12 ) ],
+"loop": true,
+"name": "slime_idle",
+"speed": 5.0
+}, {
+"frames": [ SubResource( 6 ), SubResource( 7 ), SubResource( 7 ), SubResource( 8 ) ],
 "loop": false,
 "name": "slime_jump",
-"speed": 10.0
+"speed": 15.0
 }, {
-"frames": [  ],
-"loop": true,
+"frames": [ SubResource( 11 ) ],
+"loop": false,
 "name": "slime_shoot",
+"speed": 1.0
+}, {
+"frames": [ SubResource( 5 ) ],
+"loop": true,
+"name": "slime_stunned",
 "speed": 5.0
 } ]
 
 [node name="Boss" type="Node2D" groups=["Enemies"]]
 script = ExtResource( 1 )
+speed = 200.0
 projectile = ExtResource( 3 )
 
 [node name="BossBody" type="RigidBody2D" parent="."]
@@ -80,7 +112,8 @@ __meta__ = {
 }
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="BossBody"]
-position = Vector2( -0.115974, 5.71144 )
+position = Vector2( -0.420921, 14.5511 )
+rotation = 1.5708
 shape = SubResource( 1 )
 
 [node name="BossAudio" type="Node2D" parent="BossBody"]
@@ -93,10 +126,22 @@ hitsounds = [ ExtResource( 19 ), ExtResource( 18 ), ExtResource( 20 ), ExtResour
 [node name="Sprite" type="AnimatedSprite" parent="BossBody"]
 z_index = 5
 z_as_relative = false
-frames = SubResource( 10 )
-animation = "slime_fall"
-frame = 3
+frames = SubResource( 13 )
+animation = "slime_charge"
 playing = true
+script = ExtResource( 4 )
+__meta__ = {
+"_edit_lock_": true
+}
+
+[node name="Shadow" type="Sprite" parent="BossBody"]
+modulate = Color( 0, 0, 0, 0.627451 )
+position = Vector2( 0.491097, 26.3436 )
+scale = Vector2( 0.331138, 0.17132 )
+texture = ExtResource( 5 )
+__meta__ = {
+"_edit_lock_": true
+}
 
 [node name="Line2D" type="Line2D" parent="."]
 z_index = 4096
@@ -104,5 +149,8 @@ z_as_relative = false
 __meta__ = {
 "_edit_lock_": true
 }
+
+[node name="AudioStreamPlayer" type="AudioStreamPlayer" parent="."]
+stream = ExtResource( 6 )
 
 [connection signal="body_shape_entered" from="BossBody" to="." method="_on_RigidBody2D_body_shape_entered"]

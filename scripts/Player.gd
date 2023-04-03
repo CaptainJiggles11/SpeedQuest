@@ -10,7 +10,7 @@ var devmode = false
 var rb_script = load("res://scripts/PlayerRB.gd").new()
 var move_player = null
 var look_direction = Vector2(1,1)
-
+var speed_modifier = 1
 
 #Controller
 var deadzone = 0.5
@@ -59,6 +59,7 @@ func _ready():
 	viewport_center = Vector2(get_viewport_rect().size.x/2,get_viewport_rect().size.y/2) #Middle of the viewport.
 	Global.player_position = rb.global_position
 	player_cam = $PlayerCam
+	Global.player = self
 	
 	_timer = Timer.new()
 	add_child(_timer)
@@ -79,7 +80,6 @@ func _process(delta):
 	Global.player_damage = attack_damage
 	Global.player_position = rb.global_position
 	local_mouse_pos = get_viewport().get_mouse_position() #Mouse position on the viewport.
-	
 	
 	movement() #Controls player movement (Walking, Rolling)
 	weapon_movement(delta) #Controls the revolving weapon.
@@ -128,7 +128,7 @@ func movement():
 			keyboard_controls()
 		
 		#Actually sets rigidbody velocity.
-		rb.linear_velocity = input_velocity.normalized() * walk_speed * 100 
+		rb.linear_velocity = input_velocity.normalized() * walk_speed * 100 * speed_modifier
 		
 		
 		#Flips character x according to mouse position.
@@ -204,6 +204,7 @@ func attack():
 	if rolling == false and attacking == false:
 		$PlayerCam.add_trauma(.15)
 		$Weapon/WeaponBody.set("friendly", true)
+		$Weapon/WeaponBody.set("attack_damage", Global.player_damage)
 		$Weapon/WeaponBody/CollisionShape2D.disabled = false
 		attacking = true
 		$Weapon.frame = 0
@@ -217,6 +218,7 @@ func attack():
 func take_damage(amount):
 	if i_frames <= 0:
 		i_frames = 1.0
+		$PlayerCam.add_trauma(.2)
 		$PlayerCam.add_trauma(.2)
 		Global.player_health -= amount
 		sfx.play_sound(sfx.dmg)

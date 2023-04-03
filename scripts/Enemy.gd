@@ -19,6 +19,8 @@ export (bool) var chase = true
 export (float) var aggro_range = 150
 export (float) var stopping_distance = 0
 var jump_direction = Vector2(0,0)
+var moving = false
+var attacking = false
 
 #Enemy Setup
 var rb
@@ -26,7 +28,8 @@ var sprite
 var sfx
 var path: Array = []
 var level_navigation: Navigation2D = null
-var timer = 2
+var timer = 0
+var charge_timer = 0
 var cooldown = false
 export(PackedScene) var projectile
 
@@ -50,6 +53,8 @@ func _ready():
 		enemy_type.bigzombie:
 			speed = 30
 			health = 8
+			aggro_range = 200
+			timer = rand_range(2,5)
 			sprite.animation = "bigzombie_run"
 			
 		enemy_type.chort:
@@ -66,16 +71,17 @@ func _ready():
 			sprite.animation = "swampy_run"
 			speed = 30
 			health = 5
+			timer = rand_range(1,2)
 			
 		enemy_type.skeleton:
-			sprite.animation = "skeleton_run"
+			sprite.animation = "skeleton_idle"
 			speed = 50
 			health = 3
+			timer = 1
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(delta):
 	level_navigation = get_tree().get_nodes_in_group("LevelNavigation")[0]
-	
 	line2d.global_position = Vector2.ZERO
 	if health <= 0:
 		death()
@@ -94,48 +100,73 @@ func _process(delta):
 	if chase == true:
 		if Vector2(Global.player_position.x,Global.player_position.y).distance_to(Vector2(global_position.x,global_position.y)) < aggro_range or aggro == true:
 			aggro = true
-			if passable == false:
-				generate_path()
-				navigate(delta)
-			else:
-				global_position += (Global.player_position - global_position).normalized() * actual_speed * delta 
-		
-	match my_attack: 
-		attack_type.none:
-			pass
-		attack_type.jump: #Mentally insane sleep deprived machination 
-			if Vector2(Global.player_position.x,Global.player_position.y).distance_to(Vector2(global_position.x,global_position.y)) < aggro_range or aggro == true:
-				aggro == true
-				if timer > 0:
-					global_position += jump_direction * actual_speed*timer/.05 * delta 
-					timer -= delta
-				elif timer >= -2:
-					timer -= delta
+			if attacking == false:
+				if passable == false:
+					generate_path()
+					navigate(delta)
 				else:
-					timer = .5
-					jump_direction = (Global.player_position - global_position).normalized()
-					#jump_direction = Vector2(rand_range(250, -250),rand_range(250, -250)).normalized()
+					global_position += (Global.player_position - global_position).normalized() * actual_speed * delta 
+		
+	match my_type: 
+		enemy_type.none:
+			pass
+		enemy_type.skeleton: #Mentally insane sleep deprived machination 
+			if Vector2(Global.player_position.x,Global.player_position.y).distance_to(Vector2(global_position.x,global_position.y)) < aggro_range or aggro == true:
+				aggro = true
+				if timer >= 0:
+					rb.linear_velocity = jump_direction * actual_speed * 5 * timer
+					timer -= delta
+				elif attacking == false:
+					attacking = true
+					sprite.animation = "skeleton_idle"
+					rb.linear_velocity = Vector2.ZERO
+					randomize()
+					yield(get_tree().create_timer(rand_range(.5,1)), "timeout")
+					sprite.animation = "skeleton_crouch"
+					yield(sprite,"animation_finished")
+					jump_direction = (Global.player_position - rb.global_position).normalized()
+					timer = 1
+					sprite.animation = "skeleton_jump"
+					attacking = false
+
 	
-		attack_type.shoot:
+		enemy_type.swampy:
 			if Vector2(Global.player_position.x,Global.player_position.y).distance_to(Vector2(global_position.x,global_position.y)) < aggro_range or aggro == true:	
-				if timer <= 0:
+				if timer <= 0 and attacking == false:
+					sprite.animation = "swampy_attack"
+					attacking = true
+					yield(sprite,"animation_finished")
+					sprite.animation = "swampy_finish"
 					var new_projectile = projectile.instance()
 					new_projectile.set("attack_damage", projectile_damage)
 					new_projectile.set("provided_velocity", (Global.player_position - global_position).normalized() )
-					new_projectile.global_position = position + (Global.player_position - global_position).normalized() * 10
-					new_projectile.set("start_pos", global_position + (Global.player_position - global_position).normalized() * 10)
+					new_projectile.global_position = rb.global_position + (Global.player_position - rb.global_position).normalized() * 10
+					new_projectile.set("start_pos", rb.global_position + (Global.player_position - rb.global_position).normalized() * 10)
 					get_parent().add_child(new_projectile)
 					randomize()
-					timer = rand_range(.75,3)
-				else:
+					timer = rand_range(1,2)
+					attacking = false
+					sprite.animation = "swampy_run"
+				elif timer > 0:
 					timer -= delta
+					
+		enemy_type.bigzombie:
+			if Vector2(Global.player_position.x,Global.player_position.y).distance_to(Vector2(global_position.x,global_position.y)) < aggro_range or aggro == true:	
+				aggro = true
+				if timer >= 0:
+					speed = 60
+					timer -= delta
+				elif attacking == false:
+					attacking = true
+					yield(get_tree().create_timer(rand_range(1,2)), "timeout")
+					timer = rand_range(3,4)
+					attacking = false
+				
 
 
 func _on_RigidBody2D_body_shape_entered(body_id, body, body_shape, local_shape):
-	#print(body.name)
 	if body.name == "WeaponBody":
 		sprite.modulate = Color(1,0,0)
-		#print("hit")
 		yield(get_tree().create_timer(.1), "timeout")
 		sprite.modulate = Color(1,1,1)
 		position -= (Global.player_position - self.position).normalized() * 3
@@ -144,9 +175,9 @@ func _on_RigidBody2D_body_shape_entered(body_id, body, body_shape, local_shape):
 	pass # Replace with function body.
 	
 func take_damage(damage_dealt):
+	print(damage_dealt)
 	sfx.play_sound(sfx.hitsounds)
 	health-=damage_dealt
-	#print(health)
 
 func generate_path():
 	if level_navigation != null:
@@ -161,7 +192,7 @@ func navigate(delta):
 
 func death():
 	var coin = preload("res://scenes/Coin.tscn").instance()
-	coin.position = position
-	get_parent().add_child(coin)
+	get_parent().get_parent().add_child(coin)
+	coin.global_position = rb.global_position
 	get_parent().get("enemies").erase(self)
 	queue_free()

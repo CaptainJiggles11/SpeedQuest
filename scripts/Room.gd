@@ -42,6 +42,7 @@ func _process(delta):
 			if enemies.size() <= 0:
 				$Doors.open_room()
 				enemies = null
+				Global.player.speed_modifier = 1.5
 				
 		if obscure.modulate.a > 0:
 			obscure.modulate.a -= 5 * delta
@@ -49,6 +50,7 @@ func _process(delta):
 	else:
 		if obscure.modulate.a < 1:
 			obscure.modulate.a += 3 * delta
+			Global.player.speed_modifier = 1
 			
 
 func set_active(): 

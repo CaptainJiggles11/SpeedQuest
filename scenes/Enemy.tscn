@@ -1,4 +1,4 @@
-[gd_scene load_steps=31 format=2]
+[gd_scene load_steps=51 format=2]
 
 [ext_resource path="res://scripts/Enemy.gd" type="Script" id=1]
 [ext_resource path="res://art/packs/0x72_DungeonTilesetII_v1.4/frames/big_zombie_run_anim_f3.png" type="Texture" id=2]
@@ -28,6 +28,26 @@
 [ext_resource path="res://art/packs/0x72_DungeonTilesetII_v1.4/frames/swampy_run_anim_f2.png" type="Texture" id=26]
 [ext_resource path="res://scripts/PlayerRB.gd" type="Script" id=27]
 [ext_resource path="res://scenes/Projectile.tscn" type="PackedScene" id=28]
+[ext_resource path="res://art/packs/0x72_DungeonTilesetII_v1.4/frames/custom_enemy_anims/swampy_attack/swampy_attack_anim_f3.png" type="Texture" id=29]
+[ext_resource path="res://art/packs/0x72_DungeonTilesetII_v1.4/frames/custom_enemy_anims/swampy_attack/swampy_attack_anim_f8.png" type="Texture" id=30]
+[ext_resource path="res://art/packs/0x72_DungeonTilesetII_v1.4/frames/custom_enemy_anims/swampy_attack/swampy_attack_anim_f6.png" type="Texture" id=31]
+[ext_resource path="res://art/packs/0x72_DungeonTilesetII_v1.4/frames/custom_enemy_anims/swampy_attack/swampy_attack_anim_f7.png" type="Texture" id=32]
+[ext_resource path="res://art/packs/0x72_DungeonTilesetII_v1.4/frames/custom_enemy_anims/swampy_attack/swampy_attack_anim_f2.png" type="Texture" id=33]
+[ext_resource path="res://art/packs/0x72_DungeonTilesetII_v1.4/frames/custom_enemy_anims/swampy_attack/swampy_attack_anim_f4.png" type="Texture" id=34]
+[ext_resource path="res://art/packs/0x72_DungeonTilesetII_v1.4/frames/custom_enemy_anims/swampy_attack/swampy_attack_anim_f1.png" type="Texture" id=35]
+[ext_resource path="res://art/packs/0x72_DungeonTilesetII_v1.4/frames/custom_enemy_anims/skeleton_attack/skelet_attack3.png" type="Texture" id=36]
+[ext_resource path="res://art/packs/0x72_DungeonTilesetII_v1.4/frames/custom_enemy_anims/swampy_attack/swampy_attack_anim_f0.png" type="Texture" id=37]
+[ext_resource path="res://art/packs/0x72_DungeonTilesetII_v1.4/frames/custom_enemy_anims/swampy_attack/swampy_attack_anim_f9.png" type="Texture" id=38]
+[ext_resource path="res://art/packs/0x72_DungeonTilesetII_v1.4/frames/custom_enemy_anims/swampy_attack/swampy_attack_anim_f10.png" type="Texture" id=39]
+[ext_resource path="res://art/packs/0x72_DungeonTilesetII_v1.4/frames/custom_enemy_anims/skeleton_attack/skelet_attack6.png" type="Texture" id=40]
+[ext_resource path="res://art/packs/0x72_DungeonTilesetII_v1.4/frames/custom_enemy_anims/skeleton_attack/skelet_attack4.png" type="Texture" id=41]
+[ext_resource path="res://art/packs/0x72_DungeonTilesetII_v1.4/frames/custom_enemy_anims/skeleton_attack/skelet_attack5.png" type="Texture" id=42]
+[ext_resource path="res://art/packs/0x72_DungeonTilesetII_v1.4/frames/custom_enemy_anims/skeleton_attack/skelet_attack1.png" type="Texture" id=43]
+[ext_resource path="res://art/packs/0x72_DungeonTilesetII_v1.4/frames/custom_enemy_anims/skeleton_attack/skelet_attack2.png" type="Texture" id=44]
+[ext_resource path="res://art/packs/0x72_DungeonTilesetII_v1.4/frames/skelet_idle_anim_f2.png" type="Texture" id=45]
+[ext_resource path="res://art/packs/0x72_DungeonTilesetII_v1.4/frames/skelet_idle_anim_f0.png" type="Texture" id=46]
+[ext_resource path="res://art/packs/0x72_DungeonTilesetII_v1.4/frames/skelet_idle_anim_f3.png" type="Texture" id=47]
+[ext_resource path="res://art/packs/0x72_DungeonTilesetII_v1.4/frames/skelet_idle_anim_f1.png" type="Texture" id=48]
 
 [sub_resource type="CapsuleShape2D" id=1]
 radius = 5.0
@@ -35,15 +55,15 @@ height = 0.0709038
 
 [sub_resource type="SpriteFrames" id=2]
 animations = [ {
-"frames": [ ExtResource( 8 ), ExtResource( 9 ), ExtResource( 7 ), ExtResource( 2 ) ],
-"loop": true,
-"name": "bigzombie_run",
-"speed": 5.0
+"frames": [ ExtResource( 32 ), ExtResource( 30 ), ExtResource( 38 ), ExtResource( 39 ) ],
+"loop": false,
+"name": "swampy_finish",
+"speed": 10.0
 }, {
-"frames": [ ExtResource( 17 ), ExtResource( 14 ), ExtResource( 15 ), ExtResource( 16 ) ],
-"loop": true,
-"name": "chort_run",
-"speed": 5.0
+"frames": [ ExtResource( 37 ), ExtResource( 35 ), ExtResource( 29 ), ExtResource( 29 ), ExtResource( 33 ), ExtResource( 29 ), ExtResource( 34 ), ExtResource( 31 ) ],
+"loop": false,
+"name": "swampy_attack",
+"speed": 10.0
 }, {
 "frames": [ ExtResource( 3 ), ExtResource( 4 ), ExtResource( 5 ), ExtResource( 6 ) ],
 "loop": true,
@@ -55,13 +75,40 @@ animations = [ {
 "name": "swampy_run",
 "speed": 5.0
 }, {
+"frames": [ ExtResource( 8 ), ExtResource( 9 ), ExtResource( 7 ), ExtResource( 2 ) ],
+"loop": true,
+"name": "bigzombie_run",
+"speed": 5.0
+}, {
+"frames": [ ExtResource( 17 ), ExtResource( 14 ), ExtResource( 15 ), ExtResource( 16 ) ],
+"loop": true,
+"name": "chort_run",
+"speed": 5.0
+}, {
 "frames": [ ExtResource( 10 ), ExtResource( 12 ), ExtResource( 13 ), ExtResource( 11 ) ],
 "loop": true,
 "name": "zombie_run",
 "speed": 5.0
+}, {
+"frames": [ ExtResource( 42 ), ExtResource( 40 ) ],
+"loop": false,
+"name": "skeleton_jump",
+"speed": 10.0
+}, {
+"frames": [ ExtResource( 46 ), ExtResource( 48 ), ExtResource( 45 ), ExtResource( 47 ) ],
+"loop": true,
+"name": "skeleton_idle",
+"speed": 5.0
+}, {
+"frames": [ ExtResource( 43 ), ExtResource( 44 ), ExtResource( 36 ), ExtResource( 41 ), ExtResource( 36 ), ExtResource( 36 ) ],
+"loop": false,
+"name": "skeleton_crouch",
+"speed": 10.0
 } ]
 
-[node name="Enemy" type="Node2D" groups=["Enemies"]]
+[node name="Enemy" type="Node2D" groups=[
+"Enemies",
+]]
 script = ExtResource( 1 )
 my_type = 1
 projectile = ExtResource( 28 )
@@ -69,7 +116,7 @@ projectile = ExtResource( 28 )
 [node name="EnemyBody" type="RigidBody2D" parent="."]
 collision_layer = 34
 collision_mask = 34
-mode = 3
+mode = 2
 contacts_reported = 10
 contact_monitor = true
 script = ExtResource( 27 )
@@ -92,8 +139,8 @@ hitsounds = [ ExtResource( 19 ), ExtResource( 18 ), ExtResource( 20 ), ExtResour
 z_index = 5
 z_as_relative = false
 frames = SubResource( 2 )
-animation = "chort_run"
-frame = 2
+animation = "skeleton_jump"
+frame = 1
 playing = true
 __meta__ = {
 "_edit_lock_": true
@@ -105,6 +152,5 @@ z_as_relative = false
 __meta__ = {
 "_edit_lock_": true
 }
-
 [connection signal="body_shape_entered" from="EnemyBody" to="." method="_on_RigidBody2D_body_shape_entered"]
 [connection signal="body_shape_exited" from="EnemyBody" to="." method="_on_EnemyBody_body_shape_exited"]

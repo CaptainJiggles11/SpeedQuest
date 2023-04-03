@@ -66,6 +66,7 @@ func generate_map(room_number): #Roughly fills matrix with normal rooms that ori
 	#matrix[vertical][horizontal] 
 	#Vert: +/DOWN -/UP | Horiz: +/RIGHT -/LEFT
 	matrix[size/2][size/2] = 99
+	print(size/2)
 	
 	var room_count = 0
 	while room_count < room_number:

@@ -115,13 +115,14 @@ animations = [ {
 
 [sub_resource type="CapsuleShape2D" id=5]
 radius = 13.9274
-height = 17.8859
+height = 40.548
 
 [node name="Player" type="Node2D" groups=["Player"]]
 z_index = 10
 z_as_relative = false
 script = ExtResource( 27 )
 my_class = 1
+walk_speed = 1.1
 
 [node name="PlayerBody" type="RigidBody2D" parent="."]
 z_index = 10
@@ -143,7 +144,7 @@ z_index = 10
 z_as_relative = false
 frames = SubResource( 2 )
 animation = "up"
-frame = 3
+frame = 2
 playing = true
 
 [node name="PlayerSfx" type="Node2D" parent="PlayerBody"]
@@ -177,11 +178,14 @@ frame = 6
 z_as_relative = false
 collision_layer = 96
 collision_mask = 96
-mode = 3
+mode = 1
+contacts_reported = 10
+contact_monitor = true
 script = ExtResource( 56 )
+friendly = true
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Weapon/WeaponBody"]
-position = Vector2( 7, 0.15 )
+position = Vector2( 1.809, 0.5 )
 rotation = 1.5708
 scale = Vector2( 2, 0.5 )
 shape = SubResource( 5 )
