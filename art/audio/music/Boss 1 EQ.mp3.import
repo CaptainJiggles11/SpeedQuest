@@ -1,0 +1,15 @@
+[remap]
+
+importer="mp3"
+type="AudioStreamMP3"
+path="res://.import/Boss 1 EQ.mp3-8f8a1023befdcaa9180cae62e1a6fc86.mp3str"
+
+[deps]
+
+source_file="res://art/audio/music/Boss 1 EQ.mp3"
+dest_files=[ "res://.import/Boss 1 EQ.mp3-8f8a1023befdcaa9180cae62e1a6fc86.mp3str" ]
+
+[params]
+
+loop=true
+loop_offset=0

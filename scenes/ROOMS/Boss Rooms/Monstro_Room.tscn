@@ -1193,7 +1193,6 @@ texture = ExtResource( 7 )
 
 [node name="Boss" parent="." instance=ExtResource( 2 )]
 scale = Vector2( 0.998623, 0.987663 )
-my_attack = 3
 
 [node name="Doors" parent="." instance=ExtResource( 8 )]
 
