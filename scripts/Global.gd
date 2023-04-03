@@ -10,6 +10,7 @@ var time
 var player_health
 var level = null
 var alive = false
+var player = null
 
 # Upgrades
 var max_time = 120

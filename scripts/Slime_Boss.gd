@@ -180,6 +180,7 @@ func burst():
 	timer = rand_range(2,3)
 
 func radial():
+	Global.player.player_cam.add_trauma(.2)
 	var shoot_angle = Vector2.UP
 	for x in range(128):
 		shoot(shoot_angle.normalized(),global_position + shoot_angle)

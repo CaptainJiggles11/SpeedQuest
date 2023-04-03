@@ -59,6 +59,7 @@ func _ready():
 	viewport_center = Vector2(get_viewport_rect().size.x/2,get_viewport_rect().size.y/2) #Middle of the viewport.
 	Global.player_position = rb.global_position
 	player_cam = $PlayerCam
+	Global.player = self
 	
 	_timer = Timer.new()
 	add_child(_timer)
@@ -217,6 +218,7 @@ func attack():
 func take_damage(amount):
 	if i_frames <= 0:
 		i_frames = 1.0
+		$PlayerCam.add_trauma(.2)
 		$PlayerCam.add_trauma(.2)
 		Global.player_health -= amount
 		sfx.play_sound(sfx.dmg)
