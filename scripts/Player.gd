@@ -10,7 +10,7 @@ var devmode = false
 var rb_script = load("res://scripts/PlayerRB.gd").new()
 var move_player = null
 var look_direction = Vector2(1,1)
-
+var speed_modifier = 1
 
 #Controller
 var deadzone = 0.5
@@ -128,7 +128,7 @@ func movement():
 			keyboard_controls()
 		
 		#Actually sets rigidbody velocity.
-		rb.linear_velocity = input_velocity.normalized() * walk_speed * 100 
+		rb.linear_velocity = input_velocity.normalized() * walk_speed * 100 * speed_modifier
 		
 		
 		#Flips character x according to mouse position.
