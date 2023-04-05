@@ -122,7 +122,7 @@ z_index = 10
 z_as_relative = false
 script = ExtResource( 27 )
 my_class = 1
-walk_speed = 1.1
+walk_speed = 1.2
 
 [node name="PlayerBody" type="RigidBody2D" parent="."]
 z_index = 10
@@ -144,7 +144,7 @@ z_index = 10
 z_as_relative = false
 frames = SubResource( 2 )
 animation = "up"
-frame = 2
+frame = 1
 playing = true
 
 [node name="PlayerSfx" type="Node2D" parent="PlayerBody"]

@@ -241,7 +241,7 @@ func _on_PlayerBody_body_shape_entered(body_id, body, body_shape, local_shape):
 			3:
 				reset = true
 
-	if body.name == "EnemyBody":
+	if body.name == "EnemyBody" or body.name == "BossBody":
 		take_damage(1)
 	
 	if door_timer <= 0:

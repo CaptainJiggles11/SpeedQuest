@@ -81,6 +81,7 @@ func _ready():
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(delta):
+	global_position = rb.global_position
 	level_navigation = get_tree().get_nodes_in_group("LevelNavigation")[0]
 	line2d.global_position = Vector2.ZERO
 	if health <= 0:
