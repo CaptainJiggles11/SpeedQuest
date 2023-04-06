@@ -11,6 +11,7 @@ var player_health
 var level = null
 var alive = false
 var player = null
+var current_room = null
 
 # Upgrades
 var max_time = 120
@@ -29,7 +30,10 @@ func _ready():
 	add_child(timer)
 	timer.start()
 	
-	
+func _process(delta):
+	if is_instance_valid(current_room):
+		print(current_room.room_number)
+		
 func goto_scene(path):
 	# This function will usually be called from a signal callback,
 	# or some other function in the current scene.

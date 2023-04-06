@@ -4,6 +4,7 @@ var loaded = false
 signal cleared
 var obscure 
 var adjacent_rooms
+var room_number
 var enemies = []
 
 # Declare member variables here. Examples:
@@ -55,6 +56,7 @@ func _process(delta):
 
 func set_active(): 
 	loaded = true
+	Global.current_room = self
 	for i in self.get_children():
 		i.set_process(true)
 	

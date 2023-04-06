@@ -59,6 +59,7 @@ func _ready():
 			
 		enemy_type.chort:
 			sprite.animation = "chort_run"
+			#jukeman
 			speed = 80
 			health = 2
 		
@@ -71,13 +72,13 @@ func _ready():
 			sprite.animation = "swampy_run"
 			speed = 30
 			health = 5
-			timer = rand_range(1,2)
+			timer = rand_range(.5,2)
 			
 		enemy_type.skeleton:
 			sprite.animation = "skeleton_idle"
 			speed = 50
 			health = 3
-			timer = 1
+			timer = rand_range(.5,1)
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(delta):
@@ -130,7 +131,6 @@ func _process(delta):
 					sprite.animation = "skeleton_jump"
 					attacking = false
 
-	
 		enemy_type.swampy:
 			if Vector2(Global.player_position.x,Global.player_position.y).distance_to(Vector2(global_position.x,global_position.y)) < aggro_range or aggro == true:	
 				if timer <= 0 and attacking == false:
@@ -145,12 +145,12 @@ func _process(delta):
 					new_projectile.set("start_pos", rb.global_position + (Global.player_position - rb.global_position).normalized() * 10)
 					get_parent().add_child(new_projectile)
 					randomize()
-					timer = rand_range(1,2)
+					timer = rand_range(.5,2)
 					attacking = false
 					sprite.animation = "swampy_run"
 				elif timer > 0:
 					timer -= delta
-					
+
 		enemy_type.bigzombie:
 			if Vector2(Global.player_position.x,Global.player_position.y).distance_to(Vector2(global_position.x,global_position.y)) < aggro_range or aggro == true:	
 				aggro = true
@@ -162,8 +162,6 @@ func _process(delta):
 					yield(get_tree().create_timer(rand_range(1,2)), "timeout")
 					timer = rand_range(3,4)
 					attacking = false
-				
-
 
 func _on_RigidBody2D_body_shape_entered(body_id, body, body_shape, local_shape):
 	if body.name == "WeaponBody":
