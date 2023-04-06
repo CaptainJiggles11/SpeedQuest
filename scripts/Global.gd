@@ -32,7 +32,7 @@ func _ready():
 	
 func _process(delta):
 	if is_instance_valid(current_room):
-		print(current_room.room_number)
+		pass
 		
 func goto_scene(path):
 	# This function will usually be called from a signal callback,

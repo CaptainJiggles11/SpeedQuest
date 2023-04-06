@@ -39,6 +39,7 @@ var attacking = false
 var reset = false
 var i_frames = 0
 var door_timer = 0
+var grounded_pos = Vector2.ZERO
 
 #Player Stats
 export(float) var walk_speed = 1
@@ -113,6 +114,7 @@ func movement():
 			rb.set_collision_layer_bit(1, false)
 			rb.set_collision_layer_bit(2, false)
 			rb.set_collision_layer_bit(3, false)
+			$PlayerBody/PitCollider/CollisionShape2D.disabled = true
 			rolling = true
 			can_roll = false
 			sprite.animation = "roll"
@@ -122,6 +124,9 @@ func movement():
 
 	#Get WASD inputs.
 	if rolling == false:
+		
+		grounded_pos = rb.global_position
+		
 		if Input.get_connected_joypads().size() >= 1:
 			joypad_controls()
 		else:
@@ -177,6 +182,7 @@ func movement():
 			rb.set_collision_layer_bit(1, true) #Enemy
 			rb.set_collision_layer_bit(2, true) #Enemy Projectiles
 			rb.set_collision_layer_bit(3, true) #Hazards
+			$PlayerBody/PitCollider/CollisionShape2D.disabled = false
 		yield(sprite,"animation_finished") #Wait for the last frame to end rolling state.
 		rolling = false
 		
@@ -231,15 +237,8 @@ func _on_Timer_timeout():
 		sfx.play_sound(sfx.footsteps)
 
 func _on_PlayerBody_body_shape_entered(body_id, body, body_shape, local_shape):
-	if body.name == ("Hazards (Tangible)"):
-		#print(body.get_cell(position.x,position.y))
-		match body.get_cell(position.x,position.y):
-			-1:
-				#Pitfall ID
-				reset = true
-				#print(reset)
-			3:
-				reset = true
+	pass
+
 
 	if body.name == "EnemyBody" or body.name == "BossBody":
 		take_damage(1)
