@@ -115,11 +115,11 @@ my_type = 1
 projectile = ExtResource( 28 )
 
 [node name="EnemyBody" type="RigidBody2D" parent="."]
-collision_layer = 42
-collision_mask = 42
+collision_layer = 34
+collision_mask = 34
 mode = 2
 physics_material_override = SubResource( 3 )
-continuous_cd = 2
+continuous_cd = 1
 contacts_reported = 10
 contact_monitor = true
 script = ExtResource( 27 )

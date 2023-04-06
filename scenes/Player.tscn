@@ -144,7 +144,6 @@ contacts_reported = 10
 contact_monitor = true
 can_sleep = false
 script = ExtResource( 47 )
-enemy = false
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="PlayerBody"]
 position = Vector2( 0, 10 )
@@ -158,6 +157,7 @@ z_index = 10
 z_as_relative = false
 frames = SubResource( 2 )
 animation = "up"
+frame = 2
 playing = true
 __meta__ = {
 "_edit_lock_": true

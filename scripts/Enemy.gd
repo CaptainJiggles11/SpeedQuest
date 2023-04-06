@@ -43,6 +43,7 @@ func _ready():
 	sprite = $EnemyBody/Sprite
 	sfx = $EnemyBody/EnemyAudio
 	yield(get_tree(), "idle_frame")
+	
 
 	
 	
@@ -115,9 +116,11 @@ func _process(delta):
 		enemy_type.skeleton: #Mentally insane sleep deprived machination 
 			if Vector2(Global.player_position.x,Global.player_position.y).distance_to(Vector2(global_position.x,global_position.y)) < aggro_range or aggro == true:
 				aggro = true
-				if timer >= 0:
-					rb.linear_velocity = jump_direction * actual_speed * 5 * timer
-					timer -= delta
+				if timer <= 0:
+					if jump_direction != Vector2.ZERO:
+						var tween := create_tween().set_trans(Tween.TRANS_QUAD).set_ease(Tween.EASE_IN_OUT)
+						tween.tween_property(self, "global_position", global_position + jump_direction * 100 , .5)
+					timer = 2
 				elif attacking == false:
 					attacking = true
 					sprite.animation = "skeleton_idle"
@@ -127,7 +130,8 @@ func _process(delta):
 					sprite.animation = "skeleton_crouch"
 					yield(sprite,"animation_finished")
 					jump_direction = (Global.player_position - rb.global_position).normalized()
-					timer = 1
+					print(jump_direction)
+					timer = 0
 					sprite.animation = "skeleton_jump"
 					attacking = false
 
