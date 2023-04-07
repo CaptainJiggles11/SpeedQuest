@@ -28,6 +28,7 @@ var input_velocity = Vector2.ZERO
 var player_position = Vector2.ZERO
 var sprite
 var inventory = []
+export (PackedScene) var projectile = null
 
 
 #Player States
@@ -208,6 +209,7 @@ func weapon_movement(delta):
 
 func attack():
 	if rolling == false and attacking == false:
+		shoot_projectile()
 		$PlayerCam.add_trauma(.15)
 		$Weapon/WeaponBody.set("friendly", true)
 		$Weapon/WeaponBody.set("attack_damage", Global.player_damage)
@@ -220,7 +222,22 @@ func attack():
 		$Weapon/WeaponBody/CollisionShape2D.disabled = true
 		yield(get_tree().create_timer(attack_cooldown), "timeout")
 		attacking = false
-
+		
+func shoot_projectile():
+	var new_projectile = projectile.instance()
+	new_projectile.friendly = true
+	new_projectile.piercing_left = 3
+	new_projectile.set("attack_damage", attack_damage)
+	new_projectile.set("provided_velocity", (look_direction).normalized() * 500 )
+	new_projectile.global_position = rb.global_position + (look_direction).normalized() * weapon_offset
+	new_projectile.set("start_pos", rb.global_position + (look_direction).normalized() * weapon_offset) 
+	add_child(new_projectile)
+	new_projectile.CS.scale = Vector2(5, 1)
+	new_projectile.look_at(look_direction)
+	var angleTo = new_projectile.transform.x.angle_to(look_direction)
+	new_projectile.rotate(sign(angleTo)* min(10, abs(angleTo))) 
+	
+	
 func take_damage(amount):
 	if i_frames <= 0:
 		i_frames = 1.0

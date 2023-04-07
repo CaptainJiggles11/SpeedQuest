@@ -172,12 +172,21 @@ func _on_RigidBody2D_body_shape_entered(body_id, body, body_shape, local_shape):
 	if body.name == "WeaponBody":
 		sprite.modulate = Color(1,0,0)
 		yield(get_tree().create_timer(.1), "timeout")
+		take_damage(body.attack_damage)
 		sprite.modulate = Color(1,1,1)
 		position -= (Global.player_position - self.position).normalized() * 3
 		slow = .75
-		take_damage(body.attack_damage)
+
+	if "Projectile" in body.name and body.friendly == true:
+		sprite.modulate = Color(1,0,0)
+		yield(get_tree().create_timer(.1), "timeout")
+		take_damage(Global.player_damage)
+		sprite.modulate = Color(1,1,1)
+		position -= (Global.player_position - self.position).normalized() * 3
+		slow = .5
+
 	if "Walls (Tangible)" in body.name:
-		print("wall")
+
 		rb.stop = true
 		var tween := create_tween().set_trans(Tween.TRANS_QUAD).set_ease(Tween.EASE_IN_OUT)
 		tween.tween_property(self, "global_position", global_position, 1)
