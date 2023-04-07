@@ -27,14 +27,14 @@ func _on_PitCollider_body_entered(body):
 				player.reset = true
 				rb.reset_pos = player.grounded_pos -rb.linear_velocity.normalized() * 15
 				player.i_frames = 2
-				rb.set_collision_mask_bit(3, true)
+				get_parent().set_collision_mask_bit(3, true)
 				yield(get_tree().create_timer(.5), "timeout")
-				rb.set_collision_mask_bit(3, false)
+				get_parent().set_collision_mask_bit(3, false)
 			3:
 				player.reset = true
 				rb.reset_pos = player.grounded_pos -rb.linear_velocity.normalized() * 15
 				player.i_frames = 2
-				rb.set_collision_mask_bit(3, true)
+				get_parent().set_collision_mask_bit(3, true)
 				yield(get_tree().create_timer(.5), "timeout")
-				rb.set_collision_mask_bit(3, false)
+				get_parent().set_collision_mask_bit(3, false)
 				

@@ -115,6 +115,7 @@ func movement():
 			rb.set_collision_layer_bit(1, false)
 			rb.set_collision_layer_bit(2, false)
 			rb.set_collision_layer_bit(3, false)
+			rb.set_collision_mask_bit(3, false)
 			$PlayerBody/PitCollider/CollisionShape2D.disabled = true
 			rolling = true
 			can_roll = false
