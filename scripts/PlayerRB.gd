@@ -1,5 +1,6 @@
 extends RigidBody2D
 var reset_pos = Vector2.ZERO
+var stop = false
 
 # Called when the node enters the scene tree for the first time.
 func _ready():
@@ -16,6 +17,10 @@ func _integrate_forces(state):
 	if move_player != null:
 		state.transform.origin += move_player
 		get_owner().set("move_player", null)
+	
+	if stop == true:
+		linear_velocity = Vector2.ZERO
+		stop = false
 		
 
 

@@ -118,8 +118,9 @@ func _process(delta):
 				aggro = true
 				if timer <= 0:
 					if jump_direction != Vector2.ZERO:
+						var rand = rand_range(.5,2)
 						var tween := create_tween().set_trans(Tween.TRANS_QUAD).set_ease(Tween.EASE_IN_OUT)
-						tween.tween_property(self, "global_position", global_position + jump_direction * 100 , .5)
+						tween.tween_property(self, "global_position", global_position + jump_direction * 100 * rand , .5 * rand)
 					timer = 2
 				elif attacking == false:
 					attacking = true
@@ -175,6 +176,12 @@ func _on_RigidBody2D_body_shape_entered(body_id, body, body_shape, local_shape):
 		position -= (Global.player_position - self.position).normalized() * 3
 		slow = .75
 		take_damage(body.attack_damage)
+	if "Walls (Tangible)" in body.name:
+		print("wall")
+		rb.stop = true
+		var tween := create_tween().set_trans(Tween.TRANS_QUAD).set_ease(Tween.EASE_IN_OUT)
+		tween.tween_property(self, "global_position", global_position, 1)
+		
 	pass # Replace with function body.
 	
 func take_damage(damage_dealt):
