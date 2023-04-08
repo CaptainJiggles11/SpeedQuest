@@ -16,5 +16,4 @@ func _on_Exit_pressed():
 
 
 func _on_Start_pressed():
-	Global.alive = true
-	Global.goto_scene("res://scenes/ROOMS/Level.tscn")
+	Global.start_game()

@@ -23,12 +23,9 @@ func _ready():
 
 
 func _on_Start_pressed():
-	Global.alive = true
-	Global.time = Global.max_time
-	Global.player_health = Global.max_hp
+	Global.start_game()
 	var root = get_tree().root
 	root.remove_child(self)
-	Global.goto_scene("res://scenes/ROOMS/Level.tscn")
 
 
 func time_init():

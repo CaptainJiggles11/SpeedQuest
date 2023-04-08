@@ -131,7 +131,7 @@ func _process(delta):
 					sprite.animation = "skeleton_crouch"
 					yield(sprite,"animation_finished")
 					jump_direction = (Global.player_position - rb.global_position).normalized()
-					print(jump_direction)
+					#print(jump_direction)
 					timer = 0
 					sprite.animation = "skeleton_jump"
 					attacking = false
@@ -194,7 +194,7 @@ func _on_RigidBody2D_body_shape_entered(body_id, body, body_shape, local_shape):
 	pass # Replace with function body.
 	
 func take_damage(damage_dealt):
-	print(damage_dealt)
+	#print(damage_dealt)
 	sfx.play_sound(sfx.hitsounds)
 	health-=damage_dealt
 
