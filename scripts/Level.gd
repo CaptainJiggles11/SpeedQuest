@@ -41,7 +41,7 @@ func generate_floor(map): #Actually fills the world with level nodes.
 					new_room.set("room_number", Vector2(x,y))
 					self.add_child(new_room)
 					
-					$Player/Minimap.add_block(Vector2(x,y))
+					$Player/Minimap.add_block(Vector2(x,y), Color(.5,.5,.5,1))
 					
 				1: #Normal Room
 					var new_room = choose(rooms).instance()
@@ -51,7 +51,7 @@ func generate_floor(map): #Actually fills the world with level nodes.
 					new_room.set("room_number", Vector2(x,y))
 					self.add_child(new_room)
 					
-					$Player/Minimap.add_block(Vector2(x,y))
+					$Player/Minimap.add_block(Vector2(x,y), Color(.5,.5,.5,1))
 					
 				2: #Treasure Room
 					var new_room = treasure_room.instance()
@@ -61,7 +61,7 @@ func generate_floor(map): #Actually fills the world with level nodes.
 					new_room.set("room_number", Vector2(x,y))
 					self.add_child(new_room)
 					
-					$Player/Minimap.add_block(Vector2(x,y))
+					$Player/Minimap.add_block(Vector2(x,y), Color(1,1,0,1))
 					
 					
 				3: #Boss Room
@@ -72,7 +72,7 @@ func generate_floor(map): #Actually fills the world with level nodes.
 					new_room.set("room_number", Vector2(x,y))
 					self.add_child(new_room)
 					
-					$Player/Minimap.add_block(Vector2(x,y))
+					$Player/Minimap.add_block(Vector2(x,y), Color(1,0,1,1))
 
 func generate_map(room_number): #Roughly fills matrix with normal rooms that originate from the start room.
 	var rng = RandomNumberGenerator.new()

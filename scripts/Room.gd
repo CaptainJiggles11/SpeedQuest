@@ -64,7 +64,7 @@ func set_active():
 		Global.player.speed_modifier = 1
 	for i in self.get_children():
 		i.set_process(true)
-		
+	
 	for room in adjacent_rooms:
 		for blocks in Global.player.minimap.minimap_blocks:
 			if blocks.block_number == room + room_number:

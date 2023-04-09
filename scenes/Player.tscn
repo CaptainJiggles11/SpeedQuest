@@ -1,4 +1,4 @@
-[gd_scene load_steps=73 format=2]
+[gd_scene load_steps=74 format=2]
 
 [ext_resource path="res://art/packs/0x72_DungeonTilesetII_v1.4/frames/knight_f_idle_anim_f3.png" type="Texture" id=1]
 [ext_resource path="res://art/packs/0x72_DungeonTilesetII_v1.4/frames/knight_f_run_anim_f0.png" type="Texture" id=2]
@@ -65,6 +65,7 @@
 [ext_resource path="res://art/audio/sfx/Player/Slash/slash3.wav" type="AudioStream" id=63]
 [ext_resource path="res://art/audio/sfx/Player/Slash/slash1.wav" type="AudioStream" id=64]
 [ext_resource path="res://MapBlock.tscn" type="PackedScene" id=65]
+[ext_resource path="res://art/Miscellaneous/white_square.png" type="Texture" id=66]
 
 [sub_resource type="PhysicsMaterial" id=7]
 friction = 0.0
@@ -161,6 +162,7 @@ z_index = 10
 z_as_relative = false
 frames = SubResource( 2 )
 animation = "up"
+frame = 3
 playing = true
 __meta__ = {
 "_edit_lock_": true
@@ -214,7 +216,7 @@ __meta__ = {
 [node name="WeaponBody" type="RigidBody2D" parent="Weapon"]
 z_as_relative = false
 collision_layer = 96
-collision_mask = 0
+collision_mask = 64
 mode = 1
 contacts_reported = 10
 contact_monitor = true
@@ -252,11 +254,17 @@ margin_bottom = 230.0
 
 [node name="Viewport" type="Viewport" parent="Minimap/Control/ViewportContainer"]
 size = Vector2( 200, 200 )
+transparent_bg = true
 handle_input_locally = false
 hdr = false
 disable_3d = true
 usage = 0
 render_target_update_mode = 3
+
+[node name="Sprite" type="Sprite" parent="Minimap/Control/ViewportContainer/Viewport"]
+modulate = Color( 0, 0, 0, 0.447059 )
+scale = Vector2( 1000, 1000 )
+texture = ExtResource( 66 )
 
 [connection signal="body_shape_entered" from="PlayerBody" to="." method="_on_PlayerBody_body_shape_entered"]
 [connection signal="area_shape_entered" from="PlayerBody/Area2D" to="." method="_on_Area2D_area_shape_entered"]

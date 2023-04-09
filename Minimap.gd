@@ -16,7 +16,7 @@ func _ready():
 
 	pass # Replace with function body.
 
-func add_block(coords):
+func add_block(coords, color):
 	var x = coords.x
 	var y = coords.y
 	var vpc = vp.size/2
@@ -24,7 +24,9 @@ func add_block(coords):
 	vp.add_child(new_block)
 	new_block.position = Vector2(x * block_offset ,y * block_offset)
 	new_block.block_number = Vector2(x,y)
+	new_block.color = color
 	minimap_blocks.append(new_block)
+	
 	
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.

@@ -15,19 +15,25 @@ onready var CS = get_node("CollisionShape2D")
 
 # Called when the node enters the scene tree for the first time.
 func _ready():
-
+	hide()
+	if friendly == true:
+		set_collision_mask_bit(6, false)
 	pass # Replace with function body.
 
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _integrate_forces(state):
+	
 	if friendly == true:
 		attack_damage = Global.player_damage
 		#set_collision_layer_bit(1, true)
 		set_collision_layer_bit(7, true)
+		set_collision_mask_bit(6, false)
 		linear_velocity = provided_velocity
+		show()
 	else:
 		if active == true:
+			show()
 			linear_velocity = provided_velocity * 200
 			#set_collision_layer_bit(0, true)
 			set_collision_mask_bit(0,true)
