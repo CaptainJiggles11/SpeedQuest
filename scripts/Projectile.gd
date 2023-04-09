@@ -22,9 +22,9 @@ func _ready():
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _integrate_forces(state):
 	if friendly == true:
-		attack_damage = Global.player_damage
+		attack_damage = Global.player_damage * .5
 		#set_collision_layer_bit(1, true)
-		set_collision_mask_bit(7, true)
+		set_collision_layer_bit(7, true)
 		linear_velocity = provided_velocity
 	else:
 		if active == true:

@@ -12,7 +12,7 @@ radius = 2.56099
 [node name="Projectile" type="RigidBody2D"]
 z_index = 5
 z_as_relative = false
-collision_layer = 16
+collision_layer = 144
 collision_mask = 0
 mode = 2
 physics_material_override = SubResource( 1 )

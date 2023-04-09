@@ -138,7 +138,7 @@ roll_velocity = 1.7
 z_index = 10
 z_as_relative = false
 collision_layer = 31
-collision_mask = 16
+collision_mask = 0
 mode = 2
 physics_material_override = SubResource( 7 )
 continuous_cd = 2
@@ -159,7 +159,7 @@ z_index = 10
 z_as_relative = false
 frames = SubResource( 2 )
 animation = "up"
-frame = 3
+frame = 1
 playing = true
 __meta__ = {
 "_edit_lock_": true
@@ -213,7 +213,7 @@ __meta__ = {
 [node name="WeaponBody" type="RigidBody2D" parent="Weapon"]
 z_as_relative = false
 collision_layer = 96
-collision_mask = 96
+collision_mask = 0
 mode = 1
 contacts_reported = 10
 contact_monitor = true

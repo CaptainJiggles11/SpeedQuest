@@ -55,6 +55,7 @@ export (float) var weapon_offset = 20
 
 
 func _ready():
+	
 	rb = get_node("PlayerBody")
 	sprite = get_node("PlayerBody/AnimatedSprite")
 	sfx = get_node("PlayerBody/PlayerSfx")
@@ -210,7 +211,8 @@ func weapon_movement(delta):
 
 func attack():
 	if rolling == false and attacking == false:
-		shoot_projectile()
+		if Global.player_health >= Global.max_hp:
+			shoot_projectile()
 		$PlayerCam.add_trauma(.15)
 		$Weapon/WeaponBody.set("friendly", true)
 		$Weapon/WeaponBody.set("attack_damage", Global.player_damage)
@@ -230,10 +232,10 @@ func shoot_projectile():
 	new_projectile.piercing_left = 3
 	new_projectile.set("attack_damage", attack_damage)
 	new_projectile.set("provided_velocity", (look_direction).normalized() * 500 )
-	new_projectile.global_position = rb.global_position + (look_direction).normalized() * weapon_offset
-	new_projectile.set("start_pos", rb.global_position + (look_direction).normalized() * weapon_offset) 
+	new_projectile.global_position = rb.global_position + (look_direction).normalized() * weapon_offset/2
+	new_projectile.set("start_pos", rb.global_position + (look_direction).normalized() * weapon_offset/2) 
 	add_child(new_projectile)
-	new_projectile.CS.scale = Vector2(5, 1)
+	new_projectile.CS.scale = Vector2(6, 1)
 	new_projectile.look_at(look_direction)
 	var angleTo = new_projectile.transform.x.angle_to(look_direction)
 	new_projectile.rotate(sign(angleTo)* min(10, abs(angleTo))) 
@@ -255,9 +257,7 @@ func _on_Timer_timeout():
 		sfx.play_sound(sfx.footsteps)
 
 func _on_PlayerBody_body_shape_entered(body_id, body, body_shape, local_shape):
-	pass
-
-
+	
 	if body.name == "EnemyBody" or body.name == "BossBody":
 		take_damage(1)
 	
