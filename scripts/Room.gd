@@ -66,9 +66,7 @@ func set_active():
 		i.set_process(true)
 		
 	for room in adjacent_rooms:
-		print(room)
 		for blocks in Global.player.minimap.minimap_blocks:
-			print(blocks.block_number)
 			if blocks.block_number == room + room_number:
 				blocks.seen = true
 	

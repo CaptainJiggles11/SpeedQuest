@@ -1,4 +1,4 @@
-[gd_scene load_steps=151 format=2]
+[gd_scene load_steps=150 format=2]
 
 [ext_resource path="res://art/packs/0x72_DungeonTilesetII_v1.4/0f6a29db-2521-4e60-899f-1795dfa4906e.png" type="Texture" id=1]
 [ext_resource path="res://art/Miscellaneous/Tutorial_Image.png" type="Texture" id=2]
@@ -8,7 +8,6 @@
 [ext_resource path="res://scripts/Room.gd" type="Script" id=6]
 [ext_resource path="res://art/Miscellaneous/0x0.jpg" type="Texture" id=7]
 [ext_resource path="res://Doors.tscn" type="PackedScene" id=8]
-[ext_resource path="res://scenes/Enemy.tscn" type="PackedScene" id=9]
 
 [sub_resource type="NavigationPolygon" id=1]
 vertices = PoolVector2Array( 0, 0, 16, 0, 16, 16, 0, 16 )
@@ -1424,73 +1423,3 @@ position = Vector2( 0, -3.778 )
 scale = Vector2( 0.5, 0.498 )
 z_index = 100
 texture = ExtResource( 7 )
-
-[node name="Enemy" parent="." instance=ExtResource( 9 )]
-position = Vector2( -115.353, 66.5956 )
-health = 1000.0
-speed = 100.0
-my_type = 4
-my_attack = 1
-
-[node name="Enemy2" parent="." instance=ExtResource( 9 )]
-position = Vector2( -150.71, 77.259 )
-health = 1000.0
-speed = 100.0
-my_type = 4
-my_attack = 1
-
-[node name="Enemy3" parent="." instance=ExtResource( 9 )]
-position = Vector2( -115.072, 107.565 )
-health = 1000.0
-speed = 100.0
-my_type = 4
-my_attack = 1
-
-[node name="Enemy4" parent="." instance=ExtResource( 9 )]
-position = Vector2( -50.2503, 71.9273 )
-health = 1000.0
-speed = 100.0
-my_type = 4
-my_attack = 1
-
-[node name="Enemy5" parent="." instance=ExtResource( 9 )]
-position = Vector2( -115.914, 32.3605 )
-health = 1000.0
-speed = 100.0
-my_type = 4
-my_attack = 1
-
-[node name="Enemy6" parent="." instance=ExtResource( 9 )]
-position = Vector2( -135.277, 49.7587 )
-health = 1000.0
-speed = 100.0
-my_type = 4
-my_attack = 1
-
-[node name="Enemy7" parent="." instance=ExtResource( 9 )]
-position = Vector2( -87.5721, 54.8098 )
-health = 1000.0
-speed = 100.0
-my_type = 4
-my_attack = 1
-
-[node name="Enemy8" parent="." instance=ExtResource( 9 )]
-position = Vector2( -84.7659, 90.7285 )
-health = 1000.0
-speed = 100.0
-my_type = 4
-my_attack = 1
-
-[node name="Enemy9" parent="." instance=ExtResource( 9 )]
-position = Vector2( -70.4545, 23.6615 )
-health = 1000.0
-speed = 100.0
-my_type = 4
-my_attack = 1
-
-[node name="Enemy10" parent="." instance=ExtResource( 9 )]
-position = Vector2( -156.042, -0.752029 )
-health = 1000.0
-speed = 100.0
-my_type = 4
-my_attack = 1
