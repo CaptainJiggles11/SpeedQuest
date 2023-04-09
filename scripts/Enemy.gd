@@ -57,7 +57,7 @@ func _ready():
 			
 		enemy_type.bigzombie:
 			speed = 30
-			health = 8
+			health = 5
 			aggro_range = 200
 			timer = rand_range(2,5)
 			sprite.animation = "bigzombie_run"
@@ -78,7 +78,7 @@ func _ready():
 		enemy_type.swampy:
 			sprite.animation = "swampy_run"
 			speed = 30
-			health = 5
+			health = 1.5
 			timer = rand_range(.5,2)
 			cs.scale = Vector2(cs.scale*1.5)
 			cs.position.y += 2
@@ -86,7 +86,7 @@ func _ready():
 		enemy_type.skeleton:
 			sprite.animation = "skeleton_idle"
 			speed = 50
-			health = 3
+			health = 1
 			timer = rand_range(.5,1)
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.

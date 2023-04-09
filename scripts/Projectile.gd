@@ -22,7 +22,7 @@ func _ready():
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _integrate_forces(state):
 	if friendly == true:
-		attack_damage = Global.player_damage * .5
+		attack_damage = Global.player_damage
 		#set_collision_layer_bit(1, true)
 		set_collision_layer_bit(7, true)
 		linear_velocity = provided_velocity
@@ -48,10 +48,7 @@ func _on_Projectile_body_shape_entered(body_id, body, body_shape, local_shape):
 				queue_free()
 				
 			if body.name != "PlayerBody" and body.name != "WeaponBody":
-				if piercing_left <= 0:
 					queue_free()
-				else:
-					piercing_left -= 1
 
 		else:
 			if body.name == "PlayerBody":
