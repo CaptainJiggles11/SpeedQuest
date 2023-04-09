@@ -7,6 +7,7 @@ export (Array) var bow_sfx
 export (Array) var staff_sfx
 export (Array) var roll
 export (Array) var dmg
+export (Array) var fall_sounds
 
 # Declare member variables here. Examples:
 # var a = 2

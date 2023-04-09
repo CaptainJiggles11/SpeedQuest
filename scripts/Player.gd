@@ -110,7 +110,7 @@ func movement():
 
 	
 	#Roll Mechanic-- gives a burst of speed and intangibility on press.
-	if can_roll == true:
+	if can_roll == true and rolling == false:
 		if Input.is_action_pressed("roll"):
 			rb.linear_velocity = rb.linear_velocity*roll_velocity
 			rb.set_collision_layer_bit(0, false)
@@ -187,11 +187,15 @@ func movement():
 			rb.set_collision_layer_bit(2, true) #Enemy Projectiles
 			rb.set_collision_layer_bit(3, true) #Hazards
 			$PlayerBody/PitCollider/CollisionShape2D.disabled = false
+		
+		
 		yield(sprite,"animation_finished") #Wait for the last frame to end rolling state.
 		rolling = false
 		
 		yield(get_tree().create_timer(roll_cooldown), "timeout") #Wait out the roll cooldown before you can roll again.
-		can_roll = true
+		if rb.falling == false:
+			can_roll = true
+			rolling = false
 
 
 func weapon_movement(delta):
@@ -246,12 +250,20 @@ func take_damage(amount):
 	if i_frames <= 0:
 		i_frames = 1.0
 		$PlayerCam.add_trauma(.2)
-		$PlayerCam.add_trauma(.2)
 		Global.player_health -= amount
 		sfx.play_sound(sfx.dmg)
 		if Global.player_health <= 0:
 			yield(get_tree().create_timer(.2), "timeout")
 			Global.open_shop()
+			
+func true_damage(amount):
+	$PlayerCam.add_trauma(.2)
+	Global.player_health -= amount
+	sfx.play_sound(sfx.dmg)
+	if Global.player_health <= 0:
+		yield(get_tree().create_timer(.2), "timeout")
+		Global.open_shop()
+
 
 func _on_Timer_timeout():
 	if walking == true and rolling == false:

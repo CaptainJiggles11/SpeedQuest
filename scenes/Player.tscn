@@ -1,4 +1,4 @@
-[gd_scene load_steps=74 format=2]
+[gd_scene load_steps=75 format=2]
 
 [ext_resource path="res://art/packs/0x72_DungeonTilesetII_v1.4/frames/knight_f_idle_anim_f3.png" type="Texture" id=1]
 [ext_resource path="res://art/packs/0x72_DungeonTilesetII_v1.4/frames/knight_f_run_anim_f0.png" type="Texture" id=2]
@@ -66,6 +66,7 @@
 [ext_resource path="res://art/audio/sfx/Player/Slash/slash1.wav" type="AudioStream" id=64]
 [ext_resource path="res://MapBlock.tscn" type="PackedScene" id=65]
 [ext_resource path="res://art/Miscellaneous/white_square.png" type="Texture" id=66]
+[ext_resource path="res://scenes/Fall.wav" type="AudioStream" id=67]
 
 [sub_resource type="PhysicsMaterial" id=7]
 friction = 0.0
@@ -162,7 +163,7 @@ z_index = 10
 z_as_relative = false
 frames = SubResource( 2 )
 animation = "up"
-frame = 3
+frame = 2
 playing = true
 __meta__ = {
 "_edit_lock_": true
@@ -177,6 +178,7 @@ footsteps = [ ExtResource( 52 ), ExtResource( 53 ), ExtResource( 51 ) ]
 sword_sfx = [ ExtResource( 64 ), ExtResource( 62 ), ExtResource( 63 ) ]
 roll = [ ExtResource( 45 ) ]
 dmg = [ ExtResource( 48 ) ]
+fall_sounds = [ ExtResource( 67 ) ]
 
 [node name="Area2D" type="Area2D" parent="PlayerBody"]
 collision_layer = 7
