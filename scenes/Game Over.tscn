@@ -124,6 +124,5 @@ frames = SubResource( 6 )
 [node name="goblin" type="AnimatedSprite" parent="Panel/sword"]
 position = Vector2( -14.2629, 5.71663 )
 rotation = 1.61443
-scale = Vector2( 1, 1 )
 frames = SubResource( 8 )
 flip_h = true
