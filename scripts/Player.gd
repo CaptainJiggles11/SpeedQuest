@@ -233,8 +233,8 @@ func shoot_projectile():
 	new_projectile.piercing_left = 3
 	new_projectile.set("attack_damage", attack_damage * .5)
 	new_projectile.set("provided_velocity", (get_global_mouse_position() - rb.global_position ).normalized() * 500 )
-	new_projectile.global_position = rb.global_position + (get_global_mouse_position() - rb.global_position ).normalized() * weapon_offset/2
-	new_projectile.set("start_pos", rb.global_position + (get_global_mouse_position() - rb.global_position ).normalized() * weapon_offset/2) 
+	new_projectile.global_position = rb.global_position + (get_global_mouse_position() - rb.global_position ).normalized() * weapon_offset * 2
+	new_projectile.set("start_pos", rb.global_position + (get_global_mouse_position() - rb.global_position ).normalized() * weapon_offset * 2) 
 	add_child(new_projectile)
 	new_projectile.CS.scale = Vector2(6, 1)
 	new_projectile.look_at((get_global_mouse_position() - rb.global_position ).normalized())
