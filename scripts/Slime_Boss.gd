@@ -144,9 +144,9 @@ func navigate(delta):
 			path.pop_front()
 
 func death():
-	var coin = preload("res://scenes/Coin.tscn").instance()
-	coin.position = position
-	get_parent().add_child(coin)
+	var heart = preload("res://scenes/Heart_Container.tscn").instance()
+	heart.position = position
+	get_parent().add_child(heart)
 	queue_free()
 
 func shoot(direction = (Global.player_position - global_position).normalized(), shootPos = position + (Global.player_position - global_position).normalized() * 10):

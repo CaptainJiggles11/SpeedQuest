@@ -5,7 +5,7 @@ var chase_player = false
 # Called when the node enters the scene tree for the first time.
 func _ready():
 	sprite = get_node("Area2D/AnimatedSprite")
-	sprite.animation = "spin"
+	sprite.animation = "bounce"
 	z_index = 1
 
 
@@ -20,4 +20,4 @@ func _process(delta):
 
 func _on_Area2D_body_shape_entered(body_rid, body, body_shape_index, local_shape_index):
 	if body.name == "PlayerBody":
-		Global._on_get_coin(self)
+		Global._on_get_heart(self)
