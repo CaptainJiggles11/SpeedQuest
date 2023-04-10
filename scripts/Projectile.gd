@@ -17,7 +17,10 @@ onready var CS = get_node("CollisionShape2D")
 func _ready():
 	hide()
 	if friendly == true:
-		set_collision_mask_bit(6, false)
+		set_collision_layer_bit(6, false)
+	else:
+		set_collision_layer_bit(0,true)
+		
 	pass # Replace with function body.
 
 
@@ -28,7 +31,7 @@ func _integrate_forces(state):
 		attack_damage = Global.player_damage
 		#set_collision_layer_bit(1, true)
 		set_collision_layer_bit(7, true)
-		set_collision_mask_bit(6, false)
+		set_collision_layer_bit(6, false)
 		linear_velocity = provided_velocity
 		show()
 	else:
@@ -36,7 +39,7 @@ func _integrate_forces(state):
 			show()
 			linear_velocity = provided_velocity * 200
 			#set_collision_layer_bit(0, true)
-			set_collision_mask_bit(0,true)
+			set_collision_layer_bit(6,true)
 			height -= .01
 			$CollisionShape2D.scale -= Vector2(0.002,0.002)
 			if height <= 0 or $CollisionShape2D.scale.x <= 0:

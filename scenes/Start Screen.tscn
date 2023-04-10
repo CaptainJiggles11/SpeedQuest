@@ -216,14 +216,14 @@ frames = SubResource( 15 )
 position = Vector2( -5, 79.5 )
 scale = Vector2( 2, 2 )
 frames = SubResource( 6 )
-frame = 2
+frame = 1
 playing = true
 
 [node name="Demon" type="AnimatedSprite" parent="Panel"]
 position = Vector2( 242, 1 )
 scale = Vector2( 2, 2 )
 frames = SubResource( 7 )
-frame = 3
+frame = 2
 playing = true
 flip_h = true
 
@@ -231,7 +231,7 @@ flip_h = true
 position = Vector2( 252, 32 )
 scale = Vector2( 2, 2 )
 frames = SubResource( 7 )
-frame = 3
+frame = 2
 playing = true
 flip_h = true
 
@@ -239,7 +239,7 @@ flip_h = true
 position = Vector2( 269, 54 )
 scale = Vector2( 2, 2 )
 frames = SubResource( 7 )
-frame = 2
+frame = 1
 playing = true
 flip_h = true
 
@@ -247,7 +247,7 @@ flip_h = true
 position = Vector2( 261, 81 )
 scale = Vector2( 2, 2 )
 frames = SubResource( 7 )
-frame = 2
+frame = 1
 playing = true
 flip_h = true
 
@@ -255,6 +255,7 @@ flip_h = true
 position = Vector2( 208, 19 )
 scale = Vector2( 2, 2 )
 frames = SubResource( 8 )
+frame = 3
 playing = true
 flip_h = true
 
@@ -262,7 +263,7 @@ flip_h = true
 position = Vector2( 214, 34 )
 scale = Vector2( 2, 2 )
 frames = SubResource( 8 )
-frame = 3
+frame = 2
 playing = true
 flip_h = true
 
@@ -270,7 +271,7 @@ flip_h = true
 position = Vector2( 222, 46 )
 scale = Vector2( 2, 2 )
 frames = SubResource( 8 )
-frame = 3
+frame = 2
 playing = true
 flip_h = true
 
@@ -278,7 +279,7 @@ flip_h = true
 position = Vector2( 207, 61 )
 scale = Vector2( 2, 2 )
 frames = SubResource( 8 )
-frame = 2
+frame = 1
 playing = true
 flip_h = true
 
@@ -286,7 +287,7 @@ flip_h = true
 position = Vector2( 226, 53 )
 scale = Vector2( 2, 2 )
 frames = SubResource( 8 )
-frame = 2
+frame = 1
 playing = true
 flip_h = true
 
@@ -294,7 +295,7 @@ flip_h = true
 position = Vector2( 212, 77 )
 scale = Vector2( 2, 2 )
 frames = SubResource( 8 )
-frame = 2
+frame = 1
 playing = true
 flip_h = true
 
@@ -302,7 +303,6 @@ flip_h = true
 position = Vector2( 232, 81 )
 scale = Vector2( 2, 2 )
 frames = SubResource( 8 )
-frame = 1
 playing = true
 flip_h = true
 
@@ -310,7 +310,6 @@ flip_h = true
 position = Vector2( 219, 93 )
 scale = Vector2( 2, 2 )
 frames = SubResource( 8 )
-frame = 1
 playing = true
 flip_h = true
 
@@ -318,6 +317,7 @@ flip_h = true
 position = Vector2( 140, 28 )
 scale = Vector2( 2, 2 )
 frames = SubResource( 9 )
+frame = 3
 playing = true
 flip_h = true
 
@@ -325,7 +325,7 @@ flip_h = true
 position = Vector2( 159, 25 )
 scale = Vector2( 2, 2 )
 frames = SubResource( 9 )
-frame = 3
+frame = 2
 playing = true
 flip_h = true
 
@@ -333,7 +333,7 @@ flip_h = true
 position = Vector2( 181, 29 )
 scale = Vector2( 2, 2 )
 frames = SubResource( 9 )
-frame = 3
+frame = 2
 playing = true
 flip_h = true
 
@@ -341,7 +341,7 @@ flip_h = true
 position = Vector2( 175, 51 )
 scale = Vector2( 2, 2 )
 frames = SubResource( 9 )
-frame = 3
+frame = 2
 playing = true
 flip_h = true
 
@@ -349,7 +349,7 @@ flip_h = true
 position = Vector2( 187, 43 )
 scale = Vector2( 2, 2 )
 frames = SubResource( 9 )
-frame = 2
+frame = 1
 playing = true
 flip_h = true
 
@@ -357,7 +357,6 @@ flip_h = true
 position = Vector2( 188, 74 )
 scale = Vector2( 2, 2 )
 frames = SubResource( 9 )
-frame = 1
 playing = true
 flip_h = true
 
@@ -365,7 +364,6 @@ flip_h = true
 position = Vector2( 172, 82 )
 scale = Vector2( 2, 2 )
 frames = SubResource( 9 )
-frame = 1
 playing = true
 flip_h = true
 
@@ -373,7 +371,6 @@ flip_h = true
 position = Vector2( 130, 54 )
 scale = Vector2( 2, 2 )
 frames = SubResource( 10 )
-frame = 1
 playing = true
 flip_h = true
 
@@ -381,7 +378,6 @@ flip_h = true
 position = Vector2( 142, 57 )
 scale = Vector2( 2, 2 )
 frames = SubResource( 10 )
-frame = 1
 playing = true
 flip_h = true
 
@@ -389,7 +385,6 @@ flip_h = true
 position = Vector2( 150, 69 )
 scale = Vector2( 2, 2 )
 frames = SubResource( 10 )
-frame = 1
 playing = true
 flip_h = true
 
@@ -397,7 +392,6 @@ flip_h = true
 position = Vector2( 140, 85 )
 scale = Vector2( 2, 2 )
 frames = SubResource( 10 )
-frame = 1
 playing = true
 flip_h = true
 
@@ -405,7 +399,6 @@ flip_h = true
 position = Vector2( 155, 93 )
 scale = Vector2( 2, 2 )
 frames = SubResource( 10 )
-frame = 1
 playing = true
 flip_h = true
 
@@ -413,7 +406,7 @@ flip_h = true
 position = Vector2( 113, 58 )
 scale = Vector2( 2, 2 )
 frames = SubResource( 11 )
-frame = 2
+frame = 1
 playing = true
 flip_h = true
 
@@ -421,7 +414,7 @@ flip_h = true
 position = Vector2( 117, 69 )
 scale = Vector2( 2, 2 )
 frames = SubResource( 11 )
-frame = 2
+frame = 1
 playing = true
 flip_h = true
 
@@ -429,7 +422,7 @@ flip_h = true
 position = Vector2( 124, 79 )
 scale = Vector2( 2, 2 )
 frames = SubResource( 11 )
-frame = 2
+frame = 1
 playing = true
 flip_h = true
 
@@ -437,7 +430,6 @@ flip_h = true
 position = Vector2( 122, 96 )
 scale = Vector2( 2, 2 )
 frames = SubResource( 11 )
-frame = 1
 playing = true
 flip_h = true
 
@@ -445,6 +437,7 @@ flip_h = true
 position = Vector2( 96, 64 )
 scale = Vector2( 2, 2 )
 frames = SubResource( 12 )
+frame = 3
 playing = true
 flip_h = true
 
@@ -452,7 +445,7 @@ flip_h = true
 position = Vector2( 109, 79 )
 scale = Vector2( 2, 2 )
 frames = SubResource( 12 )
-frame = 3
+frame = 2
 playing = true
 flip_h = true
 
@@ -460,7 +453,7 @@ flip_h = true
 position = Vector2( 100, 90 )
 scale = Vector2( 2, 2 )
 frames = SubResource( 12 )
-frame = 3
+frame = 2
 playing = true
 flip_h = true
 
@@ -468,7 +461,6 @@ flip_h = true
 position = Vector2( 85, 82 )
 scale = Vector2( 2, 2 )
 frames = SubResource( 13 )
-frame = 1
 playing = true
 flip_h = true
 
@@ -476,7 +468,7 @@ flip_h = true
 position = Vector2( 73, 90.5 )
 scale = Vector2( 2, 2 )
 frames = SubResource( 13 )
-frame = 3
+frame = 2
 playing = true
 flip_h = true
 
@@ -484,7 +476,7 @@ flip_h = true
 position = Vector2( 54, 89.5 )
 scale = Vector2( 2, 2 )
 frames = SubResource( 14 )
-frame = 3
+frame = 2
 playing = true
 flip_h = true
 

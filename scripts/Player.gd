@@ -6,7 +6,7 @@ var viewport_center
 var rb
 var _timer = null
 var player_cam = null
-var devmode = false
+var devmode = true
 var rb_script = load("res://scripts/PlayerRB.gd").new()
 var move_player = null
 var look_direction = Vector2(1,1)
