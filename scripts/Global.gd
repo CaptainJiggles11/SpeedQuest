@@ -33,6 +33,8 @@ func _ready():
 	current_scene = root.get_child(root.get_child_count() - 1)
 	time = max_time
 	player_health = max_hp
+	if timer != null:
+		timer.disconnect("timeout", self, "_on_timer_timeout")
 	timer = Timer.new()
 	timer.connect("timeout", self, "_on_timer_timeout")
 	add_child(timer)
@@ -96,6 +98,19 @@ func _on_get_coin(the_coin):
 	var sfx = AudioStreamPlayer.new()
 	sfx.bus = "SFX"
 	sfx.stream = coin_sfx
+	add_child(sfx)
+	sfx.volume_db = -5
+	sfx.play()
+	yield(sfx, "finished")
+	sfx.queue_free()
+	
+func _on_get_heart(heart):
+	heart.queue_free()
+	max_hp += 1
+	player_health += 1
+	var sfx = AudioStreamPlayer.new()
+	sfx.bus = "SFX"
+	sfx.stream = load("res://art/audio/sfx/heart_pickup.wav")
 	add_child(sfx)
 	sfx.volume_db = -5
 	sfx.play()
