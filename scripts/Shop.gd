@@ -29,14 +29,14 @@ func _on_Start_pressed():
 
 
 func time_init():
-	var level = (Global.max_time - 10)/5
+	var level = (Global.max_time - 90)/30
 	$TimeUpgrade/Level.text = "Level " + str(level)
-	time_cost = level*5
+	time_cost = level*10
 	$TimeUpgrade/Cost.text = str(time_cost)
 
 
 func hp_init():
-	var level = Global.max_hp
+	var level = Global.max_hp - 2
 	$HealthUpgrade/Level.text = "Level " + str(level)
 	hp_cost = level*20
 	$HealthUpgrade/Cost.text = str(hp_cost)
@@ -53,7 +53,7 @@ func dmg_init():
 func _on_TimeUpgrade_pressed():
 	if Global.coin_count >= time_cost:
 		Global.coin_count -= time_cost
-		Global.max_time += 5
+		Global.max_time += 30
 		$Coins.text = str(Global.coin_count)
 		time_init()
 	else:

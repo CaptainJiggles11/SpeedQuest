@@ -25,6 +25,7 @@ func _process(delta):
 	
 func play_sound(sound_name, volume = 1):
 	var sfx = AudioStreamPlayer.new()
+	sfx.bus = "SFX"
 	add_child(sfx)
 	var rand_value = randi() % sound_name.size()
 	sfx.volume_db = 1

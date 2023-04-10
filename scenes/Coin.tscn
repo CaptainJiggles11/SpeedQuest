@@ -30,7 +30,7 @@ pause_mode = 2
 pause_mode = 2
 frames = SubResource( 1 )
 animation = "spin"
-frame = 2
+frame = 3
 playing = true
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Area2D"]

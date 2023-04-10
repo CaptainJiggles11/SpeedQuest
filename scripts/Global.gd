@@ -14,13 +14,17 @@ var player = null
 var current_room = null
 var floors = []
 
+var muted = false
+var muted_sfx = false
+
 # Upgrades
 var max_time = 120
-var max_hp = 1
+var max_hp = 3
 var player_damage = 1
 
+var BGM
+
 func _ready():
-	
 	rng.randomize()
 	var root = get_tree().root
 	current_scene = root.get_child(root.get_child_count() - 1)
@@ -87,6 +91,7 @@ func _on_get_coin(the_coin):
 	the_coin.queue_free()
 	coin_count += 1
 	var sfx = AudioStreamPlayer.new()
+	sfx.bus = "SFX"
 	sfx.stream = coin_sfx
 	add_child(sfx)
 	sfx.volume_db = -5
@@ -110,3 +115,6 @@ func start_game():
 	time = max_time
 	player_health = max_hp
 	goto_scene("res://scenes/ROOMS/Level 1.tscn")
+	
+func options():
+	get_tree().root.add_child(ResourceLoader.load("res://scenes/Options.tscn").instance())

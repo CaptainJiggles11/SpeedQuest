@@ -48,7 +48,7 @@
 [ext_resource path="res://scripts/PlayerAudio.gd" type="Script" id=46]
 [ext_resource path="res://scripts/PlayerRB.gd" type="Script" id=47]
 [ext_resource path="res://art/audio/sfx/Hit (Taking Damage)/hit1.wav" type="AudioStream" id=48]
-[ext_resource path="res://scenes/PitCollider.gd" type="Script" id=49]
+[ext_resource path="res://scripts/PitCollider.gd" type="Script" id=49]
 [ext_resource path="res://scenes/Projectile.tscn" type="PackedScene" id=50]
 [ext_resource path="res://art/audio/sfx/Player/Footsteps/footsteps 3.wav" type="AudioStream" id=51]
 [ext_resource path="res://art/audio/sfx/Player/Footsteps/footsteps 1.wav" type="AudioStream" id=52]
