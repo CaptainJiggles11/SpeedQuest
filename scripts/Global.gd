@@ -17,6 +17,9 @@ var floors = []
 var muted = false
 var muted_sfx = false
 
+var paused = false
+var options_open = false
+
 # Upgrades
 var max_time = 120
 var max_hp = 3
@@ -80,7 +83,7 @@ func add_test_coin():
 
 
 func _on_timer_timeout():
-	if alive:
+	if alive and not paused:
 		time -= 1
 		if time == -1:
 			open_shop()

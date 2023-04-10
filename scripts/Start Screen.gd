@@ -3,6 +3,7 @@ extends CanvasLayer
 
 # Called when the node enters the scene tree for the first time.
 func _ready():
+	print(get_tree().root.get_child(0))
 	AudioServer.add_bus(1)
 	AudioServer.set_bus_name(1, "Music")
 	AudioServer.add_bus(2)

@@ -107,6 +107,9 @@ func _process(delta):
 	else:
 		sprite.flip_h = false
 
+	if Global.paused:
+		return
+
 	if chase == true:
 		if Vector2(Global.player_position.x,Global.player_position.y).distance_to(Vector2(global_position.x,global_position.y)) < aggro_range or aggro == true:
 			aggro = true

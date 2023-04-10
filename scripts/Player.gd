@@ -81,6 +81,10 @@ func _ready():
 			print("mage")
 
 func _process(delta):
+	if Global.paused:
+		rb.linear_velocity = Vector2.ZERO
+		return
+	
 	Global.player_damage = attack_damage
 	Global.player_position = rb.global_position
 	local_mouse_pos = get_viewport().get_mouse_position() #Mouse position on the viewport.
@@ -103,11 +107,11 @@ func movement():
 	player_position = rb.global_position
 	
 	if Input.is_action_just_pressed("pause"):
-		Global.level = self
-		Global.alive = false
-		get_tree().root.remove_child(self)
-		get_tree().root.add_child(load("res://scenes/Pause Menu.tscn").instance())
-
+		get_tree().root.add_child(ResourceLoader.load("res://scenes/Pause Menu.tscn").instance())
+		Global.paused = true
+		get_parent().get_child(3).visible = false
+		get_child(3).visible = false
+		rb.linear_velocity = Vector2.ZERO
 	
 	#Roll Mechanic-- gives a burst of speed and intangibility on press.
 	if can_roll == true and rolling == false:
