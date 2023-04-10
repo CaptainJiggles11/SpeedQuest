@@ -12,6 +12,7 @@ var move_player = null
 var look_direction = Vector2(1,1)
 var speed_modifier = 1
 var minimap = null
+var joypad = false
 #Controller
 var deadzone = 0.5
 
@@ -118,7 +119,6 @@ func movement():
 		if Input.is_action_pressed("roll"):
 			rb.linear_velocity = rb.linear_velocity*roll_velocity
 			rb.set_collision_layer_bit(0, false)
-			rb.set_collision_mask_bit(0, false)
 			rb.set_collision_layer_bit(1, false)
 			rb.set_collision_layer_bit(2, false)
 			rb.set_collision_layer_bit(3, false)
@@ -138,6 +138,7 @@ func movement():
 		
 		if Input.get_connected_joypads().size() >= 1:
 			joypad_controls()
+			joypad = true
 		else:
 			keyboard_controls()
 		
@@ -188,7 +189,6 @@ func movement():
 		
 		if sprite.frame > 12:
 			rb.set_collision_layer_bit(0, true) #Player
-			rb.set_collision_mask_bit(0, false)
 			rb.set_collision_layer_bit(1, true) #Enemy
 			rb.set_collision_layer_bit(2, true) #Enemy Projectiles
 			rb.set_collision_layer_bit(3, true) #Hazards
@@ -238,18 +238,34 @@ func attack():
 		attacking = false
 		
 func shoot_projectile():
-	var new_projectile = projectile.instance()
-	new_projectile.friendly = true
-	new_projectile.piercing_left = 3
-	new_projectile.set("attack_damage", attack_damage * .5)
-	new_projectile.set("provided_velocity", (look_direction.normalized() * 500 ))
-	new_projectile.global_position = rb.global_position + (look_direction).normalized() * weapon_offset * 2
-	new_projectile.set("start_pos", rb.global_position + (look_direction).normalized() * weapon_offset * 2) 
-	add_child(new_projectile)
-	new_projectile.CS.scale = Vector2(6, 1)
-	new_projectile.look_at((look_direction).normalized())
-	var angleTo = new_projectile.transform.x.angle_to((look_direction).normalized())
-	new_projectile.rotate(sign(angleTo)* min(5, abs(angleTo))) 
+	
+	if joypad != true:
+		var new_projectile = projectile.instance()
+		new_projectile.friendly = true
+		new_projectile.piercing_left = 3
+		new_projectile.set("attack_damage", attack_damage * .5)
+		new_projectile.set("provided_velocity", (get_global_mouse_position() - rb.global_position ).normalized() * 500 )
+		new_projectile.global_position = rb.global_position + (get_global_mouse_position() - rb.global_position ).normalized() * weapon_offset * 2
+		new_projectile.set("start_pos", rb.global_position + (get_global_mouse_position() - rb.global_position ).normalized() * weapon_offset * 2) 
+		add_child(new_projectile)
+		new_projectile.CS.scale = Vector2(6, 1)
+		new_projectile.look_at((get_global_mouse_position() - rb.global_position ).normalized())
+		var angleTo = new_projectile.transform.x.angle_to((get_global_mouse_position() - rb.global_position ).normalized())
+		new_projectile.rotate(sign(angleTo)* min(5, abs(angleTo))) 
+		
+	else:
+		var new_projectile = projectile.instance()
+		new_projectile.friendly = true
+		new_projectile.piercing_left = 3
+		new_projectile.set("attack_damage", attack_damage * .5)
+		new_projectile.set("provided_velocity", (look_direction.normalized() * 500 ))
+		new_projectile.global_position = rb.global_position + (look_direction).normalized() * weapon_offset * 2
+		new_projectile.set("start_pos", rb.global_position + (look_direction).normalized() * weapon_offset * 2) 
+		add_child(new_projectile)
+		new_projectile.CS.scale = Vector2(6, 1)
+		new_projectile.look_at((look_direction).normalized())
+		var angleTo = new_projectile.transform.x.angle_to((look_direction).normalized())
+		new_projectile.rotate(sign(angleTo)* min(5, abs(angleTo))) 
 	
 	
 func take_damage(amount):
@@ -344,8 +360,8 @@ func joypad_controls():
 
 	
 	if abs(left_stick_rl) > deadzone || abs(left_stick_ud) > deadzone:
-		input_velocity.x += stepify(left_stick_rl,.5)
-		input_velocity.y += stepify(left_stick_ud,.5)
+		input_velocity.x += stepify(left_stick_rl,1)
+		input_velocity.y += stepify(left_stick_ud,1)
 		
 	if Input.is_action_pressed("ui_right"):
 		input_velocity.x += 1
