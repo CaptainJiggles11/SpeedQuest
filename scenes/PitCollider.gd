@@ -26,7 +26,7 @@ func _on_PitCollider_body_entered(body):
 		match body.get_cell(position.x,position.y):
 			-1:
 				sequence = true
-				player.sfx.play_sound(player.sfx.fall_sounds)
+				player.sfx.play_sound(player.sfx.fall_sounds,-20)
 				player.can_roll = false
 				var initial_ground = player.grounded_pos
 				var initial_velocity = rb.linear_velocity.normalized()
@@ -48,7 +48,7 @@ func _on_PitCollider_body_entered(body):
 				
 			3:
 				sequence = true
-				player.sfx.play_sound(player.sfx.fall_sounds)
+				player.sfx.play_sound(player.sfx.fall_sounds,-20)
 				player.can_roll = false
 				var initial_ground = player.grounded_pos
 				var initial_velocity = rb.linear_velocity.normalized()

@@ -163,7 +163,6 @@ z_index = 10
 z_as_relative = false
 frames = SubResource( 2 )
 animation = "up"
-frame = 2
 playing = true
 __meta__ = {
 "_edit_lock_": true
