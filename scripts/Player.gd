@@ -240,13 +240,13 @@ func shoot_projectile():
 	new_projectile.friendly = true
 	new_projectile.piercing_left = 3
 	new_projectile.set("attack_damage", attack_damage * .5)
-	new_projectile.set("provided_velocity", (get_global_mouse_position() - rb.global_position ).normalized() * 500 )
-	new_projectile.global_position = rb.global_position + (get_global_mouse_position() - rb.global_position ).normalized() * weapon_offset * 2
-	new_projectile.set("start_pos", rb.global_position + (get_global_mouse_position() - rb.global_position ).normalized() * weapon_offset * 2) 
+	new_projectile.set("provided_velocity", (look_direction.normalized() * 500 ))
+	new_projectile.global_position = rb.global_position + (look_direction).normalized() * weapon_offset * 2
+	new_projectile.set("start_pos", rb.global_position + (look_direction).normalized() * weapon_offset * 2) 
 	add_child(new_projectile)
 	new_projectile.CS.scale = Vector2(6, 1)
-	new_projectile.look_at((get_global_mouse_position() - rb.global_position ).normalized())
-	var angleTo = new_projectile.transform.x.angle_to((get_global_mouse_position() - rb.global_position ).normalized())
+	new_projectile.look_at((look_direction).normalized())
+	var angleTo = new_projectile.transform.x.angle_to((look_direction).normalized())
 	new_projectile.rotate(sign(angleTo)* min(5, abs(angleTo))) 
 	
 	
@@ -342,8 +342,8 @@ func joypad_controls():
 
 	
 	if abs(left_stick_rl) > deadzone || abs(left_stick_ud) > deadzone:
-		input_velocity.x += left_stick_rl
-		input_velocity.y += left_stick_ud
+		input_velocity.x += stepify(left_stick_rl,.5)
+		input_velocity.y += stepify(left_stick_ud,.5)
 		
 	if Input.is_action_pressed("ui_right"):
 		input_velocity.x += 1
