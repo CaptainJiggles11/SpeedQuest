@@ -11,6 +11,8 @@ var player_health
 var level = null
 var alive = false
 var player = null
+var current_room = null
+var floors = []
 
 # Upgrades
 var max_time = 120
@@ -29,7 +31,10 @@ func _ready():
 	add_child(timer)
 	timer.start()
 	
-	
+func _process(delta):
+	if is_instance_valid(current_room):
+		pass
+		
 func goto_scene(path):
 	# This function will usually be called from a signal callback,
 	# or some other function in the current scene.
@@ -97,3 +102,11 @@ func open_shop():
 func pause():
 	alive = false
 	goto_scene("res://scenes/Pause Menu.tscn")
+	
+func start_game():
+	floors = []
+	floors.append(get_node("Level 1"))
+	alive = true
+	time = max_time
+	player_health = max_hp
+	goto_scene("res://scenes/ROOMS/Level 1.tscn")

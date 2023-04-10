@@ -1,9 +1,10 @@
 extends Node2D
 
 var loaded = false
-signal cleared
+var cleared = false
 var obscure 
 var adjacent_rooms
+var room_number
 var enemies = []
 
 # Declare member variables here. Examples:
@@ -42,6 +43,7 @@ func _process(delta):
 			if enemies.size() <= 0:
 				$Doors.open_room()
 				enemies = null
+				cleared = true
 				Global.player.speed_modifier = 1.5
 				
 		if obscure.modulate.a > 0:
@@ -50,13 +52,23 @@ func _process(delta):
 	else:
 		if obscure.modulate.a < 1:
 			obscure.modulate.a += 3 * delta
-			Global.player.speed_modifier = 1
+
 			
 
 func set_active(): 
 	loaded = true
+	Global.current_room = self
+	if cleared == true:
+		Global.player.speed_modifier = 1.5
+	else:
+		Global.player.speed_modifier = 1
 	for i in self.get_children():
 		i.set_process(true)
+	
+	for room in adjacent_rooms:
+		for blocks in Global.player.minimap.minimap_blocks:
+			if blocks.block_number == room + room_number:
+				blocks.seen = true
 	
 		
 func set_inactive():

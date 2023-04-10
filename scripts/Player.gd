@@ -11,7 +11,7 @@ var rb_script = load("res://scripts/PlayerRB.gd").new()
 var move_player = null
 var look_direction = Vector2(1,1)
 var speed_modifier = 1
-
+var minimap = null
 #Controller
 var deadzone = 0.5
 
@@ -28,6 +28,7 @@ var input_velocity = Vector2.ZERO
 var player_position = Vector2.ZERO
 var sprite
 var inventory = []
+export (PackedScene) var projectile = null
 
 
 #Player States
@@ -39,6 +40,7 @@ var attacking = false
 var reset = false
 var i_frames = 0
 var door_timer = 0
+var grounded_pos = Vector2.ZERO
 
 #Player Stats
 export(float) var walk_speed = 1
@@ -53,6 +55,7 @@ export (float) var weapon_offset = 20
 
 
 func _ready():
+	
 	rb = get_node("PlayerBody")
 	sprite = get_node("PlayerBody/AnimatedSprite")
 	sfx = get_node("PlayerBody/PlayerSfx")
@@ -60,6 +63,7 @@ func _ready():
 	Global.player_position = rb.global_position
 	player_cam = $PlayerCam
 	Global.player = self
+	minimap = $Minimap
 	
 	_timer = Timer.new()
 	add_child(_timer)
@@ -106,13 +110,15 @@ func movement():
 
 	
 	#Roll Mechanic-- gives a burst of speed and intangibility on press.
-	if can_roll == true:
+	if can_roll == true and rolling == false:
 		if Input.is_action_pressed("roll"):
 			rb.linear_velocity = rb.linear_velocity*roll_velocity
 			rb.set_collision_layer_bit(0, false)
 			rb.set_collision_layer_bit(1, false)
 			rb.set_collision_layer_bit(2, false)
 			rb.set_collision_layer_bit(3, false)
+			rb.set_collision_mask_bit(3, false)
+			$PlayerBody/PitCollider/CollisionShape2D.disabled = true
 			rolling = true
 			can_roll = false
 			sprite.animation = "roll"
@@ -122,6 +128,9 @@ func movement():
 
 	#Get WASD inputs.
 	if rolling == false:
+		
+		grounded_pos = rb.global_position
+		
 		if Input.get_connected_joypads().size() >= 1:
 			joypad_controls()
 		else:
@@ -177,11 +186,16 @@ func movement():
 			rb.set_collision_layer_bit(1, true) #Enemy
 			rb.set_collision_layer_bit(2, true) #Enemy Projectiles
 			rb.set_collision_layer_bit(3, true) #Hazards
+			$PlayerBody/PitCollider/CollisionShape2D.disabled = false
+		
+		
 		yield(sprite,"animation_finished") #Wait for the last frame to end rolling state.
 		rolling = false
 		
 		yield(get_tree().create_timer(roll_cooldown), "timeout") #Wait out the roll cooldown before you can roll again.
-		can_roll = true
+		if rb.falling == false:
+			can_roll = true
+			rolling = false
 
 
 func weapon_movement(delta):
@@ -202,6 +216,8 @@ func weapon_movement(delta):
 
 func attack():
 	if rolling == false and attacking == false:
+		if Global.player_health >= Global.max_hp:
+			shoot_projectile()
 		$PlayerCam.add_trauma(.15)
 		$Weapon/WeaponBody.set("friendly", true)
 		$Weapon/WeaponBody.set("attack_damage", Global.player_damage)
@@ -214,34 +230,48 @@ func attack():
 		$Weapon/WeaponBody/CollisionShape2D.disabled = true
 		yield(get_tree().create_timer(attack_cooldown), "timeout")
 		attacking = false
-
+		
+func shoot_projectile():
+	var new_projectile = projectile.instance()
+	new_projectile.friendly = true
+	new_projectile.piercing_left = 3
+	new_projectile.set("attack_damage", attack_damage * .5)
+	new_projectile.set("provided_velocity", (get_global_mouse_position() - rb.global_position ).normalized() * 500 )
+	new_projectile.global_position = rb.global_position + (get_global_mouse_position() - rb.global_position ).normalized() * weapon_offset * 2
+	new_projectile.set("start_pos", rb.global_position + (get_global_mouse_position() - rb.global_position ).normalized() * weapon_offset * 2) 
+	add_child(new_projectile)
+	new_projectile.CS.scale = Vector2(6, 1)
+	new_projectile.look_at((get_global_mouse_position() - rb.global_position ).normalized())
+	var angleTo = new_projectile.transform.x.angle_to((get_global_mouse_position() - rb.global_position ).normalized())
+	new_projectile.rotate(sign(angleTo)* min(5, abs(angleTo))) 
+	
+	
 func take_damage(amount):
 	if i_frames <= 0:
 		i_frames = 1.0
-		$PlayerCam.add_trauma(.2)
 		$PlayerCam.add_trauma(.2)
 		Global.player_health -= amount
 		sfx.play_sound(sfx.dmg)
 		if Global.player_health <= 0:
 			yield(get_tree().create_timer(.2), "timeout")
 			Global.open_shop()
+			
+func true_damage(amount):
+	$PlayerCam.add_trauma(.2)
+	Global.player_health -= amount
+	sfx.play_sound(sfx.dmg)
+	if Global.player_health <= 0:
+		yield(get_tree().create_timer(.2), "timeout")
+		Global.open_shop()
+
 
 func _on_Timer_timeout():
 	if walking == true and rolling == false:
 		sfx.play_sound(sfx.footsteps)
 
 func _on_PlayerBody_body_shape_entered(body_id, body, body_shape, local_shape):
-	if body.name == ("Hazards (Tangible)"):
-		#print(body.get_cell(position.x,position.y))
-		match body.get_cell(position.x,position.y):
-			-1:
-				#Pitfall ID
-				reset = true
-				#print(reset)
-			3:
-				reset = true
-
-	if body.name == "EnemyBody":
+	
+	if body.name == "EnemyBody" or body.name == "BossBody":
 		take_damage(1)
 	
 	if door_timer <= 0:

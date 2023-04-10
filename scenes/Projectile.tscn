@@ -12,10 +12,11 @@ radius = 2.56099
 [node name="Projectile" type="RigidBody2D"]
 z_index = 5
 z_as_relative = false
-collision_layer = 0
-collision_mask = 64
+collision_layer = 80
+collision_mask = 0
 mode = 2
 physics_material_override = SubResource( 1 )
+continuous_cd = 1
 contacts_reported = 10
 contact_monitor = true
 script = ExtResource( 2 )
@@ -28,4 +29,5 @@ scale = Vector2( 0.005, 0.005 )
 z_index = 8
 z_as_relative = false
 texture = ExtResource( 1 )
+
 [connection signal="body_shape_entered" from="." to="." method="_on_Projectile_body_shape_entered"]

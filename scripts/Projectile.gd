@@ -6,6 +6,8 @@ var provided_velocity = Vector2(0,0)
 var start_pos = Vector2(0,0)
 var active = false
 var height = 3
+var piercing_left = 0
+onready var CS = get_node("CollisionShape2D")
 # Declare member variables here. Examples:
 # var a = 2
 # var b = "text"
@@ -13,18 +15,25 @@ var height = 3
 
 # Called when the node enters the scene tree for the first time.
 func _ready():
-
+	hide()
+	if friendly == true:
+		set_collision_mask_bit(6, false)
 	pass # Replace with function body.
 
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _integrate_forces(state):
+	
 	if friendly == true:
 		attack_damage = Global.player_damage
 		#set_collision_layer_bit(1, true)
-		set_collision_mask_bit(1, true)
+		set_collision_layer_bit(7, true)
+		set_collision_mask_bit(6, false)
+		linear_velocity = provided_velocity
+		show()
 	else:
 		if active == true:
+			show()
 			linear_velocity = provided_velocity * 200
 			#set_collision_layer_bit(0, true)
 			set_collision_mask_bit(0,true)
@@ -40,9 +49,13 @@ func _integrate_forces(state):
 func _on_Projectile_body_shape_entered(body_id, body, body_shape, local_shape):
 	if body.name != "Projectile":
 		if friendly == true:
-			if body.name != "PlayerBody":
+			
+			if "Walls (Tangible)" in body.name:
 				queue_free()
-				pass
+				
+			if body.name != "PlayerBody" and body.name != "WeaponBody":
+					queue_free()
+
 		else:
 			if body.name == "PlayerBody":
 				body.get_parent().take_damage(attack_damage)

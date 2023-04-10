@@ -4,9 +4,10 @@ extends Node2D
 # Declare member variables here. Examples:
 # var a = 2
 # var b = "text"
-var size = 50
+var size = 10
 var room_offset = 510
 var generate_room_amount = 7
+var instanced_rooms = []
 
 export(Array, PackedScene) var rooms
 export(PackedScene) var boss_room
@@ -34,26 +35,44 @@ func generate_floor(map): #Actually fills the world with level nodes.
 				
 				99: #Replace with Start Room
 					var new_room = start_room.instance()
+					instanced_rooms.append(new_room)
 					new_room.position = Vector2(room_offset*(x-size/2),room_offset*(y-size/2))
 					new_room.set("adjacent_rooms", get_adjacent(map,Vector2(x,y)))
+					new_room.set("room_number", Vector2(x,y))
 					self.add_child(new_room)
+					
+					$Player/Minimap.add_block(Vector2(x,y), Color(.5,.5,.5,1))
 					
 				1: #Normal Room
 					var new_room = choose(rooms).instance()
+					instanced_rooms.append(new_room)
 					new_room.position = Vector2(room_offset*(x-size/2),room_offset*(y-size/2))
 					new_room.set("adjacent_rooms", get_adjacent(map,Vector2(x,y)))
+					new_room.set("room_number", Vector2(x,y))
 					self.add_child(new_room)
+					
+					$Player/Minimap.add_block(Vector2(x,y), Color(.5,.5,.5,1))
 					
 				2: #Treasure Room
 					var new_room = treasure_room.instance()
+					instanced_rooms.append(new_room)
 					new_room.position = Vector2(room_offset*(x-size/2),room_offset*(y-size/2))
 					new_room.set("adjacent_rooms", get_adjacent(map,Vector2(x,y)))
+					new_room.set("room_number", Vector2(x,y))
 					self.add_child(new_room)
+					
+					$Player/Minimap.add_block(Vector2(x,y), Color(1,1,0,1))
+					
+					
 				3: #Boss Room
 					var new_room = boss_room.instance()
+					instanced_rooms.append(new_room)
 					new_room.position = Vector2(room_offset*(x-size/2),room_offset*(y-size/2))
 					new_room.set("adjacent_rooms", get_adjacent(map,Vector2(x,y)))
+					new_room.set("room_number", Vector2(x,y))
 					self.add_child(new_room)
+					
+					$Player/Minimap.add_block(Vector2(x,y), Color(1,0,1,1))
 
 func generate_map(room_number): #Roughly fills matrix with normal rooms that originate from the start room.
 	var rng = RandomNumberGenerator.new()
@@ -70,9 +89,11 @@ func generate_map(room_number): #Roughly fills matrix with normal rooms that ori
 	
 	var room_count = 0
 	while room_count < room_number:
+		var room_things = []
 		for x in range(size):
 			for y in range(size):
 				if matrix[x][y] != 0:
+					room_things.append(Vector2(x,y))
 					var next_room = null
 					#Makes sure the next room is placed within grid size.
 					while next_room == null or x+next_room[0] > size-1 or y+next_room[1] > size-1: 

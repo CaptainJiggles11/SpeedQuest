@@ -173,7 +173,7 @@ func burst():
 	for x in range(64):
 		var ran = rand_range(.75,1.5)
 		randomize()
-		var new_projectile = shoot((Global.player_position - global_position).normalized()*rand_range(0,1) + Vector2(rand_range(-.4,.4),rand_range(-.4,.4)) )
+		var new_projectile = shoot((Global.player_position - global_position).normalized()*rand_range(0,1) + Vector2(rand_range(-.4,.4),rand_range(-.4,.4)), rb.global_position )
 		new_projectile.get_child(0).scale = Vector2(ran,ran)
 	randomize()
 	choose_attack()

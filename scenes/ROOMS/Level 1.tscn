@@ -19,15 +19,12 @@ boss_room = ExtResource( 5 )
 start_room = ExtResource( 6 )
 treasure_room = ExtResource( 7 )
 
-[node name="Navigation2D" type="Navigation2D" parent="." groups=[
-"LevelNavigation",
-]]
+[node name="Navigation2D" type="Navigation2D" parent="." groups=["LevelNavigation"]]
 pause_mode = 2
 
 [node name="UI" parent="." instance=ExtResource( 4 )]
 
 [node name="Player" parent="." instance=ExtResource( 3 )]
-attack_damage = 3.0
 
 [node name="0x0" type="Sprite" parent="."]
 modulate = Color( 0.109804, 0.0666667, 0.0901961, 1 )
