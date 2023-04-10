@@ -118,6 +118,7 @@ func movement():
 		if Input.is_action_pressed("roll"):
 			rb.linear_velocity = rb.linear_velocity*roll_velocity
 			rb.set_collision_layer_bit(0, false)
+			rb.set_collision_mask_bit(0, false)
 			rb.set_collision_layer_bit(1, false)
 			rb.set_collision_layer_bit(2, false)
 			rb.set_collision_layer_bit(3, false)
@@ -187,6 +188,7 @@ func movement():
 		
 		if sprite.frame > 12:
 			rb.set_collision_layer_bit(0, true) #Player
+			rb.set_collision_mask_bit(0, false)
 			rb.set_collision_layer_bit(1, true) #Enemy
 			rb.set_collision_layer_bit(2, true) #Enemy Projectiles
 			rb.set_collision_layer_bit(3, true) #Hazards
