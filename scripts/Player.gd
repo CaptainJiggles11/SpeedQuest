@@ -270,6 +270,7 @@ func shoot_projectile():
 	
 func take_damage(amount):
 	if i_frames <= 0:
+		rb.disable_collision()
 		i_frames = 1.0
 		$PlayerCam.add_trauma(.2)
 		Global.player_health -= amount
@@ -277,6 +278,10 @@ func take_damage(amount):
 		if Global.player_health <= 0:
 			yield(get_tree().create_timer(.2), "timeout")
 			Global.open_shop()
+		else:
+			yield(get_tree().create_timer(.2), "timeout")
+			rb.enable_collision()
+			
 			
 func true_damage(amount):
 	$PlayerCam.add_trauma(.2)
@@ -299,30 +304,30 @@ func _on_PlayerBody_body_shape_entered(body_id, body, body_shape, local_shape):
 	if door_timer <= 0:
 		match body.name:
 			"North Door":
-				move_player = Vector2(0,-50)
+				move_player = Vector2(0,-60)
 				door_timer = .5
 			"South Door":
-				move_player = Vector2(0,50)
+				move_player = Vector2(0,60)
 				door_timer = .5
 			"West Door":
-				move_player = Vector2(-50,0)
+				move_player = Vector2(-60,0)
 				door_timer = .5
 			"East Door":
-				move_player = Vector2(50,0)
+				move_player = Vector2(60,0)
 				door_timer = .5
 
 func _on_Area2D_area_shape_entered(area_id, area, area_shape, self_shape):
 	if area.name == ("RoomCollider"):
 		area.get_parent().set_active()
-			
-	pass # Replace with function body.
+		
+
 
 func _on_Area2D_area_shape_exited(area_id, area, area_shape, self_shape):
 	if area != null:
 		if area.name == ("RoomCollider"):
 			area.get_parent().set_inactive()
 		
-	pass # Replace with function body.
+
 
 func keyboard_controls():
 	

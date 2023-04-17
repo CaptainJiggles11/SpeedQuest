@@ -29,6 +29,7 @@ func _on_PitCollider_body_entered(body):
 				
 			3:
 				pit_sequence()
+	
 
 func pit_sequence():
 	sequence = true

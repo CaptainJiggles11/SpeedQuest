@@ -24,6 +24,7 @@ var timer = 2
 var jump_dir = Vector2.ZERO
 var moving = false
 var collision
+export (PackedScene) var stair
 
 onready var line2d = $Line2D
 
@@ -116,17 +117,23 @@ func _process(delta):
 				timer -= delta
 
 func _on_RigidBody2D_body_shape_entered(body_id, body, body_shape, local_shape):
-	#print(body.name)
+
 	if body.name == "WeaponBody":
 		sprite.modulate = Color(1,0,0)
-		#print("hit")
 		yield(get_tree().create_timer(.1), "timeout")
 		sprite.modulate = Color(1,1,1)
 		position -= (Global.player_position - self.position).normalized() * 3
 		slow = .75
 		take_damage(body.attack_damage)
-	pass # Replace with function body.
-	
+		
+	if "Projectile" in body.name and body.friendly == true:
+		sprite.modulate = Color(1,0,0)
+		yield(get_tree().create_timer(.1), "timeout")
+		take_damage(Global.player_damage)
+		sprite.modulate = Color(1,1,1)
+		position -= (Global.player_position - self.position).normalized() * 3
+		slow = .5
+
 func take_damage(damage_dealt):
 	sfx.play_sound(sfx.hitsounds)
 	health-=damage_dealt
@@ -144,8 +151,12 @@ func navigate(delta):
 			path.pop_front()
 
 func death():
+	get_parent().get("enemies").erase(self)
 	var heart = preload("res://scenes/Heart_Container.tscn").instance()
 	heart.position = position
+	var new_stair = preload("res://scripts/Stair.tscn").instance()
+	new_stair.position = position + Vector2(0,-30)
+	get_parent().add_child(new_stair)
 	get_parent().add_child(heart)
 	queue_free()
 

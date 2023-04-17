@@ -136,3 +136,7 @@ func start_game():
 	
 func options():
 	get_tree().root.add_child(ResourceLoader.load("res://scenes/Options.tscn").instance())
+
+func next_floor():
+	var level = goto_scene("res://scenes/ROOMS/Level 1.tscn")
+	floors.append(level)
