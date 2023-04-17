@@ -163,7 +163,6 @@ z_index = 10
 z_as_relative = false
 frames = SubResource( 2 )
 animation = "up"
-frame = 2
 playing = true
 __meta__ = {
 "_edit_lock_": true
@@ -229,9 +228,9 @@ __meta__ = {
 friendly = true
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Weapon/WeaponBody"]
-position = Vector2( 1.809, 0.5 )
+position = Vector2( 4, 0.5 )
 rotation = 1.5708
-scale = Vector2( 2, 0.5 )
+scale = Vector2( 2, 0.7 )
 shape = SubResource( 5 )
 disabled = true
 __meta__ = {

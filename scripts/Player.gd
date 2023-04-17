@@ -306,15 +306,19 @@ func _on_PlayerBody_body_shape_entered(body_id, body, body_shape, local_shape):
 			"North Door":
 				move_player = Vector2(0,-60)
 				door_timer = .5
+				rb.stop = true
 			"South Door":
 				move_player = Vector2(0,60)
 				door_timer = .5
+				rb.stop = true
 			"West Door":
 				move_player = Vector2(-60,0)
 				door_timer = .5
+				rb.stop = true
 			"East Door":
 				move_player = Vector2(60,0)
 				door_timer = .5
+				rb.stop = true
 
 func _on_Area2D_area_shape_entered(area_id, area, area_shape, self_shape):
 	if area.name == ("RoomCollider"):

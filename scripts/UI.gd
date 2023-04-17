@@ -18,6 +18,7 @@ func _ready():
 func _process(delta):
 	$Coins.text = str(Global.coin_count)
 	$Time.text = str(Global.time)
+	$Floor.text = str("Floor "+str(Global.floors.size()))
 	if Global.max_hp > old_max:
 		for i in range(old_max, Global.max_hp):
 			var heart = preload("res://scenes/Heart.tscn").instance()

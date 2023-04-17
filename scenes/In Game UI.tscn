@@ -53,3 +53,11 @@ margin_bottom = 265.0
 custom_fonts/font = SubResource( 3 )
 text = "Time
 "
+
+[node name="Floor" type="Label" parent="."]
+margin_left = 17.9839
+margin_top = 254.63
+margin_right = 249.984
+margin_bottom = 339.63
+custom_fonts/font = SubResource( 3 )
+text = "Floor"

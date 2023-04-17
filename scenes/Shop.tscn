@@ -199,5 +199,5 @@ text = "Start Run"
 [connection signal="pressed" from="TimeUpgrade" to="." method="_on_TimeUpgrade_pressed"]
 [connection signal="pressed" from="HealthUpgrade" to="." method="_on_HealthUpgrade_pressed"]
 [connection signal="pressed" from="DmgUpgrade" to="." method="_on_DmgUpgrade_pressed"]
-[connection signal="pressed" from="Start" to="." method="_on_Start_pressed"]
 [connection signal="pressed" from="Start" to="." method="_on_Button_pressed"]
+[connection signal="pressed" from="Start" to="." method="_on_Start_pressed"]

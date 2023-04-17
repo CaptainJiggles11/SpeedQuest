@@ -34,6 +34,7 @@ var cooldown = false
 export(PackedScene) var projectile
 var cs
 var tween
+export(PackedScene) var drops
 
 
 onready var line2d = $Line2D
@@ -207,7 +208,6 @@ func _on_RigidBody2D_body_shape_entered(body_id, body, body_shape, local_shape):
 	pass # Replace with function body.
 	
 func take_damage(damage_dealt):
-	#print(damage_dealt)
 	sfx.play_sound(sfx.hitsounds)
 	health-=damage_dealt
 
@@ -223,9 +223,16 @@ func navigate(delta):
 			path.pop_front()
 
 func death():
+	randomize()
+	if rand_range(0,15) >= 14:
+		var item = drops.instance()
+		get_parent().get_parent().add_child(item)
+		item.global_position = rb.global_position + Vector2(0,-20)
+		
 	var coin = preload("res://scenes/Coin.tscn").instance()
 	get_parent().get_parent().add_child(coin)
 	coin.global_position = rb.global_position
+	
 	get_parent().get("enemies").erase(self)
 	if tween != null:
 		tween.kill()

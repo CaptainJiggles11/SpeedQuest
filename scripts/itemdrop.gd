@@ -1,4 +1,4 @@
-extends Sprite
+extends Area2D
 
 
 # Declare member variables here. Examples:
@@ -14,3 +14,10 @@ func _ready():
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 #func _process(delta):
 #	pass
+
+
+func _on_Area2D_body_entered(body):
+	if(body.name == "PlayerBody"):
+		if Global.player_health < Global.max_hp:
+			Global.player_health += 1
+			queue_free()

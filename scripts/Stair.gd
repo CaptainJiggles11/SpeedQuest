@@ -17,5 +17,6 @@ func _ready():
 
 
 func _on_Stair_body_entered(body):
-	Global.next_floor()
-	pass # Replace with function body.
+	if(body.name == "PlayerBody"):
+		Global.next_floor()
+		queue_free()

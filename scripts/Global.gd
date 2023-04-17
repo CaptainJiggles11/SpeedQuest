@@ -138,5 +138,9 @@ func options():
 	get_tree().root.add_child(ResourceLoader.load("res://scenes/Options.tscn").instance())
 
 func next_floor():
-	var level = goto_scene("res://scenes/ROOMS/Level 1.tscn")
-	floors.append(level)
+	if floors.size() <= 2:
+		time += max_time
+		var level = goto_scene("res://scenes/ROOMS/Level 1.tscn")
+		floors.append(level)
+	else:
+		goto_scene("res://scenes/Game Over.tscn")
