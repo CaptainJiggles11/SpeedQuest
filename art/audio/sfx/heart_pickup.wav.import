@@ -2,12 +2,12 @@
 
 importer="wav"
 type="AudioStreamSample"
-path="res://.import/SPEEDQUEST 1.wav-002e177b91ce4411a01ab27dcad96343.sample"
+path="res://.import/heart_pickup.wav-71ca33334a4f496731e0266715a8dbfb.sample"
 
 [deps]
 
-source_file="res://art/audio/music/SPEEDQUEST 1.wav"
-dest_files=[ "res://.import/SPEEDQUEST 1.wav-002e177b91ce4411a01ab27dcad96343.sample" ]
+source_file="res://art/audio/sfx/heart_pickup.wav"
+dest_files=[ "res://.import/heart_pickup.wav-71ca33334a4f496731e0266715a8dbfb.sample" ]
 
 [params]
 

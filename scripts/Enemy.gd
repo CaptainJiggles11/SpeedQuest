@@ -107,6 +107,9 @@ func _process(delta):
 	else:
 		sprite.flip_h = false
 
+	if Global.paused:
+		return
+
 	if chase == true:
 		if Vector2(Global.player_position.x,Global.player_position.y).distance_to(Vector2(global_position.x,global_position.y)) < aggro_range or aggro == true:
 			aggro = true
@@ -152,6 +155,7 @@ func _process(delta):
 					sprite.animation = "swampy_finish"
 					var new_projectile = projectile.instance()
 					new_projectile.set("attack_damage", projectile_damage)
+					new_projectile.set("friendly", false)
 					new_projectile.set("provided_velocity", (Global.player_position - global_position).normalized() )
 					new_projectile.global_position = rb.global_position + (Global.player_position - rb.global_position).normalized() * 10
 					new_projectile.set("start_pos", rb.global_position + (Global.player_position - rb.global_position).normalized() * 10)

@@ -19,6 +19,12 @@ func _ready():
 	Global.level = self
 	get_tree().root.add_child(self)
 	var map = null
+	
+	Global.BGM = AudioStreamPlayer.new()
+	Global.BGM.bus = "Music"
+	add_child(Global.BGM)
+	Global.BGM.stream = load("res://art/audio/music/SPEEDQUEST 1.wav")
+	Global.BGM.play()
 
 	while map == null:
 		map = generate_map(generate_room_amount)

@@ -14,18 +14,27 @@ var player = null
 var current_room = null
 var floors = []
 
+var muted = false
+var muted_sfx = false
+
+var paused = false
+var options_open = false
+
 # Upgrades
 var max_time = 120
-var max_hp = 1
+var max_hp = 3
 var player_damage = 1
 
+var BGM
+
 func _ready():
-	
 	rng.randomize()
 	var root = get_tree().root
 	current_scene = root.get_child(root.get_child_count() - 1)
 	time = max_time
 	player_health = max_hp
+	if timer != null:
+		timer.disconnect("timeout", self, "_on_timer_timeout")
 	timer = Timer.new()
 	timer.connect("timeout", self, "_on_timer_timeout")
 	add_child(timer)
@@ -76,7 +85,7 @@ func add_test_coin():
 
 
 func _on_timer_timeout():
-	if alive:
+	if alive and not paused:
 		time -= 1
 		if time == -1:
 			open_shop()
@@ -87,7 +96,21 @@ func _on_get_coin(the_coin):
 	the_coin.queue_free()
 	coin_count += 1
 	var sfx = AudioStreamPlayer.new()
+	sfx.bus = "SFX"
 	sfx.stream = coin_sfx
+	add_child(sfx)
+	sfx.volume_db = -5
+	sfx.play()
+	yield(sfx, "finished")
+	sfx.queue_free()
+	
+func _on_get_heart(heart):
+	heart.queue_free()
+	max_hp += 1
+	player_health += 1
+	var sfx = AudioStreamPlayer.new()
+	sfx.bus = "SFX"
+	sfx.stream = load("res://art/audio/sfx/heart_pickup.wav")
 	add_child(sfx)
 	sfx.volume_db = -5
 	sfx.play()
@@ -110,3 +133,6 @@ func start_game():
 	time = max_time
 	player_health = max_hp
 	goto_scene("res://scenes/ROOMS/Level 1.tscn")
+	
+func options():
+	get_tree().root.add_child(ResourceLoader.load("res://scenes/Options.tscn").instance())

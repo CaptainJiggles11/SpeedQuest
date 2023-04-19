@@ -144,13 +144,14 @@ func navigate(delta):
 			path.pop_front()
 
 func death():
-	var coin = preload("res://scenes/Coin.tscn").instance()
-	coin.position = position
-	get_parent().add_child(coin)
+	var heart = preload("res://scenes/Heart_Container.tscn").instance()
+	heart.position = position
+	get_parent().add_child(heart)
 	queue_free()
 
 func shoot(direction = (Global.player_position - global_position).normalized(), shootPos = position + (Global.player_position - global_position).normalized() * 10):
 	var new_projectile = projectile.instance()
+	new_projectile.set("friendly", false)
 	new_projectile.set("attack_damage", projectile_damage)
 	new_projectile.set("provided_velocity", direction)
 	new_projectile.set("start_pos", shootPos)
@@ -173,7 +174,7 @@ func burst():
 	for x in range(64):
 		var ran = rand_range(.75,1.5)
 		randomize()
-		var new_projectile = shoot((Global.player_position - global_position).normalized()*rand_range(0,1) + Vector2(rand_range(-.4,.4),rand_range(-.4,.4)), rb.global_position )
+		var new_projectile = shoot((Global.player_position - rb.global_position).normalized()*rand_range(0,1) + Vector2(rand_range(-.4,.4),rand_range(-.4,.4)), rb.global_position )
 		new_projectile.get_child(0).scale = Vector2(ran,ran)
 	randomize()
 	choose_attack()
