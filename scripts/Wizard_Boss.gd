@@ -39,7 +39,7 @@ func _ready():
 	
 	speed = 30
 	health = 20
-	sprite.animation = "slime_idle"
+	sprite.animation = "wizard_idle"
 
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
@@ -52,6 +52,11 @@ func _process(delta):
 	actual_speed = speed * slow
 	if slow < 1:
 		slow+= delta
+
+	if global_position.x > Global.player_position.x:
+		sprite.flip_h = false
+	else:
+		sprite.flip_h = true
 	
 	match my_attack:
 		0: #Idle
@@ -60,13 +65,12 @@ func _process(delta):
 			else:
 				randomize()
 				choose_attack()
-				
-		1: #Radial
-			choose_attack()
-		2: #Burst
-			pass
-		3: #Follow:
-			pass
+		1: #Dash
+			dash()
+		2: #Fire
+			fire()
+		3: #Laser
+			laser()
 
 
 func _on_RigidBody2D_body_shape_entered(_body_id, body, _body_shape, _local_shape):
@@ -90,18 +94,6 @@ func _on_RigidBody2D_body_shape_entered(_body_id, body, _body_shape, _local_shap
 func take_damage(damage_dealt):
 	sfx.play_sound(sfx.hitsounds)
 	health-=damage_dealt
-	#print(health)
-
-func generate_path():
-	if level_navigation != null:
-		path = level_navigation.get_simple_path(rb.global_position, Global.player_position, true)
-		line2d.points = path
-
-func navigate(delta):
-	if path.size() > 0:
-		position += global_position.direction_to(path[1]).normalized() * actual_speed * delta
-		if global_position == path[0]:
-			path.pop_front()
 
 func death():
 	get_parent().get("enemies").erase(self)
@@ -125,32 +117,12 @@ func shoot(direction = (Global.player_position - global_position).normalized(), 
 func choose_attack():
 	my_attack = attack_type.values()[ randi()%attack_type.size() ]
 
-func burst():
-	timer = 100
-	sprite.animation = "slime_charge"
-	sprite.squeeze(Vector2(.9,1.5),.5)
-	yield(sprite,"animation_finished")
-	sprite.animation = "slime_shoot"
-	yield(sprite,"animation_finished")
-	sprite.animation = "slime_idle"
-	sprite.squash(Vector2(1.2,.8),.25)
-	var _shoot_angle = Vector2.UP
-	for _x in range(64):
-		var ran = rand_range(.75,1.5)
-		randomize()
-		var new_projectile = shoot((Global.player_position - rb.global_position).normalized()*rand_range(0,1) + Vector2(rand_range(-.4,.4),rand_range(-.4,.4)), rb.global_position )
-		new_projectile.get_child(0).scale = Vector2(ran,ran)
-	randomize()
-	choose_attack()
-	timer = rand_range(2,3)
-
-func radial():
-	Global.player.player_cam.add_trauma(.2)
-	var shoot_angle = Vector2.UP
-	for _x in range(128):
-		shoot(shoot_angle.normalized(),global_position + shoot_angle)
-		shoot_angle = shoot_angle.rotated(deg2rad(15/4))
-	randomize()
-	choose_attack()
-	timer = rand_range(3,5)
+func dash():
+	pass
+	
+func fire():
+	pass
+	
+func laser():
+	pass
 

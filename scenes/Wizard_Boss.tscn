@@ -1,10 +1,11 @@
-[gd_scene load_steps=41 format=2]
+[gd_scene load_steps=55 format=2]
 
-[ext_resource path="res://scripts/Slime_Boss.gd" type="Script" id=1]
 [ext_resource path="res://art/sprites/characters/enemies/Wizard/wizard_shoot.png" type="Texture" id=2]
+[ext_resource path="res://art/sprites/characters/enemies/Wizard/wizard_death.png" type="Texture" id=3]
 [ext_resource path="res://scripts/Boss_Sprite.gd" type="Script" id=4]
 [ext_resource path="res://art/Miscellaneous/shadow.png" type="Texture" id=5]
 [ext_resource path="res://art/audio/music/SpeedQuest - (BOSS 1).wav" type="AudioStream" id=6]
+[ext_resource path="res://scenes/Player.tscn" type="PackedScene" id=7]
 [ext_resource path="res://scripts/Wizard_Boss.gd" type="Script" id=8]
 [ext_resource path="res://art/sprites/characters/enemies/Wizard/wizard_dash.png" type="Texture" id=9]
 [ext_resource path="res://art/sprites/characters/enemies/Wizard/wizard_fire.png" type="Texture" id=10]
@@ -13,6 +14,7 @@
 [ext_resource path="res://art/audio/sfx/Hit (Taking Damage)/hit3.wav" type="AudioStream" id=20]
 [ext_resource path="res://art/audio/sfx/Hit (Taking Damage)/hit4.wav" type="AudioStream" id=21]
 [ext_resource path="res://EnemyAudio.gd" type="Script" id=22]
+[ext_resource path="res://scripts/PlayerRB.gd" type="Script" id=27]
 
 [sub_resource type="CapsuleShape2D" id=1]
 radius = 14.7306
@@ -49,6 +51,46 @@ region = Rect2( 0, 160, 80, 80 )
 [sub_resource type="AtlasTexture" id=23]
 atlas = ExtResource( 9 )
 region = Rect2( 80, 160, 80, 80 )
+
+[sub_resource type="AtlasTexture" id=42]
+atlas = ExtResource( 3 )
+region = Rect2( 0, 0, 80, 80 )
+
+[sub_resource type="AtlasTexture" id=43]
+atlas = ExtResource( 3 )
+region = Rect2( 80, 0, 80, 80 )
+
+[sub_resource type="AtlasTexture" id=44]
+atlas = ExtResource( 3 )
+region = Rect2( 160, 0, 80, 80 )
+
+[sub_resource type="AtlasTexture" id=45]
+atlas = ExtResource( 3 )
+region = Rect2( 0, 80, 80, 80 )
+
+[sub_resource type="AtlasTexture" id=46]
+atlas = ExtResource( 3 )
+region = Rect2( 80, 80, 80, 80 )
+
+[sub_resource type="AtlasTexture" id=47]
+atlas = ExtResource( 3 )
+region = Rect2( 160, 80, 80, 80 )
+
+[sub_resource type="AtlasTexture" id=48]
+atlas = ExtResource( 3 )
+region = Rect2( 0, 160, 80, 80 )
+
+[sub_resource type="AtlasTexture" id=49]
+atlas = ExtResource( 3 )
+region = Rect2( 80, 160, 80, 80 )
+
+[sub_resource type="AtlasTexture" id=50]
+atlas = ExtResource( 3 )
+region = Rect2( 160, 160, 80, 80 )
+
+[sub_resource type="AtlasTexture" id=51]
+atlas = ExtResource( 3 )
+region = Rect2( 0, 240, 80, 80 )
 
 [sub_resource type="AtlasTexture" id=30]
 atlas = ExtResource( 10 )
@@ -90,6 +132,14 @@ region = Rect2( 80, 80, 80, 80 )
 atlas = ExtResource( 10 )
 region = Rect2( 160, 80, 80, 80 )
 
+[sub_resource type="AtlasTexture" id=52]
+atlas = ExtResource( 3 )
+region = Rect2( 80, 0, 80, 80 )
+
+[sub_resource type="AtlasTexture" id=53]
+atlas = ExtResource( 3 )
+region = Rect2( 80, 240, 80, 80 )
+
 [sub_resource type="AtlasTexture" id=17]
 atlas = ExtResource( 9 )
 region = Rect2( 0, 0, 80, 80 )
@@ -130,6 +180,11 @@ animations = [ {
 "name": "wizard_dashstart",
 "speed": 7.0
 }, {
+"frames": [ SubResource( 42 ), SubResource( 43 ), SubResource( 44 ), SubResource( 45 ), SubResource( 46 ), SubResource( 47 ), SubResource( 48 ), SubResource( 49 ), SubResource( 50 ), SubResource( 51 ) ],
+"loop": true,
+"name": "wizard_death",
+"speed": 5.0
+}, {
 "frames": [ SubResource( 30 ), SubResource( 31 ), SubResource( 32 ), SubResource( 33 ) ],
 "loop": true,
 "name": "wizard_fire",
@@ -139,6 +194,11 @@ animations = [ {
 "loop": false,
 "name": "wizard_firestart",
 "speed": 6.0
+}, {
+"frames": [ SubResource( 52 ), SubResource( 53 ) ],
+"loop": true,
+"name": "wizard_hide",
+"speed": 5.0
 }, {
 "frames": [ SubResource( 17 ) ],
 "loop": true,
@@ -152,7 +212,7 @@ animations = [ {
 } ]
 
 [node name="Boss" type="Node2D" groups=["Enemies"]]
-script = ExtResource( 1 )
+script = ExtResource( 8 )
 
 [node name="BossBody" type="RigidBody2D" parent="."]
 collision_layer = 162
@@ -160,7 +220,7 @@ collision_mask = 162
 mode = 3
 contacts_reported = 10
 contact_monitor = true
-script = ExtResource( 8 )
+script = ExtResource( 27 )
 __meta__ = {
 "_edit_lock_": true
 }
@@ -203,5 +263,7 @@ __meta__ = {
 
 [node name="AudioStreamPlayer" type="AudioStreamPlayer" parent="."]
 stream = ExtResource( 6 )
+
+[node name="Player" parent="." instance=ExtResource( 7 )]
 
 [connection signal="body_shape_entered" from="BossBody" to="." method="_on_RigidBody2D_body_shape_entered"]
