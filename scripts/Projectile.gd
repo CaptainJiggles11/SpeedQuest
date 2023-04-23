@@ -49,7 +49,7 @@ func _integrate_forces(state):
 			active = true
 
 
-func _on_Projectile_body_shape_entered(body_id, body, body_shape, local_shape):
+func _on_Projectile_body_shape_entered(_body_id, body, _body_shape, _local_shape):
 	if body.name != "Projectile":
 		if friendly == true:
 			

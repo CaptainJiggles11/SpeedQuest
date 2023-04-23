@@ -1,12 +1,10 @@
-[gd_scene load_steps=26 format=2]
+[gd_scene load_steps=24 format=2]
 
 [ext_resource path="res://scripts/Slime_Boss.gd" type="Script" id=1]
 [ext_resource path="res://art/sprites/characters/enemies/monstro.png" type="Texture" id=2]
-[ext_resource path="res://scenes/Projectile.tscn" type="PackedScene" id=3]
-[ext_resource path="res://scripts/Slime_Sprite.gd" type="Script" id=4]
+[ext_resource path="res://scripts/Boss_Sprite.gd" type="Script" id=4]
 [ext_resource path="res://art/Miscellaneous/shadow.png" type="Texture" id=5]
 [ext_resource path="res://art/audio/music/SpeedQuest - (BOSS 1).wav" type="AudioStream" id=6]
-[ext_resource path="res://scripts/Stair.tscn" type="PackedScene" id=7]
 [ext_resource path="res://art/audio/sfx/Hit (Taking Damage)/hit2.wav" type="AudioStream" id=18]
 [ext_resource path="res://art/audio/sfx/Hit (Taking Damage)/hit1.wav" type="AudioStream" id=19]
 [ext_resource path="res://art/audio/sfx/Hit (Taking Damage)/hit3.wav" type="AudioStream" id=20]
@@ -98,9 +96,6 @@ animations = [ {
 
 [node name="Boss" type="Node2D" groups=["Enemies"]]
 script = ExtResource( 1 )
-speed = 200.0
-projectile = ExtResource( 3 )
-stair = ExtResource( 7 )
 
 [node name="BossBody" type="RigidBody2D" parent="."]
 collision_layer = 162
@@ -130,6 +125,7 @@ z_index = 5
 z_as_relative = false
 frames = SubResource( 13 )
 animation = "slime_charge"
+frame = 2
 playing = true
 script = ExtResource( 4 )
 __meta__ = {

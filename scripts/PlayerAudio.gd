@@ -20,10 +20,10 @@ func _ready():
 
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
-func _process(delta):
+func _process(_delta):
 	pass
 	
-func play_sound(sound_name, volume = 1):
+func play_sound(sound_name, _volume = 1):
 	var sfx = AudioStreamPlayer.new()
 	sfx.bus = "SFX"
 	add_child(sfx)

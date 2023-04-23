@@ -15,7 +15,7 @@ func _ready():
 	pass # Replace with function body.
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
-func _process(delta):
+func _process(_delta):
 	if moving == true:
 		global_position = global_position.linear_interpolate(jump_end + Vector2(0,-50), .03)
 

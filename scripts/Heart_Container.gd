@@ -10,7 +10,7 @@ func _ready():
 
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
-func _process(delta):
+func _process(_delta):
 	if chase_player == false:
 		if Vector2(global_position).distance_to(Global.player_position) > 200:
 			chase_player = true
@@ -18,6 +18,6 @@ func _process(delta):
 		global_position += (Global.player_position - global_position).normalized() * 2
 
 
-func _on_Area2D_body_shape_entered(body_rid, body, body_shape_index, local_shape_index):
+func _on_Area2D_body_shape_entered(_body_rid, body, _body_shape_index, _local_shape_index):
 	if body.name == "PlayerBody":
 		Global._on_get_heart(self)

@@ -15,7 +15,7 @@ func _ready():
 		health.append(heart)
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
-func _process(delta):
+func _process(_delta):
 	$Coins.text = str(Global.coin_count)
 	$Time.text = str(Global.time)
 	$Floor.text = str("Floor "+str(Global.floors.size()))

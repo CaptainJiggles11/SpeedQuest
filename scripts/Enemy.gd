@@ -1,8 +1,8 @@
 extends Node2D
 
 #Enemy Stats
-export (float) var health = 3
-export (float) var speed = 50
+export (float) var health = 3.0
+export (float) var speed = 50.0
 export (int) var damage = 1
 export (int) var projectile_damage = 1
 var actual_speed
@@ -16,8 +16,8 @@ export (attack_type) var my_attack = attack_type.none
 var aggro = false
 export (bool) var passable = false
 export (bool) var chase = true
-export (float) var aggro_range = 150
-export (float) var stopping_distance = 0
+export (float) var aggro_range = 150.0
+export (float) var stopping_distance = 0.0
 var jump_direction = Vector2(0,0)
 var moving = false
 var attacking = false
@@ -180,7 +180,7 @@ func _process(delta):
 					timer = rand_range(3,4)
 					attacking = false
 
-func _on_RigidBody2D_body_shape_entered(body_id, body, body_shape, local_shape):
+func _on_RigidBody2D_body_shape_entered(_body_id, body, _body_shape, _local_shape):
 	if body.name == "WeaponBody":
 		sprite.modulate = Color(1,0,0)
 		yield(get_tree().create_timer(.1), "timeout")

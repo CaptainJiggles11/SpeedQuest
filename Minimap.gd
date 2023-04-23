@@ -19,7 +19,7 @@ func _ready():
 func add_block(coords, color):
 	var x = coords.x
 	var y = coords.y
-	var vpc = vp.size/2
+	var _vpc = vp.size/2
 	var new_block = map_block.instance()
 	vp.add_child(new_block)
 	new_block.position = Vector2(x * block_offset ,y * block_offset)

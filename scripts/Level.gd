@@ -81,11 +81,11 @@ func generate_floor(map): #Actually fills the world with level nodes.
 					$Player/Minimap.add_block(Vector2(x,y), Color(1,0,1,1))
 
 func generate_map(room_number): #Roughly fills matrix with normal rooms that originate from the start room.
-	var rng = RandomNumberGenerator.new()
+	var _rng = RandomNumberGenerator.new()
 	var matrix = []
 	for x in range(size):
 		matrix.append([])
-		for y in range(size):
+		for _y in range(size):
 			matrix[x].append(0)
 	
 	#matrix[vertical][horizontal] 

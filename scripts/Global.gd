@@ -40,7 +40,7 @@ func _ready():
 	add_child(timer)
 	timer.start()
 	
-func _process(delta):
+func _process(_delta):
 	if is_instance_valid(current_room):
 		pass
 		
@@ -77,7 +77,7 @@ func _deferred_goto_scene(path):
 # test function
 func add_test_coin():
 	coin_count = 0
-	for i in range(0, 10):
+	for _i in range(0, 10):
 		var coin = preload("res://scenes/Coin.tscn").instance()
 		coin.position = Vector2(rng.randi_range(-250, 250), rng.randi_range(-150, 150))
 		coin.get_child(0).connect("body_shape_entered", self, "_on_get_coin")
@@ -128,11 +128,11 @@ func pause():
 	
 func start_game():
 	floors = []
-	floors.append(get_node("Level 1"))
 	alive = true
 	time = max_time
 	player_health = max_hp
 	goto_scene("res://scenes/ROOMS/Level 1.tscn")
+	floors.append(get_node("Level 1"))
 	
 func options():
 	get_tree().root.add_child(ResourceLoader.load("res://scenes/Options.tscn").instance())
@@ -140,7 +140,7 @@ func options():
 func next_floor():
 	if floors.size() <= 2:
 		time += max_time
-		var level = goto_scene("res://scenes/ROOMS/Level 1.tscn")
-		floors.append(level)
+		var next_level = goto_scene("res://scenes/ROOMS/Level 1.tscn")
+		floors.append(next_level)
 	else:
 		goto_scene("res://scenes/Game Over.tscn")

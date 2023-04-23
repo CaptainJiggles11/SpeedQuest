@@ -9,7 +9,7 @@ var actual_speed
 var slow = 1
 
 #Boss States
-enum attack_type {idle,radial,burst,follow}
+enum attack_type {idle,dash,fire,shoot}
 export (attack_type) var my_attack = attack_type.idle
 export (bool) var passable = false
 var jumping = false
@@ -38,7 +38,7 @@ func _ready():
 	yield(get_tree(), "idle_frame")
 	
 	speed = 30
-	health = 10
+	health = 20
 	sprite.animation = "slime_idle"
 
 
@@ -53,11 +53,6 @@ func _process(delta):
 	if slow < 1:
 		slow+= delta
 	
-	if global_position.x > Global.player_position.x:
-		sprite.flip_h = false
-	else:
-		sprite.flip_h = true
-	
 	match my_attack:
 		0: #Idle
 			if timer >= 0:
@@ -69,52 +64,10 @@ func _process(delta):
 		1: #Radial
 			choose_attack()
 		2: #Burst
-			if timer <= 0:
-				burst()
-			else:
-				timer -= delta
+			pass
 		3: #Follow:
-			if timer <= 0:
-				var rand = rand_range(.5,1)
-				if jumping == false:
-					var _jump_start = global_position
-					var og_scale = sprite.scale
-					jump_dir = (Global.player_position - global_position).normalized()
-					sprite.power = rand
-					var jump_end = Global.player_position
-					sprite.jump_end = jump_end
-					sprite.animation = "slime_jump"
-					jumping = true
-					collision.disabled = true
-					yield(sprite,"animation_finished")
-					moving = true
-					sprite.scale = og_scale
-					sprite.animation = "slime_airborne"
-					sprite.up()
-					yield(get_tree().create_timer(rand), "timeout")
-					sprite.down()
-					yield(sprite,"animation_finished")
-					radial()
-					sprite.animation = "slime_stunned"
-					sprite.squash(Vector2(1.2,.8), .5)
-					yield(get_tree().create_timer(rand/1.5), "timeout")
-					jumping = false
-					moving = false
-					collision.disabled = false
-					timer = rand
+			pass
 
-	
-				else:
-					if sprite.frame == 2 and sprite.animation == "slime_jump":
-						sprite.scale = Vector2(.8,1.2)
-						sprite.moving = true
-					if sprite.frame == 0 and sprite.animation == "slime_fall":
-						sprite.scale = Vector2(.8,1.2)
-					if moving == true:
-						global_position = global_position.linear_interpolate(sprite.jump_end,.2)
-					
-			else:
-				timer -= delta
 
 func _on_RigidBody2D_body_shape_entered(_body_id, body, _body_shape, _local_shape):
 

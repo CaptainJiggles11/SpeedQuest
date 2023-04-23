@@ -15,7 +15,7 @@ func _ready():
 
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
-func _process(delta):
+func _process(_delta):
 	if weakref(Global.current_room).get_ref():
 		if Global.current_room.room_number == block_number:
 			modulate = Color(1,1,1,1)

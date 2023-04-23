@@ -15,7 +15,7 @@ func _ready():
 
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
-func _process(delta):
+func _process(_delta):
 	if Input.is_action_just_pressed("pause"):
 		_on_Back_pressed()
 
@@ -44,7 +44,7 @@ func _on_Sounds_pressed():
 		$VBoxContainer/SoundSlider.value = 100
 
 
-func _on_MusicSlider_drag_ended(value_changed):
+func _on_MusicSlider_drag_ended(_value_changed):
 	var vol = $VBoxContainer/MusicSlider.value
 	if vol == 0:
 		vol = 10000000
@@ -56,7 +56,7 @@ func _on_MusicSlider_drag_ended(value_changed):
 	AudioServer.set_bus_volume_db(1, -pow((100-vol),2)/300)
 
 
-func _on_SoundSlider_drag_ended(value_changed):
+func _on_SoundSlider_drag_ended(_value_changed):
 	var vol = $VBoxContainer/SoundSlider.value
 	if vol == 0:
 		vol = 10000000

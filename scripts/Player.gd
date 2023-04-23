@@ -44,15 +44,15 @@ var door_timer = 0
 var grounded_pos = Vector2.ZERO
 
 #Player Stats
-export(float) var walk_speed = 1
-export(float) var attack_damage = 1
+export(float) var walk_speed = 1.0
+export(float) var attack_damage = 1.0
 export(float) var roll_cooldown = .1
 export(float) var attack_cooldown = .4
 export(float) var roll_velocity = 1.8
 
 
 #Weapon Stats
-export (float) var weapon_offset = 20
+export (float) var weapon_offset = 20.0
 
 
 func _ready():
@@ -296,7 +296,7 @@ func _on_Timer_timeout():
 	if walking == true and rolling == false:
 		sfx.play_sound(sfx.footsteps)
 
-func _on_PlayerBody_body_shape_entered(body_id, body, body_shape, local_shape):
+func _on_PlayerBody_body_shape_entered(_body_id, body, _body_shape, _local_shape):
 	
 	if body.name == "EnemyBody" or body.name == "BossBody":
 		take_damage(1)
@@ -320,13 +320,13 @@ func _on_PlayerBody_body_shape_entered(body_id, body, body_shape, local_shape):
 				door_timer = .5
 				rb.stop = true
 
-func _on_Area2D_area_shape_entered(area_id, area, area_shape, self_shape):
+func _on_Area2D_area_shape_entered(_area_id, area, _area_shape, _self_shape):
 	if area.name == ("RoomCollider"):
 		area.get_parent().set_active()
 		
 
 
-func _on_Area2D_area_shape_exited(area_id, area, area_shape, self_shape):
+func _on_Area2D_area_shape_exited(_area_id, area, _area_shape, _self_shape):
 	if area != null:
 		if area.name == ("RoomCollider"):
 			area.get_parent().set_inactive()
