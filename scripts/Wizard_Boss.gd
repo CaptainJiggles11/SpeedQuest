@@ -132,7 +132,8 @@ func idle():
 	print("idle")
 	randomize()
 	choose_attack()
-	timer = .1
+	timer = 0
+	#timer = rand_range(2,3)
 	wait = false
 	
 func dash():
@@ -149,14 +150,14 @@ func laser():
 	print("fire")
 	randomize()
 	choose_attack()
-	timer = .1
+	timer = 0
 	wait = false
 
 	
 func fire():
 	var shoot_angle = Vector2.UP
 	var strange = rand_range(64,128)
-	var wrange = rand_range(.01,.05)
+	var wrange = rand_range(.02,.05)
 	
 	sprite.animation = "wizard_firestart"
 	yield(sprite,"animation_finished")
@@ -165,11 +166,12 @@ func fire():
 	for _x in range(64):
 		var new_projectile = shoot(shoot_angle.normalized(),global_position + shoot_angle)
 		new_projectile.use_sprite.animation = "fire"
-		new_projectile.CS.scale *= 2
+		new_projectile.CS.scale *= 4
 		shoot_angle = shoot_angle.rotated(deg2rad(strange))
 		yield(get_tree().create_timer(wrange), "timeout")
 	randomize()
 	choose_attack()
+	sprite.animation = "wizard_firestop"
 	timer = 3
 	wait = false
 

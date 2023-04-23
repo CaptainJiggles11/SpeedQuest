@@ -1,4 +1,4 @@
-[gd_scene load_steps=10 format=2]
+[gd_scene load_steps=12 format=2]
 
 [ext_resource path="res://art/sprites/characters/enemies/Wizard/white_projectile.png" type="Texture" id=1]
 [ext_resource path="res://scripts/Projectile.gd" type="Script" id=2]
@@ -6,23 +6,35 @@
 [ext_resource path="res://art/sprites/characters/enemies/Wizard/Fire/fire2.png" type="Texture" id=4]
 [ext_resource path="res://art/sprites/characters/enemies/Wizard/Fire/fire3.png" type="Texture" id=5]
 [ext_resource path="res://art/sprites/characters/enemies/Wizard/Fire/fire4.png" type="Texture" id=6]
+[ext_resource path="res://art/sprites/characters/enemies/Wizard/slime_ball.png" type="Texture" id=7]
+[ext_resource path="res://art/packs/0x72_DungeonTilesetII_v1.4/frames/jaime_test/sword/sword_transparent.png" type="Texture" id=8]
 
 [sub_resource type="PhysicsMaterial" id=1]
 friction = 0.0
 
 [sub_resource type="CircleShape2D" id=2]
-radius = 2.56099
+radius = 3.79993
 
 [sub_resource type="SpriteFrames" id=3]
 animations = [ {
 "frames": [ ExtResource( 1 ) ],
-"loop": true,
+"loop": false,
 "name": "default",
 "speed": 5.0
 }, {
 "frames": [ ExtResource( 3 ), ExtResource( 4 ), ExtResource( 5 ), ExtResource( 6 ) ],
 "loop": true,
 "name": "fire",
+"speed": 5.0
+}, {
+"frames": [ ExtResource( 7 ) ],
+"loop": false,
+"name": "slimeball",
+"speed": 5.0
+}, {
+"frames": [ ExtResource( 8 ) ],
+"loop": false,
+"name": "sword",
 "speed": 5.0
 } ]
 
@@ -39,12 +51,16 @@ contact_monitor = true
 script = ExtResource( 2 )
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+position = Vector2( 0, 1 )
+scale = Vector2( 0.5, 0.5 )
 shape = SubResource( 2 )
 
 [node name="Sprite" type="AnimatedSprite" parent="CollisionShape2D"]
 z_index = 8
 z_as_relative = false
 frames = SubResource( 3 )
+animation = "sword"
 playing = true
+offset = Vector2( 0, -1 )
 
 [connection signal="body_shape_entered" from="." to="." method="_on_Projectile_body_shape_entered"]

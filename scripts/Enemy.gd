@@ -161,6 +161,7 @@ func _process(delta):
 					new_projectile.global_position = rb.global_position + (Global.player_position - rb.global_position).normalized() * 10
 					new_projectile.set("start_pos", rb.global_position + (Global.player_position - rb.global_position).normalized() * 10)
 					get_parent().add_child(new_projectile)
+					new_projectile.use_sprite.animation = "slimeball"
 					randomize()
 					timer = rand_range(.5,2)
 					attacking = false

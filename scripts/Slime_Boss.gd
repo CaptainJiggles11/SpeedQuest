@@ -162,6 +162,7 @@ func shoot(direction = (Global.player_position - global_position).normalized(), 
 	new_projectile.set("provided_velocity", direction)
 	new_projectile.set("start_pos", shootPos)
 	get_parent().add_child(new_projectile)
+	new_projectile.use_sprite.animation = "slimeball"
 	return new_projectile
 
 func choose_attack():
