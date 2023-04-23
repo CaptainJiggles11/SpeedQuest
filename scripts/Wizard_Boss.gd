@@ -24,6 +24,7 @@ var timer = 2
 var jump_dir = Vector2.ZERO
 var moving = false
 var collision
+var wait = false
 export (PackedScene) var stair
 
 onready var line2d = $Line2D
@@ -58,19 +59,28 @@ func _process(delta):
 	else:
 		sprite.flip_h = true
 	
-	match my_attack:
-		0: #Idle
-			if timer >= 0:
-				timer-=delta
-			else:
-				randomize()
-				choose_attack()
-		1: #Dash
-			dash()
-		2: #Fire
-			fire()
-		3: #Laser
-			laser()
+	#print(wait, timer)
+	if wait == false:
+		if timer > 0:
+			timer-=delta
+		else:
+			match my_attack:
+				0: #Idle
+					wait = true
+					idle()
+					
+				1: #Dash
+					wait = true
+					dash()
+					
+				2: #Fire
+					wait = true
+					fire()
+					
+				3: #Laser
+					wait = true
+					laser()
+					
 
 
 func _on_RigidBody2D_body_shape_entered(_body_id, body, _body_shape, _local_shape):
@@ -117,12 +127,49 @@ func shoot(direction = (Global.player_position - global_position).normalized(), 
 func choose_attack():
 	my_attack = attack_type.values()[ randi()%attack_type.size() ]
 
-func dash():
-	pass
+func idle():
 	
-func fire():
-	pass
+	print("idle")
+	randomize()
+	choose_attack()
+	timer = .1
+	wait = false
+	
+func dash():
+	
+	print("dash")
+	randomize()
+	choose_attack()
+	timer = .1
+	wait = false
+
 	
 func laser():
-	pass
+	
+	print("fire")
+	randomize()
+	choose_attack()
+	timer = .1
+	wait = false
+
+	
+func fire():
+	var shoot_angle = Vector2.UP
+	var strange = rand_range(64,128)
+	var wrange = rand_range(.01,.05)
+	
+	sprite.animation = "wizard_firestart"
+	yield(sprite,"animation_finished")
+	sprite.animation = "wizard_fire"
+	
+	for _x in range(64):
+		var new_projectile = shoot(shoot_angle.normalized(),global_position + shoot_angle)
+		new_projectile.use_sprite.animation = "fire"
+		new_projectile.CS.scale *= 2
+		shoot_angle = shoot_angle.rotated(deg2rad(strange))
+		yield(get_tree().create_timer(wrange), "timeout")
+	randomize()
+	choose_attack()
+	timer = 3
+	wait = false
 

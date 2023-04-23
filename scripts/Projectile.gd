@@ -7,6 +7,7 @@ var start_pos = Vector2(0,0)
 var active = false
 var height = 3
 var piercing_left = 0
+onready var use_sprite = $CollisionShape2D/Sprite
 onready var CS = get_node("CollisionShape2D")
 # Declare member variables here. Examples:
 # var a = 2
@@ -16,6 +17,7 @@ onready var CS = get_node("CollisionShape2D")
 # Called when the node enters the scene tree for the first time.
 func _ready():
 	hide()
+	
 	if friendly == true:
 		set_collision_layer_bit(6, false)
 	else:

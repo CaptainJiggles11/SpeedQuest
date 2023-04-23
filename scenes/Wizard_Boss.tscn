@@ -1,14 +1,16 @@
-[gd_scene load_steps=55 format=2]
+[gd_scene load_steps=57 format=2]
 
 [ext_resource path="res://art/sprites/characters/enemies/Wizard/wizard_shoot.png" type="Texture" id=2]
 [ext_resource path="res://art/sprites/characters/enemies/Wizard/wizard_death.png" type="Texture" id=3]
 [ext_resource path="res://scripts/Boss_Sprite.gd" type="Script" id=4]
 [ext_resource path="res://art/Miscellaneous/shadow.png" type="Texture" id=5]
 [ext_resource path="res://art/audio/music/SpeedQuest - (BOSS 1).wav" type="AudioStream" id=6]
-[ext_resource path="res://scenes/Player.tscn" type="PackedScene" id=7]
+[ext_resource path="res://scripts/Stair.tscn" type="PackedScene" id=7]
 [ext_resource path="res://scripts/Wizard_Boss.gd" type="Script" id=8]
 [ext_resource path="res://art/sprites/characters/enemies/Wizard/wizard_dash.png" type="Texture" id=9]
 [ext_resource path="res://art/sprites/characters/enemies/Wizard/wizard_fire.png" type="Texture" id=10]
+[ext_resource path="res://scenes/Projectile.tscn" type="PackedScene" id=14]
+[ext_resource path="res://scenes/Player.tscn" type="PackedScene" id=15]
 [ext_resource path="res://art/audio/sfx/Hit (Taking Damage)/hit2.wav" type="AudioStream" id=18]
 [ext_resource path="res://art/audio/sfx/Hit (Taking Damage)/hit1.wav" type="AudioStream" id=19]
 [ext_resource path="res://art/audio/sfx/Hit (Taking Damage)/hit3.wav" type="AudioStream" id=20]
@@ -213,6 +215,8 @@ animations = [ {
 
 [node name="Boss" type="Node2D" groups=["Enemies"]]
 script = ExtResource( 8 )
+projectile = ExtResource( 14 )
+stair = ExtResource( 7 )
 
 [node name="BossBody" type="RigidBody2D" parent="."]
 collision_layer = 162
@@ -264,6 +268,6 @@ __meta__ = {
 [node name="AudioStreamPlayer" type="AudioStreamPlayer" parent="."]
 stream = ExtResource( 6 )
 
-[node name="Player" parent="." instance=ExtResource( 7 )]
+[node name="Player" parent="." instance=ExtResource( 15 )]
 
 [connection signal="body_shape_entered" from="BossBody" to="." method="_on_RigidBody2D_body_shape_entered"]
