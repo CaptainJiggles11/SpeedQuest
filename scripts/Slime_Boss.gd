@@ -53,11 +53,7 @@ func _process(delta):
 	if slow < 1:
 		slow+= delta
 	
-	if global_position.x > Global.player_position.x:
-		sprite.flip_h = false
-	else:
-		sprite.flip_h = true
-		
+	
 	match my_attack:
 		0: #Idle
 			if timer >= 0:
