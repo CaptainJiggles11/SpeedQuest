@@ -71,11 +71,13 @@ func _process(delta):
 					
 				1: #Dash
 					wait = true
-					dash()
+					idle()
+					#dash()
 					
 				2: #Fire
 					wait = true
-					fire()
+					idle()
+					#fire()
 					
 				3: #Laser
 					wait = true
@@ -137,17 +139,49 @@ func idle():
 	wait = false
 	
 func dash():
-	
+	var shoot_angle = Vector2(45,45)
+	var strange = 90
+	var wrange = rand_range(.8,1)
 	print("dash")
+	
+	sprite.animation = "wizard_hide"
+	yield(sprite,"animation_finished")
+	rb.hide()
+	rb.CS.disabled = true
+
+	for _x in range(8):
+		var new_projectile = shoot(-shoot_angle.normalized() * 1.2,Global.player_position + shoot_angle * 2)
+		new_projectile.provided_velocity = -shoot_angle.normalized() * 1.2
+		
+		if shoot_angle.x > 0:
+			new_projectile.use_sprite.flip_h = false
+		else:
+			new_projectile.use_sprite.flip_h = true
+		
+		new_projectile.use_sprite.animation = "wizard_dash"
+		new_projectile.use_sprite.scale /= 4
+		new_projectile.CS.scale *= 8
+		shoot_angle = shoot_angle.rotated(deg2rad(strange))
+		yield(get_tree().create_timer(wrange), "timeout")
+	
+	rb.show()
+	yield(get_tree().create_timer(1), "timeout")
+	sprite.animation = "wizard_idle"
+	rb.CS.disabled = false
+	
 	randomize()
 	choose_attack()
-	timer = .1
+	timer = rand_range(2,3)
 	wait = false
 
 	
 func laser():
 	
 	print("fire")
+	
+	#attack here
+	
+	
 	randomize()
 	choose_attack()
 	timer = 0

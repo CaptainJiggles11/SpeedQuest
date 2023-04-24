@@ -7,6 +7,7 @@ var start_pos = Vector2(0,0)
 var active = false
 var height = 3
 var piercing_left = 0
+var stop = false
 onready var use_sprite = $CollisionShape2D/Sprite
 onready var CS = get_node("CollisionShape2D")
 # Declare member variables here. Examples:
@@ -49,6 +50,14 @@ func _integrate_forces(state):
 		else:
 			state.transform.origin = start_pos
 			active = true
+			
+	if use_sprite.animation == "wizard_dash" and stop == false:
+		if use_sprite.frame < 4:
+			linear_velocity /= -10
+		else:
+			linear_velocity = provided_velocity
+			use_sprite.animation = "wizard_loop"
+			stop = true
 
 
 func _on_Projectile_body_shape_entered(_body_id, body, _body_shape, _local_shape):
