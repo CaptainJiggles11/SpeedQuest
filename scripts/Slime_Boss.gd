@@ -24,6 +24,7 @@ var timer = 2
 var jump_dir = Vector2.ZERO
 var moving = false
 var collision
+var fight_start = false
 export (PackedScene) var stair
 
 onready var line2d = $Line2D
@@ -38,12 +39,18 @@ func _ready():
 	yield(get_tree(), "idle_frame")
 	
 	speed = 30
-	health = 10
+	health = 30
 	sprite.animation = "slime_idle"
 
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(delta):
+	
+	if fight_start == false:
+		Global.BGM.stream = load("res://art/audio/music/SpeedQuest - (BOSS 1).wav")
+		Global.BGM.play()
+		fight_start = true
+	
 	level_navigation = get_parent().get_node("LevelNavigation")
 	line2d.global_position = Vector2.ZERO
 	if health <= 0:

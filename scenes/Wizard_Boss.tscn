@@ -1,4 +1,4 @@
-[gd_scene load_steps=64 format=2]
+[gd_scene load_steps=75 format=2]
 
 [ext_resource path="res://art/sprites/characters/enemies/Wizard/wizard_shoot.png" type="Texture" id=2]
 [ext_resource path="res://art/sprites/characters/enemies/Wizard/wizard_death.png" type="Texture" id=3]
@@ -10,7 +10,6 @@
 [ext_resource path="res://art/sprites/characters/enemies/Wizard/wizard_dash.png" type="Texture" id=9]
 [ext_resource path="res://art/sprites/characters/enemies/Wizard/wizard_fire.png" type="Texture" id=10]
 [ext_resource path="res://scenes/Projectile.tscn" type="PackedScene" id=14]
-[ext_resource path="res://scenes/Player.tscn" type="PackedScene" id=15]
 [ext_resource path="res://art/audio/sfx/Hit (Taking Damage)/hit2.wav" type="AudioStream" id=18]
 [ext_resource path="res://art/audio/sfx/Hit (Taking Damage)/hit1.wav" type="AudioStream" id=19]
 [ext_resource path="res://art/audio/sfx/Hit (Taking Damage)/hit3.wav" type="AudioStream" id=20]
@@ -174,6 +173,54 @@ region = Rect2( 80, 240, 80, 80 )
 atlas = ExtResource( 9 )
 region = Rect2( 0, 0, 80, 80 )
 
+[sub_resource type="AtlasTexture" id=61]
+atlas = ExtResource( 2 )
+region = Rect2( 0, 0, 80, 80 )
+
+[sub_resource type="AtlasTexture" id=62]
+atlas = ExtResource( 2 )
+region = Rect2( 80, 0, 80, 80 )
+
+[sub_resource type="AtlasTexture" id=63]
+atlas = ExtResource( 2 )
+region = Rect2( 160, 0, 80, 80 )
+
+[sub_resource type="AtlasTexture" id=64]
+atlas = ExtResource( 2 )
+region = Rect2( 0, 80, 80, 80 )
+
+[sub_resource type="AtlasTexture" id=65]
+atlas = ExtResource( 2 )
+region = Rect2( 80, 80, 80, 80 )
+
+[sub_resource type="AtlasTexture" id=66]
+atlas = ExtResource( 2 )
+region = Rect2( 160, 80, 80, 80 )
+
+[sub_resource type="AtlasTexture" id=67]
+atlas = ExtResource( 2 )
+region = Rect2( 160, 80, 80, 80 )
+
+[sub_resource type="AtlasTexture" id=68]
+atlas = ExtResource( 2 )
+region = Rect2( 80, 80, 80, 80 )
+
+[sub_resource type="AtlasTexture" id=69]
+atlas = ExtResource( 2 )
+region = Rect2( 0, 80, 80, 80 )
+
+[sub_resource type="AtlasTexture" id=70]
+atlas = ExtResource( 2 )
+region = Rect2( 160, 0, 80, 80 )
+
+[sub_resource type="AtlasTexture" id=71]
+atlas = ExtResource( 2 )
+region = Rect2( 80, 0, 80, 80 )
+
+[sub_resource type="AtlasTexture" id=72]
+atlas = ExtResource( 2 )
+region = Rect2( 0, 0, 80, 80 )
+
 [sub_resource type="AtlasTexture" id=34]
 atlas = ExtResource( 2 )
 region = Rect2( 0, 0, 80, 80 )
@@ -240,6 +287,16 @@ animations = [ {
 "name": "wizard_idle",
 "speed": 5.0
 }, {
+"frames": [ SubResource( 61 ), SubResource( 62 ), SubResource( 63 ), SubResource( 64 ), SubResource( 65 ), SubResource( 66 ) ],
+"loop": false,
+"name": "wizard_laserstart",
+"speed": 5.0
+}, {
+"frames": [ SubResource( 67 ), SubResource( 68 ), SubResource( 69 ), SubResource( 70 ), SubResource( 71 ), SubResource( 72 ) ],
+"loop": false,
+"name": "wizard_laserstop",
+"speed": 5.0
+}, {
 "frames": [ SubResource( 34 ), SubResource( 35 ), SubResource( 36 ), SubResource( 37 ), SubResource( 38 ), SubResource( 39 ) ],
 "loop": false,
 "name": "wizard_shoot",
@@ -278,8 +335,8 @@ hitsounds = [ ExtResource( 19 ), ExtResource( 18 ), ExtResource( 20 ), ExtResour
 z_index = 5
 z_as_relative = false
 frames = SubResource( 13 )
-animation = "wizard_firestop"
-frame = 6
+animation = "wizard_laserstop"
+frame = 5
 playing = true
 script = ExtResource( 4 )
 __meta__ = {
@@ -301,7 +358,5 @@ __meta__ = {
 
 [node name="AudioStreamPlayer" type="AudioStreamPlayer" parent="."]
 stream = ExtResource( 6 )
-
-[node name="Player" parent="." instance=ExtResource( 15 )]
 
 [connection signal="body_shape_entered" from="BossBody" to="." method="_on_RigidBody2D_body_shape_entered"]

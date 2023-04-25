@@ -73,9 +73,14 @@ func _on_Projectile_body_shape_entered(_body_id, body, _body_shape, _local_shape
 		else:
 			if body.name == "PlayerBody":
 				body.get_parent().take_damage(attack_damage)
+				
+			if body.name == "WeaponBody":
+				print('spehm')
+				if use_sprite.animation == "wizard_dash" or use_sprite.animation == "wizard_loop":
+					print('spehm2')
+					get_parent().take_damage(.5)
+					queue_free()
+					
 			if body.name != "EnemyBody":
 				queue_free()
-				pass
 
-
-	pass # Replace with function body.

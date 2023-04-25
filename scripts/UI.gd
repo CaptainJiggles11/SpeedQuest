@@ -4,9 +4,11 @@ extends CanvasLayer
 var health = []
 var prev = Global.max_hp
 var old_max = Global.max_hp
+onready var music = $BGM
 
 # Called when the node enters the scene tree for the first time.
 func _ready():
+	
 	for i in range(Global.max_hp):
 		var heart = preload("res://scenes/Heart.tscn").instance()
 		heart.global_position = Vector2(i*80+50, 50)
@@ -16,6 +18,8 @@ func _ready():
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(_delta):
+	if Global.BGM == null:
+		Global.BGM = self
 	$Coins.text = str(Global.coin_count)
 	$Time.text = str(Global.time)
 	$Floor.text = str("Floor "+str(Global.floors.size()))

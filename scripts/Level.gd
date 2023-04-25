@@ -10,7 +10,7 @@ var generate_room_amount = 7
 var instanced_rooms = []
 
 export(Array, PackedScene) var rooms
-export(PackedScene) var boss_room
+export(Array, PackedScene) var boss_room
 export(PackedScene) var start_room
 export(PackedScene) var treasure_room
 
@@ -71,7 +71,7 @@ func generate_floor(map): #Actually fills the world with level nodes.
 					
 					
 				3: #Boss Room
-					var new_room = boss_room.instance()
+					var new_room = boss_room[Global.floors.size() - 1].instance()
 					instanced_rooms.append(new_room)
 					new_room.position = Vector2(room_offset*(x-size/2),room_offset*(y-size/2))
 					new_room.set("adjacent_rooms", get_adjacent(map,Vector2(x,y)))

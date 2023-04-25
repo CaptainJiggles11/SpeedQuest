@@ -13,7 +13,7 @@ var alive = false
 var player = null
 var current_room = null
 var floors = []
-
+var BGM
 var muted = false
 var muted_sfx = false
 
@@ -25,7 +25,7 @@ var max_time = 120
 var max_hp = 3
 var player_damage = 1
 
-var BGM
+
 
 func _ready():
 	rng.randomize()

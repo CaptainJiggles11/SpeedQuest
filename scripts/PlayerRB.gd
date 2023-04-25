@@ -47,7 +47,7 @@ func enable_collision():
 	falling = false
 	rotation_degrees = 0
 	set_collision_layer_bit(0,true)
-	set_collision_mask_bit(0,false)
+	set_collision_mask_bit(0,true)
 	set_collision_layer_bit(1,true)
 	set_collision_layer_bit(2,true)
 	set_collision_layer_bit(3,true)

@@ -7,6 +7,7 @@ export (int) var damage = 1
 export (int) var projectile_damage = 1
 var actual_speed
 var slow = 1
+var fight_start = false
 
 #Boss States
 enum attack_type {idle,dash,fire,shoot}
@@ -39,12 +40,18 @@ func _ready():
 	yield(get_tree(), "idle_frame")
 	
 	speed = 30
-	health = 20
+	health = 40
 	sprite.animation = "wizard_idle"
+	
 
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(delta):
+	if fight_start == false and Global.BGM != null:
+		Global.BGM.stream = load("res://art/audio/music/SpeedQuest - (BOSS 1).wav")
+		Global.BGM.play()
+		fight_start = true
+		
 	level_navigation = get_parent().get_node("LevelNavigation")
 	line2d.global_position = Vector2.ZERO
 	if health <= 0:
@@ -63,6 +70,7 @@ func _process(delta):
 	if wait == false:
 		if timer > 0:
 			timer-=delta
+			global_position += (Global.player_position - global_position).normalized() * actual_speed * delta
 		else:
 			match my_attack:
 				0: #Idle
@@ -71,16 +79,17 @@ func _process(delta):
 					
 				1: #Dash
 					wait = true
-					idle()
-					#dash()
+					#idle()
+					dash()
 					
 				2: #Fire
 					wait = true
-					idle()
-					#fire()
+					#idle()
+					fire()
 					
 				3: #Laser
 					wait = true
+					#idle()
 					laser()
 					
 
@@ -104,6 +113,7 @@ func _on_RigidBody2D_body_shape_entered(_body_id, body, _body_shape, _local_shap
 		slow = .5
 
 func take_damage(damage_dealt):
+	print(damage_dealt)
 	sfx.play_sound(sfx.hitsounds)
 	health-=damage_dealt
 
@@ -117,13 +127,13 @@ func death():
 	get_parent().add_child(heart)
 	queue_free()
 
-func shoot(direction = (Global.player_position - global_position).normalized(), shootPos = position + (Global.player_position - global_position).normalized() * 10):
+func shoot(direction = (Global.player_position - global_position).normalized(), shootPos = global_position + (Global.player_position - global_position).normalized() * 10):
 	var new_projectile = projectile.instance()
 	new_projectile.set("friendly", false)
 	new_projectile.set("attack_damage", projectile_damage)
 	new_projectile.set("provided_velocity", direction)
 	new_projectile.set("start_pos", shootPos)
-	get_parent().add_child(new_projectile)
+	add_child(new_projectile)
 	return new_projectile
 
 func choose_attack():
@@ -131,11 +141,12 @@ func choose_attack():
 
 func idle():
 	
-	print("idle")
+	var thang = rand_range(1, 2)
+	yield(get_tree().create_timer(thang), "timeout")
+
 	randomize()
 	choose_attack()
 	timer = 0
-	#timer = rand_range(2,3)
 	wait = false
 	
 func dash():
@@ -147,6 +158,7 @@ func dash():
 	sprite.animation = "wizard_hide"
 	yield(sprite,"animation_finished")
 	rb.hide()
+	position = Vector2.ZERO
 	rb.CS.disabled = true
 
 	for _x in range(8):
@@ -177,14 +189,23 @@ func dash():
 	
 func laser():
 	
-	print("fire")
+	sprite.animation = "wizard_laserstart"
+	yield(sprite,"animation_finished")
+	#sprite.animation = "wizard_fire"
 	
-	#attack here
-	
-	
+	for _x in range(64):
+		var strange = rand_range(-30,30)
+		var wrange = rand_range(.05,.1)
+		
+		var new_projectile = shoot((Global.player_position - global_position).normalized().rotated(deg2rad(strange)))
+		new_projectile.use_sprite.animation = "wizard_laser"
+		new_projectile.CS.scale *= 2
+		yield(get_tree().create_timer(wrange), "timeout")
+		
 	randomize()
 	choose_attack()
-	timer = 0
+	sprite.animation = "wizard_laserstop"
+	timer = 3
 	wait = false
 
 	

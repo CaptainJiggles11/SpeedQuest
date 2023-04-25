@@ -1,4 +1,4 @@
-[gd_scene load_steps=21 format=2]
+[gd_scene load_steps=24 format=2]
 
 [ext_resource path="res://art/sprites/characters/enemies/Wizard/white_projectile.png" type="Texture" id=1]
 [ext_resource path="res://scripts/Projectile.gd" type="Script" id=2]
@@ -9,6 +9,7 @@
 [ext_resource path="res://art/sprites/characters/enemies/Wizard/slime_ball.png" type="Texture" id=7]
 [ext_resource path="res://art/packs/0x72_DungeonTilesetII_v1.4/frames/jaime_test/sword/sword_transparent.png" type="Texture" id=8]
 [ext_resource path="res://art/sprites/characters/enemies/Wizard/wizard_dash.png" type="Texture" id=9]
+[ext_resource path="res://art/sprites/characters/enemies/Wizard/wizard_shoot.png" type="Texture" id=10]
 
 [sub_resource type="PhysicsMaterial" id=1]
 friction = 0.0
@@ -39,6 +40,14 @@ region = Rect2( 0, 160, 80, 80 )
 [sub_resource type="AtlasTexture" id=9]
 atlas = ExtResource( 9 )
 region = Rect2( 80, 160, 80, 80 )
+
+[sub_resource type="AtlasTexture" id=12]
+atlas = ExtResource( 10 )
+region = Rect2( 80, 240, 80, 80 )
+
+[sub_resource type="AtlasTexture" id=13]
+atlas = ExtResource( 10 )
+region = Rect2( 160, 240, 80, 80 )
 
 [sub_resource type="AtlasTexture" id=10]
 atlas = ExtResource( 9 )
@@ -75,6 +84,11 @@ animations = [ {
 "name": "wizard_dash",
 "speed": 7.0
 }, {
+"frames": [ SubResource( 12 ), SubResource( 13 ) ],
+"loop": true,
+"name": "wizard_laser",
+"speed": 5.0
+}, {
 "frames": [ SubResource( 10 ), SubResource( 11 ) ],
 "loop": true,
 "name": "wizard_loop",
@@ -102,7 +116,6 @@ shape = SubResource( 2 )
 z_index = 8
 z_as_relative = false
 frames = SubResource( 3 )
-animation = "wizard_loop"
 playing = true
 offset = Vector2( 0, -1 )
 
