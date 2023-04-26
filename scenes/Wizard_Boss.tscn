@@ -346,7 +346,7 @@ __meta__ = {
 [node name="Shadow" type="Sprite" parent="BossBody"]
 modulate = Color( 0, 0, 0, 0.627451 )
 position = Vector2( -1.5, 30 )
-scale = Vector2( 0.25, 0.171 )
+scale = Vector2( 0.2, 0.15 )
 texture = ExtResource( 5 )
 
 [node name="Line2D" type="Line2D" parent="."]

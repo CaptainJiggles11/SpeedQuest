@@ -47,9 +47,11 @@ func _ready():
 func _process(delta):
 	
 	if fight_start == false:
+		fight_start = true
+		Global.BGM.stop()
+		yield(get_tree().create_timer(1), "timeout")
 		Global.BGM.stream = load("res://art/audio/music/SpeedQuest - (BOSS 1).wav")
 		Global.BGM.play()
-		fight_start = true
 	
 	level_navigation = get_parent().get_node("LevelNavigation")
 	line2d.global_position = Vector2.ZERO
@@ -153,6 +155,7 @@ func navigate(delta):
 			path.pop_front()
 
 func death():
+	Global.BGM.stop()
 	get_parent().get("enemies").erase(self)
 	var heart = preload("res://scenes/Heart_Container.tscn").instance()
 	heart.position = position

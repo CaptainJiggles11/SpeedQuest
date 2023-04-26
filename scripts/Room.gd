@@ -70,7 +70,6 @@ func set_active():
 			if blocks.block_number == room + room_number:
 				blocks.seen = true
 	
-		
 func set_inactive():
 	loaded = false
 	for i in self.get_children():

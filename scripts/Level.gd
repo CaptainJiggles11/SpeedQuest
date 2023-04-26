@@ -67,7 +67,8 @@ func generate_floor(map): #Actually fills the world with level nodes.
 					new_room.set("room_number", Vector2(x,y))
 					self.add_child(new_room)
 					
-					$Player/Minimap.add_block(Vector2(x,y), Color(1,1,0,1))
+					$Player/Minimap.add_block(Vector2(x,y), Color(.5,.5,.5,1))
+					#$Player/Minimap.add_block(Vector2(x,y), Color(1,1,0,1))
 					
 					
 				3: #Boss Room

@@ -48,9 +48,12 @@ func _ready():
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(delta):
 	if fight_start == false and Global.BGM != null:
+		Global.BGM.stop()
+		fight_start = true
+		yield(get_tree().create_timer(1), "timeout")
 		Global.BGM.stream = load("res://art/audio/music/SpeedQuest - (BOSS 1).wav")
 		Global.BGM.play()
-		fight_start = true
+		
 		
 	level_navigation = get_parent().get_node("LevelNavigation")
 	line2d.global_position = Vector2.ZERO
@@ -118,6 +121,12 @@ func take_damage(damage_dealt):
 	health-=damage_dealt
 
 func death():
+	set_process(false)
+	rb.CS.disabled = true
+	sprite.animation = "wizard_death"
+	yield(sprite,"animation_finished")
+	
+	Global.BGM.stop()
 	get_parent().get("enemies").erase(self)
 	var heart = preload("res://scenes/Heart_Container.tscn").instance()
 	heart.position = position
@@ -183,7 +192,7 @@ func dash():
 	
 	randomize()
 	choose_attack()
-	timer = rand_range(2,3)
+	timer = rand_range(1,2)
 	wait = false
 
 	
@@ -205,7 +214,7 @@ func laser():
 	randomize()
 	choose_attack()
 	sprite.animation = "wizard_laserstop"
-	timer = 3
+	timer = rand_range(2,3)
 	wait = false
 
 	
@@ -227,6 +236,6 @@ func fire():
 	randomize()
 	choose_attack()
 	sprite.animation = "wizard_firestop"
-	timer = 3
+	timer = rand_range(2,3)
 	wait = false
 
