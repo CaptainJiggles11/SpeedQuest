@@ -2,12 +2,12 @@ extends RigidBody2D
 var reset_pos = Vector2.ZERO
 var stop = false
 var og_scale = scale
-var CS
+onready var CS = get_node("CollisionShape2D")
 var tween = null
 var falling = false
 # Called when the node enters the scene tree for the first time.
 func _ready():
-	CS = $CollisionShape2D
+
 	pass # Replace with function body.
 
 func _integrate_forces(state):

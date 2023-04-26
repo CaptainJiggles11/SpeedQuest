@@ -246,7 +246,7 @@ func shoot_projectile():
 		var new_projectile = projectile.instance()
 		new_projectile.friendly = true
 		new_projectile.piercing_left = 3
-		new_projectile.set("attack_damage", attack_damage * .5)
+		new_projectile.set("attack_damage", attack_damage * .25)
 		new_projectile.set("provided_velocity", (get_global_mouse_position() - rb.global_position ).normalized() * 500 )
 		new_projectile.global_position = rb.global_position + (get_global_mouse_position() - rb.global_position ).normalized() * weapon_offset * 2
 		new_projectile.set("start_pos", rb.global_position + (get_global_mouse_position() - rb.global_position ).normalized() * weapon_offset * 2) 
@@ -261,7 +261,7 @@ func shoot_projectile():
 		var new_projectile = projectile.instance()
 		new_projectile.friendly = true
 		new_projectile.piercing_left = 3
-		new_projectile.set("attack_damage", attack_damage * .5)
+		new_projectile.set("attack_damage", attack_damage * .25)
 		new_projectile.set("provided_velocity", (look_direction.normalized() * 500 ))
 		new_projectile.global_position = rb.global_position + (look_direction).normalized() * weapon_offset * 2
 		new_projectile.set("start_pos", rb.global_position + (look_direction).normalized() * weapon_offset * 2) 

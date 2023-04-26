@@ -20,7 +20,7 @@
 [node name="Level" type="Node2D"]
 script = ExtResource( 2 )
 rooms = [ ExtResource( 1 ), ExtResource( 9 ), ExtResource( 10 ), ExtResource( 11 ), ExtResource( 13 ), ExtResource( 12 ), ExtResource( 14 ), ExtResource( 15 ) ]
-boss_room = [ ExtResource( 7 ), ExtResource( 5 ), ExtResource( 16 ) ]
+boss_room = [ ExtResource( 5 ), ExtResource( 16 ), ExtResource( 7 ) ]
 start_room = ExtResource( 6 )
 treasure_room = ExtResource( 1 )
 

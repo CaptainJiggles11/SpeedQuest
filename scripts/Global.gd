@@ -139,7 +139,7 @@ func options():
 
 func next_floor():
 	if floors.size() <= 2:
-		time += max_time
+		time += max_time + 20
 		var next_level = goto_scene("res://scenes/ROOMS/Level 1.tscn")
 		floors.append(next_level)
 	else:

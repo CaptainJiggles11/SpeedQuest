@@ -11,6 +11,7 @@ var stop = false
 var fall_speed = 1
 onready var use_sprite = $CollisionShape2D/Sprite
 onready var CS = get_node("CollisionShape2D")
+onready var shadow = get_node("CollisionShape2D/Shadow")
 # Declare member variables here. Examples:
 # var a = 2
 # var b = "text"
@@ -52,7 +53,7 @@ func _integrate_forces(state):
 			set_collision_layer_bit(6,true)
 			height -= .01 * fall_speed
 			$CollisionShape2D.scale -= Vector2(0.002,0.002)
-			$CollisionShape2D/Shadow.modulate = Color(1,1,1,1)
+			$CollisionShape2D/Shadow.set_deferred("modulate", Color(1,1,1,1 - height/80)) 
 			if height <= 0 or $CollisionShape2D.scale.x <= 0:
 				queue_free()
 		else:

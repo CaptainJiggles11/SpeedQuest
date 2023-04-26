@@ -193,7 +193,7 @@ func _on_RigidBody2D_body_shape_entered(_body_id, body, _body_shape, _local_shap
 	if "Projectile" in body.name and body.friendly == true:
 		sprite.modulate = Color(1,0,0)
 		yield(get_tree().create_timer(.1), "timeout")
-		take_damage(Global.player_damage)
+		take_damage(Global.player_damage * .5)
 		sprite.modulate = Color(1,1,1)
 		position -= (Global.player_position - self.position).normalized() * 3
 		slow = .5
@@ -209,6 +209,7 @@ func _on_RigidBody2D_body_shape_entered(_body_id, body, _body_shape, _local_shap
 	pass # Replace with function body.
 	
 func take_damage(damage_dealt):
+	print(damage_dealt)
 	sfx.play_sound(sfx.hitsounds)
 	health-=damage_dealt
 

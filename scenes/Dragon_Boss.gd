@@ -10,7 +10,7 @@ var slow = 1
 var fight_start = false
 
 #Boss States
-enum attack_type {idle,dash,fire,shoot,radial, burst}
+enum attack_type {idle,up,fire,shoot,radial, burst}
 export (attack_type) var my_attack = attack_type.idle
 export (bool) var passable = false
 var jumping = false
@@ -26,6 +26,7 @@ var jump_dir = Vector2.ZERO
 var moving = false
 var collision
 var wait = false
+var hovering = false
 export (PackedScene) var stair
 
 onready var line2d = $Line2D
@@ -40,7 +41,7 @@ func _ready():
 	yield(get_tree(), "idle_frame")
 	
 	speed = 30
-	health = 40
+	health = 50
 	sprite.animation = "dragon_idle"
 	
 
@@ -55,8 +56,6 @@ func _process(delta):
 		Global.BGM.play()
 		
 		
-	level_navigation = get_parent().get_node("LevelNavigation")
-	line2d.global_position = Vector2.ZERO
 	if health <= 0:
 		death()
 	
@@ -73,36 +72,41 @@ func _process(delta):
 	if wait == false:
 		if timer > 0:
 			timer-=delta
-			#global_position += (Global.player_position - global_position).normalized() * actual_speed * delta
-			sprite.animation = "dragon_idle"
+			global_position += (Global.player_position - global_position).normalized() * actual_speed * delta
+			sprite.animation = "dragon_walk"
 		else:
 			match my_attack:
 				0: #Idle
 					wait = true
 					idle()
 					
-				1: #Dash
-					wait = true
-					idle()
-					#dash()
+				1: #up
+					if health <= 10:
+						wait = true
+						#idle()
+						up()
+					else:
+						choose_attack()
 					
 				2: #Fire
 					wait = true
+					#idle()
 					fire()
 					
 				3: #Hellfire
-					wait = true
-					#idle
-					hellfire()
+					choose_attack()
+					#hellfire()
 					
 				4: #Radial
 					wait = true
-					#idle
+					#idle()
 					radial()
+					
 				5: #Burst
 					wait = true
-					#idle
+					#idle()
 					burst()
+				
 
 
 func _on_RigidBody2D_body_shape_entered(_body_id, body, _body_shape, _local_shape):
@@ -118,7 +122,7 @@ func _on_RigidBody2D_body_shape_entered(_body_id, body, _body_shape, _local_shap
 	if "Projectile" in body.name and body.friendly == true:
 		sprite.modulate = Color(1,0,0)
 		yield(get_tree().create_timer(.1), "timeout")
-		take_damage(Global.player_damage)
+		take_damage(Global.player_damage * .5)
 		sprite.modulate = Color(1,1,1)
 		position -= (Global.player_position - self.position).normalized() * 3
 		slow = .5
@@ -156,16 +160,13 @@ func shoot(direction = (Global.player_position - global_position).normalized(), 
 func choose_attack():
 	my_attack = null
 	while my_attack == null:
-		my_attack = attack_type.values()[ randi()%attack_type.size() ]
 		randomize()
-		if my_attack == 5 and rand_range(0,1) <= .25:
-			my_attack = null
-			
-	print(my_attack)
+		my_attack = attack_type.values()[ randi()%attack_type.size() ]
+		if health <= 10 and rand_range(0,1) >= .5:
+			my_attack = 1
 	return my_attack
 
 func idle():
-	
 	var thang = rand_range(1, 2)
 	yield(get_tree().create_timer(thang), "timeout")
 
@@ -174,45 +175,61 @@ func idle():
 	timer = 0
 	wait = false
 	
-func dash():
-	idle()
+func up():
+	if hovering == false:
+		sprite.animation = "dragon_launch"
+		yield(sprite,"animation_finished")
+		rb.CS.set_deferred("disabled",true)
+		sprite.uptwo(Vector2(0,-40), .5)
+		sprite.animation = "dragon_hover"
+		hovering = true
+		yield(get_tree().create_timer(1), "timeout")
+		hellfire()
+
+
 
 func hellfire():
-	sprite.animation = "dragon_firestart"
 	var tween := create_tween().set_trans(Tween.TRANS_LINEAR)
 	tween.tween_property(sprite, "modulate", Color(1,0,0), 1)
 	yield(sprite,"animation_finished")
 	sprite.modulate = Color(1,1,1)
-	sprite.animation = "dragon_fire"
 	
 	for _y in range(3,6):
 		randomize()
 		var wrange = rand_range(1.5,2)
 		for _x in range(256):
 			randomize()
-			var new_projectile = shoot(Vector2.ZERO,global_position + Vector2(rand_range(-500,500),rand_range(-500,500)))
+			var new_projectile = shoot(Vector2.ZERO,global_position + Vector2(rand_range(-300,300),rand_range(-300,300)))
 			new_projectile.CS.set_deferred("disabled",true)
+			new_projectile.shadow.position = new_projectile.shadow.position + Vector2(0,-4)
 			new_projectile.height = rand_range(30,80)
 			new_projectile.fall_speed = (rand_range(10,50))
 			new_projectile.use_sprite.animation = "fire"
 			new_projectile.use_sprite.frame = int(rand_range(0,3))
-			new_projectile.CS.scale *= 4
+			new_projectile.CS.scale *= int(rand_range(3,5))
 		
 		var stween := create_tween().set_trans(Tween.TRANS_LINEAR)	
 		stween.tween_property(sprite, "modulate", Color(1,0,0), wrange)
 		yield(get_tree().create_timer(wrange), "timeout")
 		sprite.modulate = Color(1,1,1)
 		
+	yield(get_tree().create_timer(1), "timeout")
+	
+	sprite.animation = "dragon_land"
+	sprite.downtwo(Vector2(0,40), 1)
+	yield(get_tree().create_timer(1), "timeout")
+	rb.CS.set_deferred("disabled",false)
+	hovering = false
 	randomize()
 	choose_attack()
-	sprite.animation = "dragon_firestop"
-	timer = rand_range(3,5)
+	timer = rand_range(5,7)
 	wait = false
+
+
 
 func fire():
 	var shoot_angle = Vector2.UP
 
-	
 	sprite.animation = "dragon_firestart"
 	var tween := create_tween().set_trans(Tween.TRANS_LINEAR)
 	tween.tween_property(sprite, "modulate", Color(1,1,1), 1)
