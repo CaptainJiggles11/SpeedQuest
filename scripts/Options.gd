@@ -66,3 +66,8 @@ func _on_SoundSlider_drag_ended(_value_changed):
 		Global.muted_sfx = false
 		$VBoxContainer/Sounds.pressed = true
 	AudioServer.set_bus_volume_db(2, -pow((100-vol),2)/300)
+
+
+func _on_Controller_pressed():
+	Global.controller_enabled = !Global.controller_enabled
+

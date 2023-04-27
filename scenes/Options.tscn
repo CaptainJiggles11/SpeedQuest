@@ -25,14 +25,14 @@ texture = ExtResource( 2 )
 [node name="VBoxContainer" type="VBoxContainer" parent="."]
 anchor_top = 0.5
 anchor_bottom = 0.5
-margin_left = 500.0
-margin_top = -180.0
-margin_right = 645.0
-margin_bottom = -32.0
+margin_left = 475.0
+margin_top = -210.0
+margin_right = 649.0
+margin_bottom = -42.0
 rect_scale = Vector2( 2, 2 )
 
 [node name="Music" type="CheckButton" parent="VBoxContainer"]
-margin_right = 145.0
+margin_right = 174.0
 margin_bottom = 40.0
 focus_mode = 0
 custom_fonts/font = SubResource( 1 )
@@ -41,12 +41,12 @@ text = "Music"
 
 [node name="MusicSlider" type="HSlider" parent="VBoxContainer"]
 margin_top = 44.0
-margin_right = 145.0
+margin_right = 174.0
 margin_bottom = 60.0
 
 [node name="Sounds" type="CheckButton" parent="VBoxContainer"]
 margin_top = 64.0
-margin_right = 145.0
+margin_right = 174.0
 margin_bottom = 104.0
 focus_mode = 0
 custom_fonts/font = SubResource( 2 )
@@ -55,14 +55,23 @@ text = "Sounds"
 
 [node name="SoundSlider" type="HSlider" parent="VBoxContainer"]
 margin_top = 108.0
-margin_right = 145.0
+margin_right = 174.0
 margin_bottom = 124.0
+
+[node name="Controller" type="CheckButton" parent="VBoxContainer"]
+margin_top = 128.0
+margin_right = 174.0
+margin_bottom = 168.0
+focus_mode = 0
+custom_fonts/font = SubResource( 2 )
+enabled_focus_mode = 0
+text = "Controller"
 
 [node name="Back" type="Button" parent="."]
 margin_left = 521.0
-margin_top = 481.0
+margin_top = 550.0
 margin_right = 666.0
-margin_bottom = 504.0
+margin_bottom = 573.0
 rect_scale = Vector2( 1.75, 2 )
 custom_fonts/font = SubResource( 3 )
 text = "Back"
@@ -71,4 +80,5 @@ text = "Back"
 [connection signal="drag_ended" from="VBoxContainer/MusicSlider" to="." method="_on_MusicSlider_drag_ended"]
 [connection signal="pressed" from="VBoxContainer/Sounds" to="." method="_on_Sounds_pressed"]
 [connection signal="drag_ended" from="VBoxContainer/SoundSlider" to="." method="_on_SoundSlider_drag_ended"]
+[connection signal="pressed" from="VBoxContainer/Controller" to="." method="_on_Controller_pressed"]
 [connection signal="pressed" from="Back" to="." method="_on_Back_pressed"]

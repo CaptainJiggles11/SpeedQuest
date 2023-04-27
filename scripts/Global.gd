@@ -16,6 +16,7 @@ var floors = []
 var BGM
 var muted = false
 var muted_sfx = false
+var controller_enabled = false
 
 var paused = false
 var options_open = false

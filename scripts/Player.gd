@@ -138,7 +138,7 @@ func movement():
 		
 		grounded_pos = rb.global_position
 		
-		if Input.get_connected_joypads().size() >= 1:
+		if Global.controller_enabled == true:
 			joypad_controls()
 			joypad = true
 		else:
@@ -266,7 +266,8 @@ func shoot_projectile():
 		new_projectile.global_position = rb.global_position + (look_direction).normalized() * weapon_offset * 2
 		new_projectile.set("start_pos", rb.global_position + (look_direction).normalized() * weapon_offset * 2) 
 		add_child(new_projectile)
-		new_projectile.CS.scale = Vector2(6, 1)
+		new_projectile.use_sprite.animation = "sword"
+		new_projectile.CS.scale = Vector2(1, 1)
 		new_projectile.look_at((look_direction).normalized())
 		var angleTo = new_projectile.transform.x.angle_to((look_direction).normalized())
 		new_projectile.rotate(sign(angleTo)* min(5, abs(angleTo))) 
