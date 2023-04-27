@@ -262,7 +262,6 @@ func burst():
 			new_projectile.CS.scale *= 4
 			shoot_angle = shoot_angle.rotated(deg2rad(15/4))
 		
-		var stween := create_tween().set_trans(Tween.TRANS_LINEAR)	
 		yield(get_tree().create_timer(wrange), "timeout")
 	
 	randomize()
