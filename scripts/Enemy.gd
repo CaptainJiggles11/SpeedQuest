@@ -58,7 +58,7 @@ func _ready():
 			
 		enemy_type.bigzombie:
 			speed = 30
-			health = 5
+			health = 4.5
 			aggro_range = 200
 			timer = rand_range(2,5)
 			sprite.animation = "bigzombie_run"
@@ -87,7 +87,7 @@ func _ready():
 		enemy_type.skeleton:
 			sprite.animation = "skeleton_idle"
 			speed = 50
-			health = 1
+			health = .5
 			timer = rand_range(.5,1)
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
@@ -226,7 +226,7 @@ func navigate(delta):
 
 func death():
 	randomize()
-	if rand_range(0,15) >= 14:
+	if rand_range(0,13) >= 12:
 		var item = drops.instance()
 		get_parent().get_parent().add_child(item)
 		item.global_position = rb.global_position + Vector2(0,-20)

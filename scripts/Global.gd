@@ -22,7 +22,7 @@ var paused = false
 var options_open = false
 
 # Upgrades
-var max_time = 120
+var max_time = 140
 var max_hp = 3
 var player_damage = 1
 

@@ -41,7 +41,7 @@ func _ready():
 	yield(get_tree(), "idle_frame")
 	
 	speed = 30
-	health = 50
+	health = 40
 	sprite.animation = "dragon_idle"
 	
 
@@ -190,9 +190,7 @@ func up():
 
 func hellfire():
 	var tween := create_tween().set_trans(Tween.TRANS_LINEAR)
-	tween.tween_property(sprite, "modulate", Color(1,0,0), 1)
 	yield(sprite,"animation_finished")
-	sprite.modulate = Color(1,1,1)
 	
 	for _y in range(3,6):
 		randomize()
@@ -209,9 +207,7 @@ func hellfire():
 			new_projectile.CS.scale *= int(rand_range(3,5))
 		
 		var stween := create_tween().set_trans(Tween.TRANS_LINEAR)	
-		stween.tween_property(sprite, "modulate", Color(1,0,0), wrange)
 		yield(get_tree().create_timer(wrange), "timeout")
-		sprite.modulate = Color(1,1,1)
 		
 	yield(get_tree().create_timer(1), "timeout")
 	
@@ -229,12 +225,8 @@ func hellfire():
 
 func fire():
 	var shoot_angle = Vector2.UP
-
 	sprite.animation = "dragon_firestart"
-	var tween := create_tween().set_trans(Tween.TRANS_LINEAR)
-	tween.tween_property(sprite, "modulate", Color(1,1,1), 1)
 	yield(sprite,"animation_finished")
-	sprite.modulate = Color(1,1,1)
 	sprite.animation = "dragon_fire"
 	
 	for _x in range(128):
@@ -257,10 +249,9 @@ func burst():
 	var tween := create_tween().set_trans(Tween.TRANS_LINEAR)
 	tween.tween_property(sprite, "modulate", Color(1,0,0), 1)
 	yield(sprite,"animation_finished")
-	sprite.modulate = Color(1,1,1)
 	sprite.animation = "dragon_fire"
 	
-	for _y in range(1,4):
+	for _y in range(1,3):
 		var wrange = rand_range(1.5,2)
 		var shoot_angle = Vector2.UP
 		for _x in range(127):
@@ -272,12 +263,11 @@ func burst():
 			shoot_angle = shoot_angle.rotated(deg2rad(15/4))
 		
 		var stween := create_tween().set_trans(Tween.TRANS_LINEAR)	
-		stween.tween_property(sprite, "modulate", Color(1,0,0), wrange)
 		yield(get_tree().create_timer(wrange), "timeout")
-		sprite.modulate = Color(1,1,1)
-		
+	
 	randomize()
 	choose_attack()
+	sprite.modulate = Color(1,1,1)
 	sprite.animation = "dragon_firestop"
 	timer = rand_range(3,5)
 	wait = false
@@ -287,10 +277,9 @@ func radial():
 	var tween := create_tween().set_trans(Tween.TRANS_LINEAR)
 	tween.tween_property(sprite, "modulate", Color(0,0,1), 1)
 	yield(sprite,"animation_finished")
-	sprite.modulate = Color(1,1,1)
 	sprite.animation = "dragon_fire"
 	
-	for _y in range(1,8):
+	for _y in range(3,6):
 		randomize()
 		var rvel = rand_range(.25,1)
 		var wrange = rand_range(.5,1)
@@ -307,6 +296,7 @@ func radial():
 		
 	randomize()
 	choose_attack()
+	sprite.modulate = Color(1,1,1)
 	sprite.animation = "dragon_firestop"
 	timer = rand_range(1,3)
 	wait = false

@@ -39,7 +39,7 @@ func _ready():
 	yield(get_tree(), "idle_frame")
 	
 	speed = 30
-	health = 30
+	health = 20
 	sprite.animation = "slime_idle"
 
 
